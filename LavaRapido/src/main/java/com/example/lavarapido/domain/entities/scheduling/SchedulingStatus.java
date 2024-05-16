@@ -1,4 +1,5 @@
 package com.example.lavarapido.domain.entities.scheduling;
 
-public class SchedulingStatus {
+public enum SchedulingStatus {
+    PENDING, PAID, ABSENT;
 }

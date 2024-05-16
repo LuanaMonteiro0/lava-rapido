@@ -1,4 +1,5 @@
 package com.example.lavarapido.domain.entities.scheduling;
 
-public class FormOfPayment {
+public enum FormOfPayment {
+    PIX, MONEY, CREDIT, DEBIT;
 }
