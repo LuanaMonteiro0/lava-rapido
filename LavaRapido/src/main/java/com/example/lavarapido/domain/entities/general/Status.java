@@ -1,4 +1,6 @@
 package com.example.lavarapido.domain.entities.general;
 
-public class Status {
+public enum Status {
+    ACTIVE,
+    INACTIVE;
 }
