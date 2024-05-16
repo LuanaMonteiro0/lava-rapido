@@ -4,16 +4,18 @@ import com.example.lavarapido.domain.entities.general.Status;
 
 public class Vehicle {
 
+    private VehicleCategory vehicleCategory;
+
     private Status status;
 
-    String model;
+    private String model;
 
-    String color;
+    private String color;
 
-    Long id;
+    private Long id;
 
-
-    public Vehicle(Status status,String model, String color, Long id) {
+    public Vehicle(VehicleCategory vehicleCategory, Status status, String model, String color, Long id) {
+        this.vehicleCategory = vehicleCategory;
         this.status = status;
         this.model = model;
         this.color = color;
@@ -46,6 +48,10 @@ public class Vehicle {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public VehicleCategory getVehicleCategory() {
+        return vehicleCategory;
     }
 
     public void changeVehicleStatus(Status status) {
