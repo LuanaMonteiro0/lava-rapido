@@ -2,9 +2,9 @@ package com.example.lavarapido.domain.entities.vehicle;
 
 public class VehicleCategory {
 
-    String name;
+    private String name;
 
-    Long id;
+    private Long id;
 
     public VehicleCategory(Long id, String name) {
         this.id = id;

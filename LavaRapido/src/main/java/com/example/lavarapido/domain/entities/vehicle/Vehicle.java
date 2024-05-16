@@ -6,11 +6,11 @@ public class Vehicle {
 
     private Status status;
 
-    String model;
+    private String model;
 
-    String color;
+    private String color;
 
-    Long id;
+    private Long id;
 
 
     public Vehicle(Status status,String model, String color, Long id) {

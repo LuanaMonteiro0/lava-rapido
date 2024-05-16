@@ -22,6 +22,8 @@ public class Client {
 
     private List<Scheduling> schedulings;
 
+
+
     public Client() {};
 
 
