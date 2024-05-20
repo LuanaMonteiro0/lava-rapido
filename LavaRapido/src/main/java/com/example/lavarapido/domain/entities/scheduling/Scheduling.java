@@ -35,7 +35,9 @@ public class Scheduling {
     }
 
     public void verifyDate(){
-        //TODO: REGEX verifing date
+        if(date == LocalDate.now()){
+            t
+        }
     }
 
     public void changeStatus(SchedulingStatus ss){
