@@ -34,9 +34,11 @@ public class Scheduling {
         this.vehicle = vehicle;
     }
 
-    public void verifyDate(){
-        if(date == LocalDate.now()){
-            t
+    public boolean verifyDate(){
+        if(date == LocalDate.now() || date <= LocalDate.now()){
+            return false;
+        }else{
+            return true;
         }
     }
 
