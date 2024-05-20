@@ -3,6 +3,7 @@ package com.example.lavarapido.domain.entities.scheduling;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.service.Service;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
+import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -53,8 +54,9 @@ public class Scheduling {
         services.add(service);
     }
 
-    public void calculateTotal(){
-        return services.stream().forEach(s -> s.getPrice()).sum();
+    public double calculateTotal(){
+        VehicleCategory vc = this.vehicle.getVehicleCategory();
+        return services.stream().mapToDouble(service -> service.getPrice().get(vc)).sum();
     }
 
     public LocalDate getDate() {

@@ -12,8 +12,18 @@ public class Vehicle {
 
     private Long id;
 
+    //edition: add vehicleCategory
+    private  VehicleCategory vehicleCategory;
 
-    public Vehicle(Status status,String model, String color, Long id) {
+    public VehicleCategory getVehicleCategory() {
+        return vehicleCategory;
+    }
+
+    public void setVehicleCategory(VehicleCategory vehicleCategory) {
+        this.vehicleCategory = vehicleCategory;
+    }
+
+    public Vehicle(Status status, String model, String color, Long id) {
         this.status = status;
         this.model = model;
         this.color = color;
