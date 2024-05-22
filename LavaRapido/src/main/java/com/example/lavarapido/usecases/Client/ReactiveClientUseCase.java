@@ -23,12 +23,9 @@ public class ReactiveClientUseCase {
             throw new EntityNotFoundException("Client not found.");
 
         if (client.getStatus() == Status.INACTIVE)
-            return clientDAO.updateStatus(client);
+            return clientDAO.update(client);
 
-        // ou só implemento : client.setStatus(Status.ACTIVE); ??
+        throw new RuntimeException("Client is already activated.");
 
-        return false;
-
-        //nao seria interessante apenas um gerenciador de status?
     }
 }
