@@ -6,11 +6,11 @@ import com.example.lavarapido.usecases.utils.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-public class deleteClientUseCase {
+public class DeleteClientUseCase {
 
     private ClientDAO clientDAO;
 
-    public deleteClientUseCase(ClientDAO clientDAO) {
+    public DeleteClientUseCase(ClientDAO clientDAO) {
         this.clientDAO = clientDAO;
     }
 
