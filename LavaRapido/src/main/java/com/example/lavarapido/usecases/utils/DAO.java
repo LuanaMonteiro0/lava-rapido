@@ -9,5 +9,5 @@ public interface DAO<T, K> {
     List<T> findAll();
     boolean update(T type);
     boolean deleteByKey(K key);
-    //boolean delete(T type);
+    boolean delete(T type);
 }
