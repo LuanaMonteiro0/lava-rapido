@@ -1,6 +1,7 @@
 package com.example.lavarapido.usecases.Client;
 
 import com.example.lavarapido.domain.entities.client.Client;
+import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class DeleteClientUseCase {
         if (client.getSchedulings().isEmpty())
            return clientDAO.delete(client);
 
+        client.setStatus(Status.INACTIVE);
         return clientDAO.update(client);
     }
 
