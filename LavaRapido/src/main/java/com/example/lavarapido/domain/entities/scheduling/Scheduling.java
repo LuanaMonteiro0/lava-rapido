@@ -7,6 +7,7 @@ import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Scheduling {
@@ -26,7 +27,7 @@ public class Scheduling {
 
     private Client client;
 
-    private Vehicle vehicle;
+    private final Vehicle vehicle;
 
     public Scheduling(LocalDate date, double totalValue, FormOfPayment formOfPayment, SchedulingStatus status, Service service, Client client, Vehicle vehicle) {
         this.date = date;
@@ -40,16 +41,12 @@ public class Scheduling {
     }
 
     public boolean verifyDate(){
-        if(date.isEqual(LocalDate.now())|| date.isBefore(LocalDate.now())){
-            return false;
-        }else{
-            return true;
-        }
+        return !date.isEqual(LocalDate.now()) && !date.isBefore(LocalDate.now());
     }
 
-    public void changeStatus(SchedulingStatus ss){
-        if(ss != status){
-            this.status = ss;
+    public void changeStatus(SchedulingStatus schedulingStatus){
+        if(schedulingStatus != status){
+            this.status = schedulingStatus;
         }
     }
 
@@ -95,11 +92,11 @@ public class Scheduling {
         this.discount = discount;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -22,10 +22,11 @@ public class ReactiveClientUseCase {
         if (client == null || clientDAO.findOne(client.getCpfString()).isEmpty())
             throw new EntityNotFoundException("Client not found.");
 
-        if (client.getStatus() == Status.INACTIVE)
+        if (client.getStatus() == Status.INACTIVE){
+            client.setStatus(Status.ACTIVE);
             return clientDAO.update(client);
+        }
 
         throw new RuntimeException("Client is already activated.");
-
     }
 }
