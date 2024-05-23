@@ -12,7 +12,7 @@ public class ConnectionFactory { // para o try-with-resources
     public static Connection createConnection() {
         try {
             if (connection == null)
-                connection = DriverManager.getConnection("jdbc:sqlite:company.db");
+                connection = DriverManager.getConnection("jdbc:sqlite:lavarapido.db");
         } catch (SQLException e) {
             e.printStackTrace();
         }

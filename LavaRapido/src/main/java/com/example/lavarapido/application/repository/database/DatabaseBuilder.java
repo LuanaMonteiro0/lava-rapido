@@ -8,10 +8,25 @@ import java.sql.SQLException;
 
 public class DatabaseBuilder {
 
-    private final String sqlPiupiu = """
-            CREATE TABLE piupiu (
-                id LONG PRIMARY KEY NOT NULL,
-                name VARCHAR
+    private final String tableClient = """
+            CREATE TABLE Client (
+                id TEXT PRIMARY KEY NOT NULL,
+                name TEXT,
+                cpf TEXT,
+                telefone TEXT,
+                status TEXT
+            )
+            """;
+    private final String tableService = """
+            CREATE TABLE Client (
+                id TEXT PRIMARY KEY NOT NULL,
+                name TEXT
+            )
+            """;
+    private final String tableVehicleCategory = """
+            CREATE TABLE Client (
+                id TEXT PRIMARY KEY NOT NULL,
+                name TEXT
             )
             """;
 

@@ -17,7 +17,7 @@ public class Scheduling {
 
     UUID uuid = UUID.randomUUID();
     private String id = uuid.toString();
-    
+
     private FormOfPayment formOfPayment;
 
     private SchedulingStatus status;
