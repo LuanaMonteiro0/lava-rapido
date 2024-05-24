@@ -1,12 +1,9 @@
 package com.example.lavarapido.domain.entities.vehicle;
 
 import com.example.lavarapido.domain.entities.general.Status;
+import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 
 public class Vehicle {
-
-    private Plate plate;
-
-    private VehicleCategory vehicleCategory;
 
     private Status status;
 
@@ -16,18 +13,22 @@ public class Vehicle {
 
     private Long id;
 
+    private Plate plate;
 
+    //edition: add vehicleCategory
+    private  VehicleCategory vehicleCategory;
 
-    public Vehicle(
-            Plate plate,
-            VehicleCategory vehicleCategory,
-            Status status,
-            String model,
-            String color,
-            Long id) {
+    private Scheduling scheduling;
 
-        this.plate = plate;
+    public VehicleCategory getVehicleCategory() {
+        return vehicleCategory;
+    }
+
+    public void setVehicleCategory(VehicleCategory vehicleCategory) {
         this.vehicleCategory = vehicleCategory;
+    }
+
+    public Vehicle(Status status, String model, String color, Long id) {
         this.status = status;
         this.model = model;
         this.color = color;
@@ -62,15 +63,23 @@ public class Vehicle {
         this.id = id;
     }
 
+    public void changeVehicleStatus(Status status) {
+        this.status = status;
+    }
+
     public Plate getPlate() {
         return plate;
     }
 
-    public VehicleCategory getVehicleCategory() {
-        return vehicleCategory;
+    public void setPlate(Plate plate) {
+        this.plate = plate;
     }
 
-    public void changeVehicleStatus(Status status) {
-        this.status = status;
+    public Scheduling getScheduling() {
+        return scheduling;
+    }
+
+    public void setScheduling(Scheduling scheduling) {
+        this.scheduling = scheduling;
     }
 }

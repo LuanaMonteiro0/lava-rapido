@@ -8,47 +8,26 @@ import java.util.List;
 
 public class Client {
 
-    private long id;
+    private final Integer id;
 
     private String name;
 
     private Telephone phone;
 
-    private CPF cpf;
+    private final CPF cpf;
 
     private List<Vehicle> vehicles;
 
-    private Status status; // Tem valor padrão?
+    private Status status;
 
     private List<Scheduling> schedulings;
 
-
-
-    public Client() {};
-
-
-    public void changeClientStatus(Status status) {
-
-    }
-
-    public void addVehicle(VehicleDTO vDTO) {
-
-    }
-
-    public void deleteVehicle(VehicleDTO vDTO) {
-
-    }
-
-    public void changeVehicleStatus(long idVehicle, Status status) {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
+    public Client(Integer id, String name, Telephone phone, CPF cpf) {
         this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.cpf = cpf;
+        this.status = Status.ACTIVE;
     }
 
     public String getName() {
@@ -57,5 +36,41 @@ public class Client {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhone() {
+        return phone.getTelephone();
+    }
+
+    public void setPhone(Telephone phone) {
+        this.phone = phone;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getCpfString() {
+        return cpf.getCpf();
+    }
+
+    public CPF getCpf() {
+        return cpf;
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public List<Scheduling> getSchedulings() {
+        return schedulings;
     }
 }

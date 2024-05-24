@@ -9,17 +9,25 @@ import java.util.Map;
 
 public class Service {
 
-    private final long id;
-    private final String name;
+    private Integer id;
+    private String name;
     private final Map<VehicleCategory, Double> price = new HashMap<>();
 
     private List<VehicleCategory> vehicleCategories;
-    private Status status; //colocar um status padrão -> verificar se começa ATIVO ou INATIVO (exemplo no construtor)
+    private Status status;
 
-    public Service(long id, String name) {
+    public Service(Status status) {
+        status = Status.ACTIVE;
+    }
+
+    public Service(Status status, String name) {
+        this(null, status, name);
+    }
+
+    public Service(Integer id, Status status, String name) {
         this.id = id;
+        this.status = status;
         this.name = name;
-        // this.status = Status.ACTIVE; ?
     }
 
     public void changeStatus(Status status) {
