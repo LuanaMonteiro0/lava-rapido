@@ -8,22 +8,42 @@ import java.sql.SQLException;
 
 public class DatabaseBuilder {
 
-    private final String sqlPiupiu = """
-            CREATE TABLE piupiu (
+    private final String sqlClient = """
+            CREATE TABLE Clients (
                 id LONG PRIMARY KEY NOT NULL,
                 name VARCHAR
             )
             """;
+    private final String sqlVehicle = """
+            CREATE TABLE Vehicles (
+                id LONG PRIMARY KEY NOT NULL,
+                name VARCHAR
+            )
+            """;
+    private final String sqlUpdateVehicle = """
+            ALTER TABLE Vehicles ADD COLUMN plate VARCHAR
+            """;
 
     public static void main(String[] args) {
         DatabaseBuilder databaseBuilder = new DatabaseBuilder();
-        databaseBuilder.buildPiupiu();
+        //databaseBuilder.buildTables();
+        databaseBuilder.updateVehicle();
     }
 
-    private void buildPiupiu(){
+    private void buildTables(){
         try{
-            PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sqlPiupiu);
-            stmt.execute();
+            PreparedStatement statement = ConnectionFactory.createPreparedStatement(sqlClient);
+            PreparedStatement statement2 = ConnectionFactory.createPreparedStatement(sqlVehicle);
+            statement.execute();
+            statement2.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void updateVehicle(){
+        try{
+            PreparedStatement statement = ConnectionFactory.createPreparedStatement(sqlUpdateVehicle);
+            statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

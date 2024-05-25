@@ -2,6 +2,8 @@ package com.example.lavarapido.domain.entities.vehicle;
 
 import com.example.lavarapido.domain.entities.general.Status;
 
+import java.util.UUID;
+
 public class Vehicle {
 
     private Status status;
@@ -10,7 +12,8 @@ public class Vehicle {
 
     private String color;
 
-    private Long id;
+    UUID uuid = UUID.randomUUID();
+    private String id = uuid.toString();
 
     //edition: add vehicleCategory
     private  VehicleCategory vehicleCategory;
@@ -23,7 +26,7 @@ public class Vehicle {
         this.vehicleCategory = vehicleCategory;
     }
 
-    public Vehicle(Status status, String model, String color, Long id) {
+    public Vehicle(Status status, String model, String color, String id) {
         this.status = status;
         this.model = model;
         this.color = color;
@@ -46,16 +49,12 @@ public class Vehicle {
         this.color = color;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     public Status getStatus() {
         return status;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void changeVehicleStatus(Status status) {

@@ -6,10 +6,12 @@ import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class Service {
 
-    private Integer id;
+    UUID uuid = UUID.randomUUID();
+    private String id = uuid.toString();
     private String name;
     private final Map<VehicleCategory, Double> price = new HashMap<>();
 
@@ -24,7 +26,7 @@ public class Service {
         this(null, status, name);
     }
 
-    public Service(Integer id, Status status, String name) {
+    public Service(String id, Status status, String name) {
         this.id = id;
         this.status = status;
         this.name = name;
@@ -34,7 +36,7 @@ public class Service {
         this.status = status;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 

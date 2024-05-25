@@ -5,10 +5,12 @@ import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Client {
 
-    private final Integer id;
+    UUID uuid = UUID.randomUUID();
+    private String id = uuid.toString();
 
     private String name;
 
@@ -22,7 +24,7 @@ public class Client {
 
     private List<Scheduling> schedulings;
 
-    public Client(Integer id, String name, Telephone phone, CPF cpf) {
+    public Client(String id, String name, Telephone phone, CPF cpf) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -54,7 +56,7 @@ public class Client {
         this.status = status;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -73,4 +75,7 @@ public class Client {
     public List<Scheduling> getSchedulings() {
         return schedulings;
     }
+
+    
+
 }

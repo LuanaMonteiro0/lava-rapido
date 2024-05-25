@@ -31,7 +31,6 @@ public class Scheduling {
     public Scheduling(LocalDate date, double totalValue, FormOfPayment formOfPayment, SchedulingStatus status, Service service, Client client, Vehicle vehicle) {
         this.date = date;
         this.totalValue = totalValue;
-        //TODO: Automatizar geração do ID
         this.formOfPayment = formOfPayment;
         this.status = status;
         services.add(service);
@@ -95,12 +94,8 @@ public class Scheduling {
         this.discount = discount;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public FormOfPayment getFormOfPayment() {

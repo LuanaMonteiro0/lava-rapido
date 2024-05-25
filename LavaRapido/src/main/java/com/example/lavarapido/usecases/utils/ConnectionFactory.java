@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ConnectionFactory { // para o try-with-resources
+public class ConnectionFactory {
     private static Connection connection; //variável precisa ser estática
     private static PreparedStatement statement; //variável precisa ser estática
 
@@ -28,11 +28,4 @@ public class ConnectionFactory { // para o try-with-resources
         return statement;
     }
 
-    public void close() throws Exception {
-        if (connection != null) {
-            connection.close();
-            if (statement != null)
-                statement.close();
-        }
-    }
 }

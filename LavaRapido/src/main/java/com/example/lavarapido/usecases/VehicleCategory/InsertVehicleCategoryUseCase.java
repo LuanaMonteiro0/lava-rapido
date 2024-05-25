@@ -1,4 +1,4 @@
-package com.example.lavarapido.usecases.VehicleCaterory;
+package com.example.lavarapido.usecases.VehicleCategory;
 
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.usecases.utils.EntityAlreadyExistsException;
