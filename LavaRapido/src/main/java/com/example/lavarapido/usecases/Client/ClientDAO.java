@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClientDAO extends DAO<Client, String> {
+
     Optional<List<Client>> findByName(String name);
     Optional<Client> findOneByCPF(CPF cpf);
+
 }

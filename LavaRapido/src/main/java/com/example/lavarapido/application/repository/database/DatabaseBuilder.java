@@ -47,7 +47,7 @@ public class DatabaseBuilder {
 
     private void buildTables(){
         try{
-            PreparedStatement statement = ConnectionFactory.createPreparedStatement(sqlClient);
+            PreparedStatement statement = ConnectionFactory.createPreparedStatement(tableClient);
             PreparedStatement statement2 = ConnectionFactory.createPreparedStatement(sqlVehicle);
             statement.execute();
             statement2.execute();
