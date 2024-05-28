@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class DatabaseBuilder {
 
-    private final String tableClient = """
-            CREATE TABLE Client (
+    private final String tableClients = """
+            CREATE TABLE Clients (
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT,
                 cpf TEXT,
@@ -18,26 +18,33 @@ public class DatabaseBuilder {
             )
             """;
 
-    private final String tableService = """
-            CREATE TABLE Service (
+    private final String tableServices = """
+            CREATE TABLE Services (
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT,
                 status TEXT
             )
             """;
 
-    private final String tableVehicleCategory = """
-            CREATE TABLE Client (
+    private final String tableVehicleCategories = """
+            CREATE TABLE VehicleCategories (
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT
             )
             """;
-    private final String sqlVehicle = """
+
+    private final String tableVehicles = """
             CREATE TABLE Vehicles (
                 id LONG PRIMARY KEY NOT NULL,
-                name VARCHAR
+                name TEXT,
+                category TEXT,
+                FOREIGN KEY(category) REFERENCES VehicleCategories(name)
             )
             """;
+
+
+
+
     private final String sqlUpdateVehicle = """
             ALTER TABLE Vehicles ADD COLUMN plate VARCHAR
             """;
