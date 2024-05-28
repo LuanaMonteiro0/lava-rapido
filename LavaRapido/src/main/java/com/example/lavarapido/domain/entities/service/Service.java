@@ -14,22 +14,27 @@ public class Service {
     private String id = uuid.toString();
     private String name;
     private final Map<VehicleCategory, Double> price = new HashMap<>();
-
-    private List<VehicleCategory> vehicleCategories;
     private Status status;
 
     public Service(Status status) {
-        status = Status.ACTIVE;
+        this.status = Status.ACTIVE;
     }
 
     public Service(Status status, String name) {
-        this(null, status, name);
+        this(null, status, name, new HashMap<>());
     }
 
     public Service(String id, Status status, String name) {
+        this(id, status, name, new HashMap<>());
+    }
+
+    public Service(String id, Status status, String name, Map<VehicleCategory, Double> price) {
         this.id = id;
         this.status = status;
         this.name = name;
+        if (price != null) {
+            this.price.putAll(price);
+        }
     }
 
     public void changeStatus(Status status) {
@@ -46,5 +51,13 @@ public class Service {
 
     public String getName() {
         return name;
+    }
+
+    public void setPrice(VehicleCategory category, Double price) {
+        this.price.put(category, price);
+    }
+
+    public Status getStatus() {
+        return status;
     }
 }
