@@ -63,7 +63,7 @@ public class DatabaseBuilder {
                 time TEXT,
                 totalValue REAL,
                 discount REAL,
-                formOfPayment REAL,
+                formOfPayment TEXT,
                 client TEXT NOT NULL,
                 vehicle TEXT NOT NULL,
                 status TEXT,
