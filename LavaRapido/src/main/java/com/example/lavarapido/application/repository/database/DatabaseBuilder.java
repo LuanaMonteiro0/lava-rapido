@@ -51,7 +51,8 @@ public class DatabaseBuilder {
                 clientId TEXT NOT NULL,
                 vehicleId TEXT NOT NULL,
                 FOREIGN KEY(clientId) REFERENCES Clients(id),
-                FOREIGN KEY(vehicleId) REFERENCES Vehicle(id)
+                FOREIGN KEY(vehicleId) REFERENCES Vehicle(id),
+                PRIMARY KEY (clientId, vehicleId)
             )
             """;
 
