@@ -25,7 +25,7 @@ public class Scheduling {
 
     private List<Service> services;
 
-    private Client client;
+    private final Client client;
 
     private final Vehicle vehicle;
 

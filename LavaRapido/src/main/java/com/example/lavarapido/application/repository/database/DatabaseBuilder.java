@@ -53,17 +53,26 @@ public class DatabaseBuilder {
             )
             """;*/
 
-    private final String tableVehicleCategories = """
-            CREATE TABLE VehicleCategories (
+    private final String tableSchedulings = """
+            CREATE TABLE Schedulings (
                 id TEXT PRIMARY KEY NOT NULL,
-                name TEXT NOT NULL
+                date TEXT,
+                time TEXT,
+                totalValue REAL,
+                discount REAL,
+                formOfPayment REAL,
+                client TEXT NOT NULL,
+                vehicle TEXT NOT NULL,
+                status TEXT,
+                FOREIGN KEY(vehicle) REFERENCES Vehicles(id)
+                FOREIGN KEY(client) REFERENCES Clients(id)
             )
             """;
 
 
-    private final String sqlUpdateVehicle = """
+    /*private final String sqlUpdateVehicle = """
             ALTER TABLE Vehicles ADD COLUMN plate VARCHAR
-            """;
+            """;*/
 
     public static void main(String[] args) {
         DatabaseBuilder databaseBuilder = new DatabaseBuilder();
