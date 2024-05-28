@@ -18,6 +18,13 @@ public class DatabaseBuilder {
             )
             """;
 
+    private final String tableVehicleCategories = """
+            CREATE TABLE VehicleCategories (
+                id TEXT PRIMARY KEY NOT NULL,
+                name TEXT NOT NULL
+            )
+            """;
+
     private final String tableServices = """
             CREATE TABLE Services (
                 id TEXT PRIMARY KEY NOT NULL,
@@ -25,13 +32,6 @@ public class DatabaseBuilder {
                 status TEXT,
                 vehicleCategory TEXT,
                 FOREIGN KEY(vehicleCategory) REFERENCES VehicleCategories(id)
-            )
-            """;
-
-    private final String tableVehicleCategories = """
-            CREATE TABLE VehicleCategories (
-                id TEXT PRIMARY KEY NOT NULL,
-                name TEXT NOT NULL
             )
             """;
 
@@ -46,12 +46,14 @@ public class DatabaseBuilder {
             )
             """;
 
-    /*private final String tableVehiclesClients = """
-            CREATE TABLE Vehicles-Clients (
-                id TEXT PRIMARY KEY NOT NULL,
-                name TEXT NOT NULL
+    private final String tableClientVehicles = """
+            CREATE TABLE ClientVehicles (
+                clientId TEXT NOT NULL,
+                vehicleId TEXT NOT NULL,
+                FOREIGN KEY(clientId) REFERENCES Clients(id),
+                FOREIGN KEY(vehicleId) REFERENCES Vehicle(id)
             )
-            """;*/
+            """;
 
     private final String tableSchedulings = """
             CREATE TABLE Schedulings (
@@ -92,10 +94,11 @@ public class DatabaseBuilder {
 
     private void buildTables(){
         try{
-            PreparedStatement statement1 = ConnectionFactory.createPreparedStatement(tableClient);
-            PreparedStatement statement2 = ConnectionFactory.createPreparedStatement(sqlVehicle);
-            statement1.execute();
-            statement2.execute();
+            PreparedStatement tableClientsStatement = ConnectionFactory.createPreparedStatement(tableClients);
+            tableClientsStatement.execute();
+            PreparedStatement tableVehicleCategoriesStatement = ConnectionFactory.createPreparedStatement(tableVehicleCategories);
+            tableVehicleCategoriesStatement.execute();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
