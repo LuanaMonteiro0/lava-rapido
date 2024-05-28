@@ -27,9 +27,15 @@ public class DatabaseBuilder {
             """;
 
     private final String tableVehicleCategories = """
-            CREATE TABLE VehicleCategories (
+            CREATE TABLE VehiclePlates (
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT
+            )
+            """;
+
+    private final String tableVehiclePlates = """
+            CREATE TABLE Vehicles (
+                id LONG PRIMARY KEY NOT NULL,
             )
             """;
 
