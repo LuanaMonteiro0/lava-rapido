@@ -92,17 +92,34 @@ public class DatabaseBuilder {
         databaseBuilder.updateVehicle();
     }
 
-    private void buildTables(){
+    private void buildTables() {
         try{
             PreparedStatement tableClientsStatement = ConnectionFactory.createPreparedStatement(tableClients);
             tableClientsStatement.execute();
+
             PreparedStatement tableVehicleCategoriesStatement = ConnectionFactory.createPreparedStatement(tableVehicleCategories);
             tableVehicleCategoriesStatement.execute();
+
+            PreparedStatement tableServicesStatement = ConnectionFactory.createPreparedStatement(tableServices);
+            tableServicesStatement.execute();
+
+            PreparedStatement tableVehiclesStatement = ConnectionFactory.createPreparedStatement(tableVehicles);
+            tableVehiclesStatement.execute();
+
+            PreparedStatement tableClientVehiclesStatement = ConnectionFactory.createPreparedStatement(tableClientVehicles);
+            tableClientVehiclesStatement.execute();
+
+            PreparedStatement tableSchedulingsStatement = ConnectionFactory.createPreparedStatement(tableSchedulings);
+            tableSchedulingsStatement.execute();
+
+            PreparedStatement tableSchedulingsServicesStatement = ConnectionFactory.createPreparedStatement(tableSchedulingsServices);
+            tableSchedulingsServicesStatement.execute();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
     private void updateVehicle(){
         try{
             PreparedStatement statement = ConnectionFactory.createPreparedStatement(sqlUpdateVehicle);
@@ -111,4 +128,5 @@ public class DatabaseBuilder {
             throw new RuntimeException(e);
         }
     }
+
 }
