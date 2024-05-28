@@ -13,7 +13,7 @@ public class DatabaseBuilder {
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT,
                 cpf TEXT,
-                telefone TEXT,
+                phone TEXT,
                 status TEXT
             )
             """;
@@ -23,15 +23,15 @@ public class DatabaseBuilder {
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT,
                 status TEXT,
-                vehicleCategory TEXT
-                FOREIGN KEY(vehicleCategory) REFERENCES VehicleCategories(name)
+                vehicleCategory TEXT,
+                FOREIGN KEY(vehicleCategory) REFERENCES VehicleCategories(id)
             )
             """;
 
     private final String tableVehicleCategories = """
             CREATE TABLE VehicleCategories (
                 id TEXT PRIMARY KEY NOT NULL,
-                name TEXT
+                name TEXT NOT NULL
             )
             """;
 
@@ -41,11 +41,24 @@ public class DatabaseBuilder {
                 name TEXT,
                 category TEXT,
                 licensePlate TEXT,
+                status TEXT,
                 FOREIGN KEY(category) REFERENCES VehicleCategories(name)
             )
             """;
 
+    /*private final String tableVehiclesClients = """
+            CREATE TABLE Vehicles-Clients (
+                id TEXT PRIMARY KEY NOT NULL,
+                name TEXT NOT NULL
+            )
+            """;*/
 
+    private final String tableVehicleCategories = """
+            CREATE TABLE VehicleCategories (
+                id TEXT PRIMARY KEY NOT NULL,
+                name TEXT NOT NULL
+            )
+            """;
 
 
     private final String sqlUpdateVehicle = """
