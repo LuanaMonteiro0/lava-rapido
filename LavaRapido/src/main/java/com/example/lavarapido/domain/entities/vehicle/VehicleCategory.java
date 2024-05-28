@@ -3,7 +3,6 @@ package com.example.lavarapido.domain.entities.vehicle;
 public class VehicleCategory {
 
     private String name;
-
     private Long id;
 
     public VehicleCategory(Long id, String name) {

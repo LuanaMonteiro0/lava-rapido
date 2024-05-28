@@ -17,12 +17,15 @@ public class DatabaseBuilder {
                 status TEXT
             )
             """;
+
     private final String tableService = """
-            CREATE TABLE Client (
+            CREATE TABLE Service (
                 id TEXT PRIMARY KEY NOT NULL,
-                name TEXT
+                name TEXT,
+                status TEXT
             )
             """;
+
     private final String tableVehicleCategory = """
             CREATE TABLE Client (
                 id TEXT PRIMARY KEY NOT NULL,
@@ -47,9 +50,9 @@ public class DatabaseBuilder {
 
     private void buildTables(){
         try{
-            PreparedStatement statement = ConnectionFactory.createPreparedStatement(tableClient);
+            PreparedStatement statement1 = ConnectionFactory.createPreparedStatement(tableClient);
             PreparedStatement statement2 = ConnectionFactory.createPreparedStatement(sqlVehicle);
-            statement.execute();
+            statement1.execute();
             statement2.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
