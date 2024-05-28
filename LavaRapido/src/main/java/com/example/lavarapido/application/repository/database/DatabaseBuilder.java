@@ -42,7 +42,7 @@ public class DatabaseBuilder {
                 category TEXT,
                 licensePlate TEXT,
                 status TEXT,
-                FOREIGN KEY(category) REFERENCES VehicleCategories(name)
+                FOREIGN KEY(category) REFERENCES VehicleCategories(id)
             )
             """;
 
