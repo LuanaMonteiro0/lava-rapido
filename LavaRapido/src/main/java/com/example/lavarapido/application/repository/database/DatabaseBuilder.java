@@ -64,8 +64,18 @@ public class DatabaseBuilder {
                 client TEXT NOT NULL,
                 vehicle TEXT NOT NULL,
                 status TEXT,
-                FOREIGN KEY(vehicle) REFERENCES Vehicles(id)
+                FOREIGN KEY(vehicle) REFERENCES Vehicles(id),
                 FOREIGN KEY(client) REFERENCES Clients(id)
+            )
+            """;
+
+    private final String tableSchedulingsServices = """
+            CREATE TABLE Schedulings_Services (
+                SchedulingId TEXT NOT NULL,
+                ServiceId TEXT NOT NULL,
+                FOREIGN KEY(SchedulingId) REFERENCES Schedulings(id),
+                FOREIGN KEY(ServiceId) REFERENCES Services(id),
+                PRIMARY KEY(SchedulingId, ServiceId)
             )
             """;
 
