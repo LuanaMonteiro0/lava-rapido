@@ -22,7 +22,9 @@ public class DatabaseBuilder {
             CREATE TABLE Services (
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT,
-                status TEXT
+                status TEXT,
+                vehicleCategory TEXT
+                FOREIGN KEY(vehicleCategory) REFERENCES VehicleCategories(name)
             )
             """;
 
@@ -33,12 +35,6 @@ public class DatabaseBuilder {
             )
             """;
 
-    private final String tableVehicleLicensePlates = """
-            CREATE TABLE VehicleLicensePlates (
-                id TEXT PRIMARY KEY NOT NULL,
-            )
-            """;
-
     private final String tableVehicles = """
             CREATE TABLE Vehicles (
                 id LONG PRIMARY KEY NOT NULL,
@@ -46,7 +42,6 @@ public class DatabaseBuilder {
                 category TEXT,
                 licensePlate TEXT,
                 FOREIGN KEY(category) REFERENCES VehicleCategories(name)
-                FOREIGN KEY(licensePlate) REFERENCES VehicleLicensePlates(id)
             )
             """;
 
