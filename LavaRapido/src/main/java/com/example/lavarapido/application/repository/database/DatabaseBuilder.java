@@ -27,15 +27,15 @@ public class DatabaseBuilder {
             """;
 
     private final String tableVehicleCategories = """
-            CREATE TABLE VehiclePlates (
+            CREATE TABLE VehicleCategories (
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT
             )
             """;
 
-    private final String tableVehiclePlates = """
-            CREATE TABLE Vehicles (
-                id LONG PRIMARY KEY NOT NULL,
+    private final String tableVehicleLicensePlates = """
+            CREATE TABLE VehicleLicensePlates (
+                id TEXT PRIMARY KEY NOT NULL,
             )
             """;
 
@@ -44,7 +44,9 @@ public class DatabaseBuilder {
                 id LONG PRIMARY KEY NOT NULL,
                 name TEXT,
                 category TEXT,
+                licensePlate TEXT,
                 FOREIGN KEY(category) REFERENCES VehicleCategories(name)
+                FOREIGN KEY(licensePlate) REFERENCES VehicleLicensePlates(id)
             )
             """;
 
