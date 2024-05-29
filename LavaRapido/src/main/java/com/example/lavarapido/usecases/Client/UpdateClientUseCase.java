@@ -26,7 +26,7 @@ public class UpdateClientUseCase {
         if (notification.hasErrors())
             throw new IllegalArgumentException(notification.errorMessage());
 
-        Integer id = client.getId();
+        String id = client.getId();
         if (clientDAO.findOne(String.valueOf(id)).isEmpty())
             throw new EntityNotFoundException("Client not found.");
 

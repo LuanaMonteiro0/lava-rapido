@@ -25,14 +25,13 @@ public class Scheduling {
 
     private List<Service> services;
 
-    private Client client;
+    private final Client client;
 
     private final Vehicle vehicle;
 
     public Scheduling(LocalDate date, double totalValue, FormOfPayment formOfPayment, SchedulingStatus status, Service service, Client client, Vehicle vehicle) {
         this.date = date;
         this.totalValue = totalValue;
-        //TODO: Automatizar geração do ID
         this.formOfPayment = formOfPayment;
         this.status = status;
         services.add(service);

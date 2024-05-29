@@ -1,4 +1,4 @@
-package com.example.lavarapido.usecases.VehicleCaterory;
+package com.example.lavarapido.usecases.VehicleCategory;
 
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
@@ -27,7 +27,11 @@ public class UpdateVehicleCategoryUseCase {
 
         Long id = vehicleCategory.getId();
         if (vehicleCategoryDAO.findOne(id).isEmpty())
-            throw new EntityNotFoundException("Client not found.");
+            throw new EntityNotFoundException("Client not found by ID.");
+
+        String name = vehicleCategory.getName();
+        if (vehicleCategoryDAO.findOneByName(name).isEmpty())
+            throw new EntityNotFoundException("Client not found by name.");
 
         return vehicleCategoryDAO.update(vehicleCategory);
     }
