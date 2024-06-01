@@ -20,7 +20,7 @@ public class DeleteClientUseCase {
     }
 
     public boolean delete(Client client) {
-        if (client == null || clientDAO.findOne(client.getCpfString()).isEmpty())
+        if (client == null || clientDAO.findOneByCPF(client.getCpf()).isEmpty())
             throw new EntityNotFoundException("Client not found.");
 
 

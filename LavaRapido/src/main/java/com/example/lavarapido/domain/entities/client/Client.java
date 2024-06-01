@@ -32,6 +32,13 @@ public class Client {
         this.status = Status.ACTIVE;
     }
 
+    public Client(String id, String name, CPF cpf, Telephone phone) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.cpf = cpf;
+    }
+
     public String getName() {
         return name;
     }
