@@ -28,6 +28,11 @@ public class Service {
         this(id, status, name, new HashMap<>());
     }
 
+    public Service(String id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
     public Service(String id, Status status, String name, Map<VehicleCategory, Double> price) {
         this.id = id;
         this.status = status;
@@ -35,6 +40,10 @@ public class Service {
         if (price != null) {
             this.price.putAll(price);
         }
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public void changeStatus(Status status) {

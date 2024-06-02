@@ -29,15 +29,25 @@ public class DatabaseBuilder {
             CREATE TABLE Services (
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT,
-                status TEXT,
-                vehicleCategory TEXT,
-                FOREIGN KEY(vehicleCategory) REFERENCES VehicleCategories(id)
+                status TEXT
             )
             """;
 
+    private final String tableServicesPrices = """
+            CREATE TABLE ServicesPrices (
+                id TEXT PRIMARY KEY NOT NULL,
+                price REAL,
+                idService TEXT NOT NULL,
+                idVehicleCategory TEXT NOT NULL,
+                FOREIGN KEY(idVehicleCategory) REFERENCES VehicleCategories(id),
+                FOREIGN KEY(idService) REFERENCES Services(id)
+            )
+            """;
+
+
     private final String tableVehicles = """
             CREATE TABLE Vehicles (
-                id LONG PRIMARY KEY NOT NULL,
+                id TEXT PRIMARY KEY NOT NULL,
                 name TEXT,
                 category TEXT,
                 licensePlate TEXT,
@@ -83,15 +93,15 @@ public class DatabaseBuilder {
             """;
 
 
-    /*private final String sqlUpdateVehicle = """
+/*    private final String sqlUpdateVehicle = """
             ALTER TABLE Vehicles ADD COLUMN plate VARCHAR
             """;*/
 
-/*    public static void main(String[] args) {
+    public static void main(String[] args) {
         DatabaseBuilder databaseBuilder = new DatabaseBuilder();
-        //databaseBuilder.buildTables();
-        databaseBuilder.updateVehicle();
-    }*/
+        databaseBuilder.buildTables();
+        //databaseBuilder.updateVehicle();
+    }
 
 
     private void buildTables() {
@@ -104,6 +114,9 @@ public class DatabaseBuilder {
 
             PreparedStatement tableServicesStatement = ConnectionFactory.createPreparedStatement(tableServices);
             tableServicesStatement.execute();
+
+            PreparedStatement tableServicesPriceStatement = ConnectionFactory.createPreparedStatement(tableServicesPrices);
+            tableServicesPriceStatement.execute();
 
             PreparedStatement tableVehiclesStatement = ConnectionFactory.createPreparedStatement(tableVehicles);
             tableVehiclesStatement.execute();
