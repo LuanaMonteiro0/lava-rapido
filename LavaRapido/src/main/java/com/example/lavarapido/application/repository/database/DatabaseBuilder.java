@@ -2,7 +2,7 @@ package com.example.lavarapido.application.repository.database;
 
 import com.example.lavarapido.usecases.utils.ConnectionFactory;
 
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -93,6 +93,7 @@ public class DatabaseBuilder {
         databaseBuilder.updateVehicle();
     }*/
 
+
     private void buildTables() {
         try{
             PreparedStatement tableClientsStatement = ConnectionFactory.createPreparedStatement(tableClients);
@@ -121,6 +122,7 @@ public class DatabaseBuilder {
         }
     }
 
+
 /*    private void updateVehicle(){
         try{
             PreparedStatement statement = ConnectionFactory.createPreparedStatement(sqlUpdateVehicle);
@@ -129,5 +131,6 @@ public class DatabaseBuilder {
             throw new RuntimeException(e);
         }
     }*/
+
 
 }
