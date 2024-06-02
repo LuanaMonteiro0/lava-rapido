@@ -28,7 +28,6 @@ public class ClientDaoJdbc implements ClientDAO {
         return client;
     }
 
-
     @Override
     public Optional<List<Client>> findByName(String name) {
 
