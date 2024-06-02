@@ -5,6 +5,8 @@ import com.example.lavarapido.usecases.utils.DAO;
 
 import java.util.Optional;
 
-public interface VehicleCategoryDAO extends DAO<VehicleCategory, Long> {
+public interface VehicleCategoryDAO extends DAO<VehicleCategory, String> {
+
     Optional<VehicleCategory> findOneByName(String name);
+
 }

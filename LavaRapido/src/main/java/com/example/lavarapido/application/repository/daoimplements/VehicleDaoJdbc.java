@@ -40,7 +40,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
             targetVehicleStatement.setString(4, vehicle.getColor());
             targetVehicleStatement.setString(5, String.valueOf(vehicle.getPlate()));
 
-            ResultSet res = targetVehicleStatement.executeQuery();
+            targetVehicleStatement.executeUpdate();
 
             return "Vehicle inserted";
 
@@ -52,23 +52,53 @@ public class VehicleDaoJdbc implements VehicleDAO {
     }
 
     @Override
-    public Optional<Vehicle> findOne(String vehicleId) {
+    public boolean update(Vehicle vehicle) {
+
         try {
             String targetVehicle = """
-                SELECT * FROM Vehicles WHERE id = ?
+                UPDATE Vehicles SET status = ?, color = ?, model = ? WHERE id = ?
                 """;
-            PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
-            targetVehicleStatement.setString(1, vehicleId);
 
-            ResultSet res = targetVehicleStatement.executeQuery();
-            if (res.next()) {
-                Vehicle myVehicle = createVehicle(res);
-                return Optional.of(myVehicle);
-            }
+            PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
+            targetVehicleStatement.setString(1, String.valueOf(vehicle.getStatus()));
+            targetVehicleStatement.setString(2, vehicle.getColor());
+            targetVehicleStatement.setString(3, vehicle.getModel());
+
+            targetVehicleStatement.executeUpdate();
+
+            return true;
+
         } catch(SQLException e) {
             e.printStackTrace();
         }
-        return Optional.empty();
+
+        return false;
+
+    }
+
+    @Override
+    public boolean delete(Vehicle vehicle) {
+        return deleteByKey(vehicle.getId());
+    }
+
+    @Override
+    public boolean deleteByKey(String key) {
+        try {
+            String targetVehicle = """
+                DELETE FROM Vehicles WHERE id = ?
+                """;
+            PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
+            targetVehicleStatement.setString(1, key);
+
+            targetVehicleStatement.executeUpdate();
+
+            return true;
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     @Override
@@ -97,52 +127,23 @@ public class VehicleDaoJdbc implements VehicleDAO {
     }
 
     @Override
-    public boolean update(Vehicle vehicle) {
-
+    public Optional<Vehicle> findOne(String vehicleId) {
         try {
             String targetVehicle = """
-                UPDATE Vehicles SET status = ?, color = ?, model = ? WHERE id = ?
+                SELECT * FROM Vehicles WHERE id = ?
                 """;
-
             PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
-            targetVehicleStatement.setString(1, String.valueOf(vehicle.getStatus()));
-            targetVehicleStatement.setString(2, vehicle.getColor());
-            targetVehicleStatement.setString(3, vehicle.getModel());
+            targetVehicleStatement.setString(1, vehicleId);
 
             ResultSet res = targetVehicleStatement.executeQuery();
-
-            return true;
-
+            if (res.next()) {
+                Vehicle myVehicle = createVehicle(res);
+                return Optional.of(myVehicle);
+            }
         } catch(SQLException e) {
             e.printStackTrace();
         }
-
-        return false;
-
-    }
-
-    @Override
-    public boolean deleteByKey(String key) {
-        try {
-            String targetVehicle = """
-                DELETE FROM Vehicles WHERE id = ?
-                """;
-            PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
-            targetVehicleStatement.setString(1, key);
-
-            targetVehicleStatement.executeQuery();
-            return true;
-
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean delete(Vehicle vehicle) {
-        return false;
+        return Optional.empty();
     }
 
     @Override
