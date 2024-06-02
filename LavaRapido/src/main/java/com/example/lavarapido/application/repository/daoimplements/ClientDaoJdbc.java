@@ -132,8 +132,7 @@ public class ClientDaoJdbc implements ClientDAO {
             ResultSet res = targetClientStatement.executeQuery();
 
             while(res.next()){
-                Client c = instanciarCliente(res);
-                myClients.add(c);
+                myClients.add(instanciarCliente(res));
             }
             return myClients;
 
