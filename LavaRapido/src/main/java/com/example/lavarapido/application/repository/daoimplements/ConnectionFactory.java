@@ -1,4 +1,4 @@
-package com.example.lavarapido.usecases.utils;
+package com.example.lavarapido.application.repository.daoimplements;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

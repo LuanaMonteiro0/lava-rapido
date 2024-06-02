@@ -1,13 +1,12 @@
-package com.example.lavarapido.usecases.Client;
+package com.example.lavarapido.application.repository.daoimplements;
 
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
 import com.example.lavarapido.domain.entities.general.Status;
-import com.example.lavarapido.usecases.utils.ConnectionFactory;
+import com.example.lavarapido.usecases.Client.ClientDAO;
 
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
