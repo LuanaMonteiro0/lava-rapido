@@ -1,6 +1,5 @@
 package com.example.lavarapido.application.repository.daoimplements;
 
-import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.service.Service;
 import com.example.lavarapido.usecases.Service.ServiceDAO;
@@ -45,8 +44,26 @@ public class ServiceDaoJdbc implements ServiceDAO {
     }
 
     @Override
-    public String create(Service type) {
-        return null;
+    public String create(Service service) {
+        try {
+            String targetService = """
+               INSERT INTO Services (id, name, status) VALUES(?, ?, ?);
+                """;
+
+            PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetService);
+            targetClientStatement.setString(1, service.getId());
+            targetClientStatement.setString(2, service.getName());
+            targetClientStatement.setString(3, String.valueOf(service.getStatus()));
+
+            targetClientStatement.executeQuery();
+
+            return "Inserted sucessfully";
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "An error has ocurred while inserting";
     }
 
     @Override
@@ -95,7 +112,25 @@ public class ServiceDaoJdbc implements ServiceDAO {
     }
 
     @Override
-    public boolean update(Service type) {
+    public boolean update(Service service) {
+        try {
+            String targetService = """
+                UPDATE Services SET name = ?, status = ? WHERE id = ?
+                """;
+
+            PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetService);
+            targetClientStatement.setString(1, service.getName());
+            targetClientStatement.setString(2, String.valueOf(service.getStatus()));
+            targetClientStatement.setString(3, service.getId());
+
+            targetClientStatement.executeQuery();
+
+            return true;
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
