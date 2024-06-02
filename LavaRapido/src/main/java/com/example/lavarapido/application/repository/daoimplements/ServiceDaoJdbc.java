@@ -55,7 +55,7 @@ public class ServiceDaoJdbc implements ServiceDAO {
             targetClientStatement.setString(2, service.getName());
             targetClientStatement.setString(3, String.valueOf(service.getStatus()));
 
-            targetClientStatement.executeQuery();
+            targetClientStatement.executeUpdate();
 
             return "Inserted sucessfully";
 
@@ -123,7 +123,7 @@ public class ServiceDaoJdbc implements ServiceDAO {
             targetClientStatement.setString(2, String.valueOf(service.getStatus()));
             targetClientStatement.setString(3, service.getId());
 
-            targetClientStatement.executeQuery();
+            targetClientStatement.executeUpdate();
 
             return true;
 
@@ -143,7 +143,7 @@ public class ServiceDaoJdbc implements ServiceDAO {
             PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService);
             targetServiceStatement.setString(1, key);
 
-            targetServiceStatement.executeQuery();
+            targetServiceStatement.executeUpdate();
             return true;
 
         } catch(SQLException e) {

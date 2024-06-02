@@ -85,7 +85,7 @@ public class ClientDaoJdbc implements ClientDAO {
             targetClientStatement.setString(4, client.getPhone());
             targetClientStatement.setString(5, String.valueOf(client.getStatus()));
 
-            ResultSet res = targetClientStatement.executeQuery();
+            targetClientStatement.executeUpdate();
 
             return "Sucess";
 
@@ -157,7 +157,7 @@ public class ClientDaoJdbc implements ClientDAO {
                 targetClientStatement.setString(3, String.valueOf(client.getStatus()));
                 targetClientStatement.setString(4, client.getId());
 
-                ResultSet res = targetClientStatement.executeQuery();
+                targetClientStatement.executeUpdate();
 
                 return true;
 
@@ -179,7 +179,7 @@ public class ClientDaoJdbc implements ClientDAO {
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, key);
 
-            targetClientStatement.executeQuery();
+            targetClientStatement.executeUpdate();
             return true;
 
         } catch(SQLException e) {

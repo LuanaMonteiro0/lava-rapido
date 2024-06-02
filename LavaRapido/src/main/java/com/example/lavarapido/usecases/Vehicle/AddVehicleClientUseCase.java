@@ -13,7 +13,7 @@ public class AddVehicleClientUseCase {
         this.vehicleDAO = vehicleDAO;
     }
 
-    public Long insert(Vehicle vehicle) {
+    public String insert(Vehicle vehicle) {
         Validator<Vehicle> validator = new VehicleRequestValidator();
         Notification notification = validator.validate(vehicle);
 
