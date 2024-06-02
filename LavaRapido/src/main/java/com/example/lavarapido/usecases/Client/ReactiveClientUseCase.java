@@ -19,7 +19,7 @@ public class ReactiveClientUseCase {
     }
 
     public boolean reactive(Client client) {
-        if (client == null || clientDAO.findOne(client.getCpfString()).isEmpty())
+        if (client == null || clientDAO.findOneByCPF(client.getCpf()).isEmpty())
             throw new EntityNotFoundException("Client not found.");
 
         if (client.getStatus() == Status.INACTIVE){

@@ -23,6 +23,7 @@ public class ClientInputRequestValidator extends Validator<Client> {
             notification.addError("Phone is null or empty");
 
 
-        return null;
+        //return null; //?
+        return notification;
     }
 }

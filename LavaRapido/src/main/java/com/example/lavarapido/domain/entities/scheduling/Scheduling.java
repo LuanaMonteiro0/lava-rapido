@@ -6,8 +6,8 @@ import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class Scheduling {
@@ -23,7 +23,7 @@ public class Scheduling {
 
     private SchedulingStatus status;
 
-    private List<Service> services;
+    private final List<Service> services = new ArrayList<>();
 
     private final Client client;
 
@@ -33,16 +33,15 @@ public class Scheduling {
         this.date = date;
         this.totalValue = totalValue;
         this.formOfPayment = formOfPayment;
-        this.status = status;
+        this.status = SchedulingStatus.PENDING;
         services.add(service);
         this.client = client;
         this.vehicle = vehicle;
     }
 
-    public boolean verifyDate(){
-        return !date.isEqual(LocalDate.now()) && !date.isBefore(LocalDate.now());
+    public boolean verifyDate() {
+        return date.isBefore(LocalDate.now());
     }
-
     public void changeStatus(SchedulingStatus schedulingStatus){
         if(schedulingStatus != status){
             this.status = schedulingStatus;
@@ -54,9 +53,9 @@ public class Scheduling {
         services.add(service);
     }
 
-    public double calculateTotal(){
+    public void calculateTotal(){
         VehicleCategory vc = this.vehicle.getVehicleCategory();
-        return services.stream().mapToDouble(service -> service.getPrice().get(vc)).sum();
+        totalValue = services.stream().mapToDouble(service -> service.getPrice().get(vc)).sum();
     }
 
     public LocalDate getDate() {
@@ -107,4 +106,20 @@ public class Scheduling {
         this.formOfPayment = formOfPayment;
     }
 
+
+    public Client getClient() {
+        return client;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public SchedulingStatus getStatus() {
+        return status;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
 }

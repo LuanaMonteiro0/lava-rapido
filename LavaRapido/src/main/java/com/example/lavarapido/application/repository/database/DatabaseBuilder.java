@@ -87,11 +87,12 @@ public class DatabaseBuilder {
             ALTER TABLE Vehicles ADD COLUMN plate VARCHAR
             """;*/
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         DatabaseBuilder databaseBuilder = new DatabaseBuilder();
-        databaseBuilder.buildTables();
-        //databaseBuilder.updateVehicle();
-    }
+        //databaseBuilder.buildTables();
+        databaseBuilder.updateVehicle();
+    }*/
+
 
     private void buildTables() {
         try{
@@ -121,13 +122,15 @@ public class DatabaseBuilder {
         }
     }
 
-//    private void updateVehicle(){
-//        try{
-//            PreparedStatement statement = ConnectionFactory.createPreparedStatement(sqlUpdateVehicle);
-    //statement.execute();
-        //} catch (SQLException e) {
-       //     throw new RuntimeException(e);
-      //  }
-   // }
+
+/*    private void updateVehicle(){
+        try{
+            PreparedStatement statement = ConnectionFactory.createPreparedStatement(sqlUpdateVehicle);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+
 
 }
