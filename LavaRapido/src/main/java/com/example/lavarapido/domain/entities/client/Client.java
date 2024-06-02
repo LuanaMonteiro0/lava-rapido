@@ -90,6 +90,7 @@ public class Client {
         return schedulings;
     }
 
-    
-
+    public void setSchedulings(List<Scheduling> schedulings) {
+        this.schedulings = schedulings;
+    }
 }
