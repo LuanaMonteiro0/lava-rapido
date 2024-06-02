@@ -6,6 +6,6 @@ import com.example.lavarapido.usecases.utils.DAO;
 
 import java.util.Optional;
 
-public interface VehicleDAO extends DAO<Vehicle, Long> {
+public interface VehicleDAO extends DAO<Vehicle, String> {
     Optional<Vehicle> findByPlate(Plate plate);
 }

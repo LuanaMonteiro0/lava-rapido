@@ -37,8 +37,9 @@ public class DatabaseBuilder {
 
     private final String tableVehicles = """
             CREATE TABLE Vehicles (
-                id LONG PRIMARY KEY NOT NULL,
-                name TEXT,
+                id TEXT PRIMARY KEY NOT NULL,
+                color TEXT,
+                model TEXT,
                 category TEXT,
                 licensePlate TEXT,
                 status TEXT,

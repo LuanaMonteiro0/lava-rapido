@@ -7,14 +7,14 @@ import java.util.UUID;
 
 public class Vehicle {
 
+    UUID uuid = UUID.randomUUID();
+    private String id = uuid.toString();
+
     private Status status;
 
     private String model;
 
     private String color;
-
-    UUID uuid = UUID.randomUUID();
-    private String id = uuid.toString();
 
     private Plate plate;
 
@@ -35,6 +35,13 @@ public class Vehicle {
         this.status = status;
         this.model = model;
         this.color = color;
+        this.id = id;
+    }
+
+    public Vehicle(Plate plate, String color, String model, String id) {
+        this.plate = plate;
+        this.color = color;
+        this.model = model;
         this.id = id;
     }
 
