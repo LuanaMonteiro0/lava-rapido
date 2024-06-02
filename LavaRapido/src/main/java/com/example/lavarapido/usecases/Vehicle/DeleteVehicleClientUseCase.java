@@ -12,7 +12,7 @@ public class DeleteVehicleClientUseCase {
     }
 
     public boolean delete(Vehicle vehicle) {
-        if (vehicle == null || vehicleDAO.findByPlate(vehicle.getPlate()).isEmpty())
+        if (vehicle == null || vehicleDAO.findByLicensePlate(vehicle.getPlate()).isEmpty())
             throw new EntityNotFoundException("Category not found.");
 
         if (vehicle.getScheduling() == null)

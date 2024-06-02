@@ -16,7 +16,7 @@ public class Vehicle {
 
     private String color;
 
-    private Plate plate;
+    private LicensePlate licensePlate;
 
     //edition: add vehicleCategory
     private  VehicleCategory vehicleCategory;
@@ -38,8 +38,8 @@ public class Vehicle {
         this.id = id;
     }
 
-    public Vehicle(Plate plate, String color, String model, String id) {
-        this.plate = plate;
+    public Vehicle(LicensePlate licensePlate, String color, String model, String id) {
+        this.licensePlate = licensePlate;
         this.color = color;
         this.model = model;
         this.id = id;
@@ -73,12 +73,16 @@ public class Vehicle {
         this.status = status;
     }
 
-    public Plate getPlate() {
-        return plate;
+    public LicensePlate getPlate() {
+        return licensePlate;
     }
 
-    public void setPlate(Plate plate) {
-        this.plate = plate;
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setPlate(LicensePlate licensePlate) {
+        this.licensePlate = licensePlate;
     }
 
     public Scheduling getScheduling() {

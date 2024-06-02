@@ -48,7 +48,7 @@ public class InsertSchedulingUseCase {
             throw new IllegalArgumentException("Client is inactive.");
 
         Vehicle vehicle = scheduling.getVehicle();
-        if (vehicleDAO.findByPlate(vehicle.getPlate()).isEmpty())
+        if (vehicleDAO.findByLicensePlate(vehicle.getPlate()).isEmpty())
             throw new EntityNotFoundException("Vehicle is not registered.");
 
         List<Service> services = scheduling.getServices();

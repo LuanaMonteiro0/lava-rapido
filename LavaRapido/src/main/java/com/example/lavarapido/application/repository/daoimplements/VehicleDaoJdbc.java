@@ -1,10 +1,8 @@
 package com.example.lavarapido.application.repository.daoimplements;
 
-import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
-import com.example.lavarapido.domain.entities.client.Telephone;
 import com.example.lavarapido.domain.entities.general.Status;
-import com.example.lavarapido.domain.entities.vehicle.Plate;
+import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Vehicle.VehicleDAO;
 
@@ -17,16 +15,16 @@ import java.util.Optional;
 
 public class VehicleDaoJdbc implements VehicleDAO {
 
-    private Client createVehicle(ResultSet resultSet) throws SQLException {
+    private Vehicle createVehicle(ResultSet resultSet) throws SQLException {
         Vehicle vehicle = new Vehicle(
-                new Plate(resultSet.getString("licensePlate")),
+                new LicensePlate(resultSet.getString("licensePlate")),
                 resultSet.getString("color"),
                 resultSet.getString("model"),
                 resultSet.getString("id")
         );
-        client.setStatus(Status.valueOf(resultSet.getString("status")));
+        vehicle.setStatus(Status.valueOf(resultSet.getString("status")));
 
-        return client;
+        return vehicle;
     }
 
     @Override
@@ -64,7 +62,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
 
             ResultSet res = targetVehicleStatement.executeQuery();
             if (res.next()) {
-                Vehicle myVehicle = instanciarVeiculo(res);
+                Vehicle myVehicle = createVehicle(res);
                 return Optional.of(myVehicle);
             }
         } catch(SQLException e) {
@@ -82,12 +80,12 @@ public class VehicleDaoJdbc implements VehicleDAO {
             String targetVehicle = """
                 SELECT * FROM Vehicles
                 """;
-            PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetClient);
+            PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
 
             ResultSet res = targetVehicleStatement.executeQuery();
 
             while(res.next()){
-                myVehicles.add(instanciarVeiculo(res));
+                myVehicles.add(createVehicle(res));
             }
             return myVehicles;
 
@@ -148,7 +146,26 @@ public class VehicleDaoJdbc implements VehicleDAO {
     }
 
     @Override
-    public Optional<Vehicle> findByPlate(Plate plate) {
+    public Optional<Vehicle> findByLicensePlate(LicensePlate licensePlate) {
+
+        try {
+            String targetVehicle = """
+                SELECT * FROM Vehicles WHERE licensePlate = ?
+                """;
+            PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
+            targetVehicleStatement.setString(1, licensePlate.getLicensePlate());
+
+            ResultSet res = targetVehicleStatement.executeQuery();
+            Vehicle myVehicle = createVehicle(res);
+
+            return Optional.of(myVehicle);
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
 
     }
+
 }

@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class ClientDaoJdbc implements ClientDAO {
 
-    private Client instanciarCliente(ResultSet resultSet) throws SQLException {
+    private Client createClient(ResultSet resultSet) throws SQLException {
         Client client = new Client(
                 resultSet.getString("id"),
                 resultSet.getString("name"),
@@ -40,7 +40,7 @@ public class ClientDaoJdbc implements ClientDAO {
             ResultSet res = targetClientStatement.executeQuery();
             List<Client> myClients = new ArrayList<>();
             while(res.next()){
-                Client c = instanciarCliente(res);
+                Client c = createClient(res);
                 myClients.add(c);
             }
             return Optional.of(myClients);
@@ -63,7 +63,7 @@ public class ClientDaoJdbc implements ClientDAO {
 
             ResultSet res = targetClientStatement.executeQuery();
             if (res.next()) {
-                Client myClient = instanciarCliente(res);
+                Client myClient = createClient(res);
                 return Optional.of(myClient);
             }
         } catch(SQLException e) {
@@ -108,7 +108,7 @@ public class ClientDaoJdbc implements ClientDAO {
 
             ResultSet res = targetClientStatement.executeQuery();
             if (res.next()) {
-                Client myClient = instanciarCliente(res);
+                Client myClient = createClient(res);
                 return Optional.of(myClient);
             }
         } catch(SQLException e) {
@@ -132,7 +132,7 @@ public class ClientDaoJdbc implements ClientDAO {
             ResultSet res = targetClientStatement.executeQuery();
 
             while(res.next()){
-                myClients.add(instanciarCliente(res));
+                myClients.add(createClient(res));
             }
             return myClients;
 
