@@ -99,13 +99,13 @@ public class ClientDaoJdbc implements ClientDAO {
     }
 
     @Override
-    public Optional<Client> findOne(String key) {
+    public Optional<Client> findOne(String clientId) {
         try {
             String targetClient = """
                 SELECT * FROM Clients WHERE id = ?
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
-            targetClientStatement.setString(1, key);
+            targetClientStatement.setString(1, clientId);
 
             ResultSet res = targetClientStatement.executeQuery();
             if (res.next()) {
@@ -171,13 +171,13 @@ public class ClientDaoJdbc implements ClientDAO {
     }
 
     @Override
-    public boolean deleteByKey(String key) {
+    public boolean deleteByKey(String clientId) {
         try {
             String targetClient = """
                 DELETE FROM Clients WHERE id = ?
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
-            targetClientStatement.setString(1, key);
+            targetClientStatement.setString(1, clientId);
 
             targetClientStatement.executeUpdate();
             return true;
@@ -190,7 +190,6 @@ public class ClientDaoJdbc implements ClientDAO {
 
     @Override
     public boolean delete(Client client) {
-
         return deleteByKey(client.getId());
     }
 

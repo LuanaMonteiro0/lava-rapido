@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class ServiceDaoJdbc implements ServiceDAO {
 
-    private Service instanciarServico(ResultSet rs) throws SQLException {
+    private Service createServiceFromDbQuery(ResultSet rs) throws SQLException {
         Service service = new Service(
             rs.getString("id"), rs.getString("name")
         );
@@ -23,7 +23,6 @@ public class ServiceDaoJdbc implements ServiceDAO {
 
     @Override
     public Optional<Service> findOneByName(String name) {
-
         try {
             String targetService = """
                 SELECT * FROM Services WHERE name = ?
@@ -33,7 +32,7 @@ public class ServiceDaoJdbc implements ServiceDAO {
 
             ResultSet res = targetServiceStatement.executeQuery();
 
-            Service s = instanciarServico(res);
+            Service s = createServiceFromDbQuery(res);
             return Optional.of(s);
 
         } catch(SQLException e) {
@@ -47,8 +46,8 @@ public class ServiceDaoJdbc implements ServiceDAO {
     public String create(Service service) {
         try {
             String targetService = """
-               INSERT INTO Services (id, name, status) VALUES(?, ?, ?);
-                """;
+               INSERT INTO Services(id, name, status) VALUES(?, ?, ?)
+               """;
 
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetService);
             targetClientStatement.setString(1, service.getId());
@@ -57,27 +56,27 @@ public class ServiceDaoJdbc implements ServiceDAO {
 
             targetClientStatement.executeUpdate();
 
-            return "Inserted sucessfully";
+            return "Service inserted";
 
         } catch(SQLException e) {
             e.printStackTrace();
         }
 
-        return "An error has ocurred while inserting";
+        return "Service not inserted";
     }
 
     @Override
-    public Optional<Service> findOne(String key) {
+    public Optional<Service> findOne(String serviceId) {
         try {
             String targetService = """
                 SELECT * FROM Services WHERE id = ?
                 """;
             PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService);
-            targetServiceStatement.setString(1, key);
+            targetServiceStatement.setString(1, serviceId);
 
             ResultSet res = targetServiceStatement.executeQuery();
 
-            Service s = instanciarServico(res);
+            Service s = createServiceFromDbQuery(res);
             return Optional.of(s);
 
         } catch(SQLException e) {
@@ -89,7 +88,8 @@ public class ServiceDaoJdbc implements ServiceDAO {
 
     @Override
     public List<Service> findAll() {
-        List<Service> services = new ArrayList<>();
+
+        List<Service> myServices = new ArrayList<>();
 
         try {
             String targetServices = """
@@ -100,15 +100,15 @@ public class ServiceDaoJdbc implements ServiceDAO {
             ResultSet res = targetServiceStatement.executeQuery();
 
             while(res.next()){
-                services.add(instanciarServico(res));
+                myServices.add(createServiceFromDbQuery(res));
             }
-            return services;
+            return myServices;
 
         } catch(SQLException e) {
             e.printStackTrace();
         }
 
-        return services;
+        return myServices;
     }
 
     @Override
@@ -135,13 +135,13 @@ public class ServiceDaoJdbc implements ServiceDAO {
     }
 
     @Override
-    public boolean deleteByKey(String key) {
+    public boolean deleteByKey(String serviceId) {
         try {
             String targetService = """
                 DELETE FROM Services WHERE id = ?
                 """;
             PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService);
-            targetServiceStatement.setString(1, key);
+            targetServiceStatement.setString(1, serviceId);
 
             targetServiceStatement.executeUpdate();
             return true;

@@ -82,13 +82,13 @@ public class VehicleDaoJdbc implements VehicleDAO {
     }
 
     @Override
-    public boolean deleteByKey(String key) {
+    public boolean deleteByKey(String vehicleId) {
         try {
             String targetVehicle = """
                 DELETE FROM Vehicles WHERE id = ?
                 """;
             PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
-            targetVehicleStatement.setString(1, key);
+            targetVehicleStatement.setString(1, vehicleId);
 
             targetVehicleStatement.executeUpdate();
 

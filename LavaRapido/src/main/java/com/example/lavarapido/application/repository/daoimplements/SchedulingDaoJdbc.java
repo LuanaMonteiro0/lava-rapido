@@ -23,12 +23,12 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
 
     private Scheduling createSchedulingFromDbQuery(ResultSet resultSet) throws SQLException {
 
-        String dateDbResult = resultSet.getString("date");
+        String dateDbResult = resultSet.getString("date");//"2024-06-03"
 
         String [] localDateArgumentsInStringFormat = dateDbResult.split("-");
-        int day = Integer.parseInt(localDateArgumentsInStringFormat[2]);
-        int month = Integer.parseInt(localDateArgumentsInStringFormat[1]);
         int year = Integer.parseInt(localDateArgumentsInStringFormat[0]);
+        int month = Integer.parseInt(localDateArgumentsInStringFormat[1]);
+        int day = Integer.parseInt(localDateArgumentsInStringFormat[2]);
 
         //TODO: add a client and a vehicle to the scheduling
         Scheduling scheduling = new Scheduling(
@@ -47,7 +47,7 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
     public String create(Scheduling scheduling) {
         try {
             String targetScheduling = """
-                INSERT INTO Schedulings(id, formOfPayment, date, totalValue, schedulingStatus) VALUES(?, ?, ?, ?, ?);
+                INSERT INTO Schedulings(id, formOfPayment, date, totalValue, schedulingStatus, discount) VALUES(?, ?, ?, ?, ?, ?);
                 """;
             PreparedStatement targetSchedulingStatement = ConnectionFactory.createPreparedStatement(targetScheduling);
             targetSchedulingStatement.setString(1, scheduling.getId());
@@ -55,6 +55,7 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
             targetSchedulingStatement.setString(3, String.valueOf(scheduling.getDate()));
             targetSchedulingStatement.setString(4, String.valueOf(scheduling.getTotalValue()));
             targetSchedulingStatement.setString(5, String.valueOf(scheduling.getSchedulingStatus()));
+            targetSchedulingStatement.setString(6, String.valueOf(scheduling.getDiscount()));
 
             targetSchedulingStatement.executeUpdate();
 
@@ -186,7 +187,33 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
 
     @Override
     public List<Scheduling> findByDate(LocalDate date) {
-        return List.of();
+
+        List<Scheduling> mySchedulingsForTheSpecifiedDate = new ArrayList<>();
+
+        String dateOnStringFormat = date.toString(); //"yyyy-MM-dd"
+
+        try {
+            String targetScheduling = """
+                SELECT * FROM Schedulings WHERE date(date) = ?
+                """;
+            PreparedStatement targetSchedulingStatement = ConnectionFactory.createPreparedStatement(targetScheduling);
+            targetSchedulingStatement.setString(1, dateOnStringFormat);
+
+            ResultSet res = targetSchedulingStatement.executeQuery();
+
+            while (res.next()) {
+                Scheduling s = createSchedulingFromDbQuery(res);
+                mySchedulingsForTheSpecifiedDate.add(s);
+            }
+
+            return mySchedulingsForTheSpecifiedDate;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return mySchedulingsForTheSpecifiedDate;
+
     }
 
     @Override

@@ -23,6 +23,7 @@ public class Scheduling {
 
     private LocalDate date;
 
+    //TODO: change LocalDate to LocalDateTime Class
     private LocalDate hour; //optional
 
     private double totalValue;
