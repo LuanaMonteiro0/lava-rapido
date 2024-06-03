@@ -84,7 +84,7 @@ public class DatabaseBuilder {
             """;
 
     private final String tableSchedulingsServices = """
-            CREATE TABLE Schedulings_Services (
+            CREATE TABLE SchedulingsServices (
                 SchedulingId TEXT NOT NULL,
                 ServiceId TEXT NOT NULL,
                 FOREIGN KEY(SchedulingId) REFERENCES Schedulings(id),

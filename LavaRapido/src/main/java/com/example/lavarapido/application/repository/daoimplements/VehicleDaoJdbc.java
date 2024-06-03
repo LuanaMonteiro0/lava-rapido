@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class VehicleDaoJdbc implements VehicleDAO {
 
-    private Vehicle createVehicle(ResultSet resultSet) throws SQLException {
+    private Vehicle createVehicleFromDbQuery(ResultSet resultSet) throws SQLException {
         Vehicle vehicle = new Vehicle(
                 new LicensePlate(resultSet.getString("licensePlate")),
                 resultSet.getString("color"),
@@ -115,7 +115,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
             ResultSet res = targetVehicleStatement.executeQuery();
 
             while(res.next()){
-                myVehicles.add(createVehicle(res));
+                myVehicles.add(createVehicleFromDbQuery(res));
             }
             return myVehicles;
 
@@ -137,7 +137,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
 
             ResultSet res = targetVehicleStatement.executeQuery();
             if (res.next()) {
-                Vehicle myVehicle = createVehicle(res);
+                Vehicle myVehicle = createVehicleFromDbQuery(res);
                 return Optional.of(myVehicle);
             }
         } catch(SQLException e) {
@@ -157,7 +157,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
             targetVehicleStatement.setString(1, licensePlate.getLicensePlate());
 
             ResultSet res = targetVehicleStatement.executeQuery();
-            Vehicle myVehicle = createVehicle(res);
+            Vehicle myVehicle = createVehicleFromDbQuery(res);
 
             return Optional.of(myVehicle);
 

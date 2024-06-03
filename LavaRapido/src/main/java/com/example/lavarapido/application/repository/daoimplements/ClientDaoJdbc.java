@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class ClientDaoJdbc implements ClientDAO {
 
-    private Client createClient(ResultSet resultSet) throws SQLException {
+    private Client createClientFromDbQuery(ResultSet resultSet) throws SQLException {
         Client client = new Client(
                 resultSet.getString("id"),
                 resultSet.getString("name"),
@@ -39,8 +39,9 @@ public class ClientDaoJdbc implements ClientDAO {
 
             ResultSet res = targetClientStatement.executeQuery();
             List<Client> myClients = new ArrayList<>();
+
             while(res.next()){
-                Client c = createClient(res);
+                Client c = createClientFromDbQuery(res);
                 myClients.add(c);
             }
             return Optional.of(myClients);
@@ -63,7 +64,7 @@ public class ClientDaoJdbc implements ClientDAO {
 
             ResultSet res = targetClientStatement.executeQuery();
             if (res.next()) {
-                Client myClient = createClient(res);
+                Client myClient = createClientFromDbQuery(res);
                 return Optional.of(myClient);
             }
         } catch(SQLException e) {
@@ -87,13 +88,13 @@ public class ClientDaoJdbc implements ClientDAO {
 
             targetClientStatement.executeUpdate();
 
-            return "Sucess";
+            return "Client inserted";
 
         } catch(SQLException e) {
             e.printStackTrace();
         }
 
-        return "Not inserted";
+        return "Client not inserted";
 
     }
 
@@ -108,7 +109,7 @@ public class ClientDaoJdbc implements ClientDAO {
 
             ResultSet res = targetClientStatement.executeQuery();
             if (res.next()) {
-                Client myClient = createClient(res);
+                Client myClient = createClientFromDbQuery(res);
                 return Optional.of(myClient);
             }
         } catch(SQLException e) {
@@ -132,7 +133,7 @@ public class ClientDaoJdbc implements ClientDAO {
             ResultSet res = targetClientStatement.executeQuery();
 
             while(res.next()){
-                myClients.add(createClient(res));
+                myClients.add(createClientFromDbQuery(res));
             }
             return myClients;
 
@@ -171,7 +172,6 @@ public class ClientDaoJdbc implements ClientDAO {
 
     @Override
     public boolean deleteByKey(String key) {
-
         try {
             String targetClient = """
                 DELETE FROM Clients WHERE id = ?
