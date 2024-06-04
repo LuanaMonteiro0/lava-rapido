@@ -25,7 +25,7 @@ public class UpdateVehicleCategoryUseCase {
         if (notification.hasErrors())
             throw new IllegalArgumentException(notification.errorMessage());
 
-        Long id = vehicleCategory.getId();
+        String id = vehicleCategory.getId();
         if (vehicleCategoryDAO.findOne(id).isEmpty())
             throw new EntityNotFoundException("Client not found by ID.");
 

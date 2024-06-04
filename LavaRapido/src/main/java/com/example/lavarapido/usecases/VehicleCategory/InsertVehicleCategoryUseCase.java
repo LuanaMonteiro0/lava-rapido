@@ -13,14 +13,14 @@ public class InsertVehicleCategoryUseCase {
         this.vehicleCategoryDAO = vehicleCategoryDAO;
     }
 
-    public Long insert(VehicleCategory vehicleCategory) {
+    public String insert(VehicleCategory vehicleCategory) {
         Validator<VehicleCategory> validator = new VehicleCategoryRequestValidator();
         Notification notification = validator.validate(vehicleCategory);
 
         if (notification.hasErrors())
             throw new IllegalArgumentException(notification.errorMessage());
 
-        Long id = vehicleCategory.getId();
+        String id = vehicleCategory.getId();
         if (vehicleCategoryDAO.findOneByName(vehicleCategory.getName()).isPresent())
             throw new EntityAlreadyExistsException("This category name is already in use.");
 
