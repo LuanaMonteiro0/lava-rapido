@@ -1,4 +1,4 @@
-package com.example.lavarapido.usecases.Vehicle;
+package com.example.lavarapido.usecases.Service;
 
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.service.Service;

@@ -44,7 +44,7 @@ public class absentClientReportUseCase {
 
     private List<Client> filterAbsentClients(List<Scheduling> schedulings, List<Client> clients) {
         return schedulings.stream()
-                .filter(scheduling -> scheduling.getStatus() == SchedulingStatus.ABSENT)
+                .filter(scheduling -> scheduling.getSchedulingStatus() == SchedulingStatus.ABSENT)
                 .map(Scheduling::getClient)
                 .filter(client -> clients == null || clients.contains(client))
                 .distinct().toList();
