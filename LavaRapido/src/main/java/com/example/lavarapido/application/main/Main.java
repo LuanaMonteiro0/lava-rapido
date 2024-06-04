@@ -1,10 +1,12 @@
 package br.edu.ifps.luana.application.main;
 
 import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
 import com.example.lavarapido.domain.entities.general.Status;
+import com.example.lavarapido.domain.entities.service.Service;
 import com.example.lavarapido.usecases.Client.CreateClientUseCase;
 import com.example.lavarapido.usecases.Client.DeleteClientUseCase;
 import com.example.lavarapido.usecases.Client.ReactiveClientUseCase;
@@ -80,7 +82,15 @@ public class Main {
 
     }
 
-    
+    public static void testeInsereServico(){
+        ServiceDaoJdbc sjdbc = new ServiceDaoJdbc();
+
+        Service s = new Service(Status.ACTIVE, "Lavar carro");
+        
+
+
+
+    }
 
 
 
