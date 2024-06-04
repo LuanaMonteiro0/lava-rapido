@@ -31,7 +31,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
     public String create(Vehicle vehicle) {
         try {
             String targetVehicle = """
-                INSERT INTO Vehicles (id, status, model, color, plate) VALUES(?, ?, ?, ?, ?);
+                INSERT INTO Vehicles (id, status, model, color, licensePlate) VALUES(?, ?, ?, ?, ?);
                 """;
             PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
             targetVehicleStatement.setString(1, vehicle.getId());
