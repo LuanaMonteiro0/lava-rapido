@@ -26,4 +26,5 @@ public class UpdateVehicleClientUseCase {
 
         return vehicleDAO.update(vehicle);
     }
+
 }
