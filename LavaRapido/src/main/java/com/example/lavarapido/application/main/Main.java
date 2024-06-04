@@ -21,7 +21,7 @@ public class Main {
 
     }
 
-    public static void testeInsereCliente(){
+    public static void testeInsereCliente() {
         Client c = new Client("Luana Monteiro",new Telephone("16 99293-5849"), new CPF("428.888.999-16"), Status.ACTIVE);
 
         ClientDaoJdbc cjdbc = new ClientDaoJdbc();
@@ -31,7 +31,7 @@ public class Main {
         ucc.insert(c);
     }
 
-    public static void testeAtualizaCliente(){
+    public static void testeAtualizaCliente() {
         ClientDaoJdbc cjdbc = new ClientDaoJdbc();
 
         Client cn = cjdbc.findOneByCPF(new CPF("428.888.999-16")).get();
@@ -43,7 +43,7 @@ public class Main {
         ucu.update(cn);
     }
 
-    public static void testeRemoveCliente(){
+    public static void testeRemoveCliente() {
         ClientDaoJdbc cjdbc = new ClientDaoJdbc();
 
         Client cd = cjdbc.findOneByCPF(new CPF("428.888.999-16")).get();
