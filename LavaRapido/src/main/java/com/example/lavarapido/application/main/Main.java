@@ -205,7 +205,7 @@ public class Main {
 
         VehicleDaoJdbc vDaoJdbc = new VehicleDaoJdbc();
 
-        Vehicle v = new Vehicle(Status.ACTIVE, "Vw Gol", "Vermelho");
+        Vehicle v = vDaoJdbc.findByLicensePlate(new LicensePlate("CJA0562")).get();
 
         DeleteVehicleClientUseCase dvcUc = new DeleteVehicleClientUseCase(vDaoJdbc);
 

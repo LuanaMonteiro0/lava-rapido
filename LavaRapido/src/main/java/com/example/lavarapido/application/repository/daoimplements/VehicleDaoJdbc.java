@@ -157,9 +157,11 @@ public class VehicleDaoJdbc implements VehicleDAO {
             targetVehicleStatement.setString(1, licensePlate.getLicensePlate());
 
             ResultSet res = targetVehicleStatement.executeQuery();
-            Vehicle myVehicle = createVehicleFromDbQuery(res);
 
-            return Optional.of(myVehicle);
+            if (res.next()) {
+                Vehicle myVehicle = createVehicleFromDbQuery(res);
+                return Optional.of(myVehicle);
+            }
 
         } catch(SQLException e) {
             e.printStackTrace();
