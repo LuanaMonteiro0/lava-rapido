@@ -58,6 +58,6 @@ public class SchedulingInputRequestValidator extends Validator<Scheduling> {
             notification.addError("Discount cannot be negative.");
         }
 
-        return null;
+        return notification;
     }
 }

@@ -16,7 +16,7 @@ public class Service {
     private final Map<VehicleCategory, Double> price = new HashMap<>();
     private Status status;
 
-    public Service(Status status) {
+    public Service() {
         this.status = Status.ACTIVE;
     }
 
@@ -32,7 +32,6 @@ public class Service {
         this.id = id;
         this.name = name;
     }
-
     public Service(String id, Status status, String name, Map<VehicleCategory, Double> price) {
         this.id = id;
         this.status = status;
@@ -68,5 +67,9 @@ public class Service {
 
     public Status getStatus() {
         return status;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

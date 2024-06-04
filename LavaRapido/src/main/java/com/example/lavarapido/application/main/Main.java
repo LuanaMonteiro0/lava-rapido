@@ -7,10 +7,15 @@ import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.service.Service;
+import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.usecases.Client.CreateClientUseCase;
 import com.example.lavarapido.usecases.Client.DeleteClientUseCase;
 import com.example.lavarapido.usecases.Client.ReactiveClientUseCase;
 import com.example.lavarapido.usecases.Client.UpdateClientUseCase;
+import com.example.lavarapido.usecases.Service.CreateServiceUseCase;
+import com.example.lavarapido.usecases.Service.InactivateServiceUseCase;
+import com.example.lavarapido.usecases.Service.ReactiveServiceUseCase;
+import com.example.lavarapido.usecases.Service.UpdateServiceUseCase;
 
 import java.util.ArrayList;
 
@@ -28,7 +33,17 @@ public class Main {
         //testando use case ReactiveClientUseCase
         //testeReativarCliente();
 
+        //testando use case CreateServiceUseCase
+        //testeInsereServico();
 
+        //testando use case UpdateServiceUseCase
+        //testeAtualizaServico();
+
+        //testando use case UpdateServiceUseCase
+        //testandoInativarServico();
+
+        //testando use case UpdateServiceUseCase
+        //testandoReativarServico();
     }
 
     public static void testeInsereCliente() {
@@ -86,12 +101,45 @@ public class Main {
         ServiceDaoJdbc sjdbc = new ServiceDaoJdbc();
 
         Service s = new Service(Status.ACTIVE, "Lavar carro");
-        
 
+        s.setPrice(new VehicleCategory("jepe"), 200.0);
 
+        CreateServiceUseCase ucs = new CreateServiceUseCase(sjdbc);
+
+        ucs.insert(s);
 
     }
 
+    public static void testeAtualizaServico() {
+        ServiceDaoJdbc sjdbc = new ServiceDaoJdbc();
 
+        Service s = sjdbc.findOneByName("Lavar carro").get();
+
+        s.setName("Lavar carro com bucha assolan");
+
+        UpdateServiceUseCase usuc = new UpdateServiceUseCase(sjdbc);
+
+        usuc.update(s);
+    }
+
+    public static void testandoInativarServico(){
+        ServiceDaoJdbc sjdbc = new ServiceDaoJdbc();
+
+        Service s = sjdbc.findOneByName("Lavar carro com bucha assolan").get();
+
+        InactivateServiceUseCase isuc = new InactivateServiceUseCase(sjdbc);
+
+        isuc.inactivate(s);
+    }
+
+    public static void testandoReativarServico(){
+        ServiceDaoJdbc sjdbc = new ServiceDaoJdbc();
+
+        Service s = sjdbc.findOneByName("Lavar carro com bucha assolan").get();
+
+        ReactiveServiceUseCase rsuc = new ReactiveServiceUseCase(sjdbc);
+
+        rsuc.reactive(s);
+    }
 
 }

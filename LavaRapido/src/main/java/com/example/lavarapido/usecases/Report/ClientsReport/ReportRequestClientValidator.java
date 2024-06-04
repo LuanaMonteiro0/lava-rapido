@@ -21,6 +21,6 @@ public class ReportRequestClientValidator extends Validator<ReportRequestClient>
         if (request.getInitialDate().isAfter(request.getFinalDate()))
             notification.addError("Initial date cannot be after final date.");
 
-        return null;
+        return notification;
     }
 }

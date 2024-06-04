@@ -18,6 +18,6 @@ public class VehicleCategoryRequestValidator extends Validator<VehicleCategory> 
         if (nullOrEmpty(vehicleCategory.getName()))
             notification.addError("Name is null or empty");
 
-        return null;
+        return notification;
     }
 }

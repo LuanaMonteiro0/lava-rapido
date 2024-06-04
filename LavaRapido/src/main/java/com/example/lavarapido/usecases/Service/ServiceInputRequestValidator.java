@@ -31,6 +31,6 @@ public class ServiceInputRequestValidator extends Validator<Service> {
             }
         }
 
-        return null;
+        return notification;
     }
 }
