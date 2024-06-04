@@ -31,10 +31,10 @@ public class ServiceDaoJdbc implements ServiceDAO {
             targetServiceStatement.setString(1, name);
 
             ResultSet res = targetServiceStatement.executeQuery();
-
-            Service s = createServiceFromDbQuery(res);
-            return Optional.of(s);
-
+            if (res.next()) {
+                Service s = createServiceFromDbQuery(res);
+                return Optional.of(s);
+            }
         } catch(SQLException e) {
             e.printStackTrace();
         }

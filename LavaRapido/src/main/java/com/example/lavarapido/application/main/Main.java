@@ -8,27 +8,21 @@ import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.service.Service;
-<<<<<<< HEAD
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
-=======
 import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
->>>>>>> f323216fc2b71a3d2a5c2012a957c65e741a81f4
 import com.example.lavarapido.usecases.Client.CreateClientUseCase;
 import com.example.lavarapido.usecases.Client.DeleteClientUseCase;
 import com.example.lavarapido.usecases.Client.ReactiveClientUseCase;
 import com.example.lavarapido.usecases.Client.UpdateClientUseCase;
-<<<<<<< HEAD
 import com.example.lavarapido.usecases.Service.CreateServiceUseCase;
 import com.example.lavarapido.usecases.Service.InactivateServiceUseCase;
 import com.example.lavarapido.usecases.Service.ReactiveServiceUseCase;
 import com.example.lavarapido.usecases.Service.UpdateServiceUseCase;
-=======
 import com.example.lavarapido.usecases.Vehicle.AddVehicleClientUseCase;
 import com.example.lavarapido.usecases.Vehicle.DeleteVehicleClientUseCase;
 import com.example.lavarapido.usecases.Vehicle.ReactiveVehicleClientUseCase;
 import com.example.lavarapido.usecases.Vehicle.UpdateVehicleClientUseCase;
->>>>>>> f323216fc2b71a3d2a5c2012a957c65e741a81f4
 
 import java.util.ArrayList;
 
@@ -59,7 +53,7 @@ public class Main {
         //testandoReativarServico();
 
         //testando use case AddVehicleClientUseCase
-        //testeInsereServico();
+        //testeInsereVeiculo();
 
         //testando use case UpdateVehicleClientUseCase
         //testeAtualizaVeiculo();
@@ -173,6 +167,8 @@ public class Main {
 
         Vehicle v = new Vehicle(new LicensePlate("CJA0562"), "Vw Gol", "Vermelho", Status.INACTIVE);
 
+        v.setVehicleCategory(new VehicleCategory("hatch"));
+
         AddVehicleClientUseCase avcUc = new AddVehicleClientUseCase(vDaoJdbc);
 
         avcUc.insert(v);
@@ -216,6 +212,6 @@ public class Main {
         dvcUc.delete(v);
 
     }
-    
+
 
 }

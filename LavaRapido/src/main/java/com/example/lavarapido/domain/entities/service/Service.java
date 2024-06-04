@@ -4,7 +4,6 @@ import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
