@@ -31,11 +31,10 @@ public class Vehicle {
         this.vehicleCategory = vehicleCategory;
     }
 
-    public Vehicle(Status status, String model, String color, String id) {
+    public Vehicle(Status status, String model, String color) {
         this.status = status;
         this.model = model;
         this.color = color;
-        this.id = id;
     }
 
     public Vehicle(LicensePlate licensePlate, String color, String model, String id) {
@@ -43,6 +42,13 @@ public class Vehicle {
         this.color = color;
         this.model = model;
         this.id = id;
+    }
+
+    public Vehicle(LicensePlate licensePlate, String model, String color, Status status) {
+        this.licensePlate = licensePlate;
+        this.model = model;
+        this.color = color;
+        this.status = status;
     }
 
     public String getModel() {
