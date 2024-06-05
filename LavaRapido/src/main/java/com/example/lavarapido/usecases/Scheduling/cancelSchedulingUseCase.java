@@ -4,6 +4,7 @@ import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
 
 public class cancelSchedulingUseCase {
+
     private final SchedulingDAO schedulingDAO;
 
     public cancelSchedulingUseCase(SchedulingDAO schedulingDAO) {

@@ -24,12 +24,26 @@ public class Client {
 
     private List<Scheduling> schedulings;
 
+    public Client(String name, Telephone phone, CPF cpf, Status status) {
+        this.name = name;
+        this.phone = phone;
+        this.cpf = cpf;
+        this.status = status;
+    }
+
     public Client(String id, String name, Telephone phone, CPF cpf) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.cpf = cpf;
         this.status = Status.ACTIVE;
+    }
+
+    public Client(String id, String name, CPF cpf, Telephone phone) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.cpf = cpf;
     }
 
     public String getName() {
@@ -76,6 +90,7 @@ public class Client {
         return schedulings;
     }
 
-    
-
+    public void setSchedulings(List<Scheduling> schedulings) {
+        this.schedulings = schedulings;
+    }
 }

@@ -7,16 +7,16 @@ import java.util.UUID;
 
 public class Vehicle {
 
+    UUID uuid = UUID.randomUUID();
+    private String id = uuid.toString();
+
     private Status status;
 
     private String model;
 
     private String color;
 
-    UUID uuid = UUID.randomUUID();
-    private String id = uuid.toString();
-
-    private Plate plate;
+    private LicensePlate licensePlate;
 
     //edition: add vehicleCategory
     private  VehicleCategory vehicleCategory;
@@ -31,11 +31,24 @@ public class Vehicle {
         this.vehicleCategory = vehicleCategory;
     }
 
-    public Vehicle(Status status, String model, String color, String id) {
+    public Vehicle(Status status, String model, String color) {
         this.status = status;
         this.model = model;
         this.color = color;
+    }
+
+    public Vehicle(LicensePlate licensePlate, String color, String model, String id) {
+        this.licensePlate = licensePlate;
+        this.color = color;
+        this.model = model;
         this.id = id;
+    }
+
+    public Vehicle(LicensePlate licensePlate, String model, String color, Status status) {
+        this.licensePlate = licensePlate;
+        this.model = model;
+        this.color = color;
+        this.status = status;
     }
 
     public String getModel() {
@@ -66,12 +79,16 @@ public class Vehicle {
         this.status = status;
     }
 
-    public Plate getPlate() {
-        return plate;
+    public LicensePlate getPlate() {
+        return licensePlate;
     }
 
-    public void setPlate(Plate plate) {
-        this.plate = plate;
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setPlate(LicensePlate licensePlate) {
+        this.licensePlate = licensePlate;
     }
 
     public Scheduling getScheduling() {

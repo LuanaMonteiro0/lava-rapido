@@ -12,7 +12,7 @@ public class ReactiveVehicleClientUseCase {
     }
 
     public boolean reactive(Vehicle vehicle) {
-        if (vehicle == null || vehicleDAO.findByPlate(vehicle.getPlate()).isEmpty())
+        if (vehicle == null || vehicleDAO.findByLicensePlate(vehicle.getPlate()).isEmpty())
             throw new EntityNotFoundException("Vehicle not found.");
 
         if (vehicle.getStatus() == Status.INACTIVE){

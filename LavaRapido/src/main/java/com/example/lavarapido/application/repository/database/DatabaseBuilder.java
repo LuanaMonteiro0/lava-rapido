@@ -1,8 +1,8 @@
 package com.example.lavarapido.application.repository.database;
 
-import com.example.lavarapido.usecases.utils.ConnectionFactory;
+import com.example.lavarapido.application.repository.daoimplements.ConnectionFactory;
 
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -29,16 +29,27 @@ public class DatabaseBuilder {
             CREATE TABLE Services (
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT,
-                status TEXT,
-                vehicleCategory TEXT,
-                FOREIGN KEY(vehicleCategory) REFERENCES VehicleCategories(id)
+                status TEXT
             )
             """;
 
+    private final String tableServicesPrices = """
+            CREATE TABLE ServicesPrices (
+                id TEXT PRIMARY KEY NOT NULL,
+                price REAL,
+                idService TEXT NOT NULL,
+                idVehicleCategory TEXT NOT NULL,
+                FOREIGN KEY(idVehicleCategory) REFERENCES VehicleCategories(id),
+                FOREIGN KEY(idService) REFERENCES Services(id)
+            )
+            """;
+
+
     private final String tableVehicles = """
             CREATE TABLE Vehicles (
-                id LONG PRIMARY KEY NOT NULL,
-                name TEXT,
+                id TEXT PRIMARY KEY NOT NULL,
+                color TEXT,
+                model TEXT,
                 category TEXT,
                 licensePlate TEXT,
                 status TEXT,
@@ -73,7 +84,7 @@ public class DatabaseBuilder {
             """;
 
     private final String tableSchedulingsServices = """
-            CREATE TABLE Schedulings_Services (
+            CREATE TABLE SchedulingsServices (
                 SchedulingId TEXT NOT NULL,
                 ServiceId TEXT NOT NULL,
                 FOREIGN KEY(SchedulingId) REFERENCES Schedulings(id),
@@ -83,15 +94,16 @@ public class DatabaseBuilder {
             """;
 
 
-    /*private final String sqlUpdateVehicle = """
+/*    private final String sqlUpdateVehicle = """
             ALTER TABLE Vehicles ADD COLUMN plate VARCHAR
             """;*/
 
     public static void main(String[] args) {
         DatabaseBuilder databaseBuilder = new DatabaseBuilder();
-        //databaseBuilder.buildTables();
-        databaseBuilder.updateVehicle();
+        databaseBuilder.buildTables();
+        //databaseBuilder.updateVehicle();
     }
+
 
     private void buildTables() {
         try{
@@ -103,6 +115,9 @@ public class DatabaseBuilder {
 
             PreparedStatement tableServicesStatement = ConnectionFactory.createPreparedStatement(tableServices);
             tableServicesStatement.execute();
+
+            PreparedStatement tableServicesPriceStatement = ConnectionFactory.createPreparedStatement(tableServicesPrices);
+            tableServicesPriceStatement.execute();
 
             PreparedStatement tableVehiclesStatement = ConnectionFactory.createPreparedStatement(tableVehicles);
             tableVehiclesStatement.execute();
@@ -121,13 +136,15 @@ public class DatabaseBuilder {
         }
     }
 
-    private void updateVehicle(){
+
+/*    private void updateVehicle(){
         try{
             PreparedStatement statement = ConnectionFactory.createPreparedStatement(sqlUpdateVehicle);
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
+
 
 }

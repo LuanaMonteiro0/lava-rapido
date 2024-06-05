@@ -4,7 +4,6 @@ import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -16,7 +15,7 @@ public class Service {
     private final Map<VehicleCategory, Double> price = new HashMap<>();
     private Status status;
 
-    public Service(Status status) {
+    public Service() {
         this.status = Status.ACTIVE;
     }
 
@@ -28,6 +27,10 @@ public class Service {
         this(id, status, name, new HashMap<>());
     }
 
+    public Service(String id, String name){
+        this.id = id;
+        this.name = name;
+    }
     public Service(String id, Status status, String name, Map<VehicleCategory, Double> price) {
         this.id = id;
         this.status = status;
@@ -35,6 +38,10 @@ public class Service {
         if (price != null) {
             this.price.putAll(price);
         }
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public void changeStatus(Status status) {
@@ -59,5 +66,9 @@ public class Service {
 
     public Status getStatus() {
         return status;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

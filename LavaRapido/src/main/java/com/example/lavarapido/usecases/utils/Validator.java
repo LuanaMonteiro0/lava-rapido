@@ -3,6 +3,7 @@ package com.example.lavarapido.usecases.utils;
 import java.util.Collection;
 
 public abstract class Validator<T> {
+
     public abstract Notification validate(T type);
 
     public static boolean nullOrEmpty(String string) {
@@ -12,4 +13,5 @@ public abstract class Validator<T> {
     public static boolean nullOrEmpty(Collection collection) {
         return collection == null || collection.isEmpty();
     }
+
 }

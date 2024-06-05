@@ -11,40 +11,55 @@ import java.util.List;
 import java.util.UUID;
 
 public class Scheduling {
-    private LocalDate date;
-    private LocalDate hour; //optional
-    private double totalValue;
-    private double discount; //optional
 
     UUID uuid = UUID.randomUUID();
     private String id = uuid.toString();
 
+    private Client client; //final?
+
+    private Vehicle vehicle; //final?
+
     private FormOfPayment formOfPayment;
 
-    private SchedulingStatus status;
+    private LocalDate date;
+
+    //TODO: change LocalDate to LocalDateTime Class
+    private LocalDate hour; //optional
+
+    private double totalValue;
+
+    private double discount; //optional
+
+    private SchedulingStatus schedulingStatus;
 
     private final List<Service> services = new ArrayList<>();
 
-    private final Client client;
 
-    private final Vehicle vehicle;
 
-    public Scheduling(LocalDate date, double totalValue, FormOfPayment formOfPayment, SchedulingStatus status, Service service, Client client, Vehicle vehicle) {
+    public Scheduling(LocalDate date, double totalValue, FormOfPayment formOfPayment, Service service, Client client, Vehicle vehicle) {
         this.date = date;
         this.totalValue = totalValue;
         this.formOfPayment = formOfPayment;
-        this.status = SchedulingStatus.PENDING;
+        this.schedulingStatus = SchedulingStatus.PENDING;
         services.add(service);
         this.client = client;
         this.vehicle = vehicle;
     }
 
+    public Scheduling(String id, double totalValue, double discount, LocalDate date) {
+        this.id = id;
+        this.totalValue = totalValue;
+        this.discount = discount;
+        this.date = date;
+    }
+
     public boolean verifyDate() {
         return date.isBefore(LocalDate.now());
     }
+
     public void changeStatus(SchedulingStatus schedulingStatus){
-        if(schedulingStatus != status){
-            this.status = schedulingStatus;
+        if(this.schedulingStatus != schedulingStatus){
+            this.schedulingStatus = schedulingStatus;
         }
     }
 
@@ -106,7 +121,6 @@ public class Scheduling {
         this.formOfPayment = formOfPayment;
     }
 
-
     public Client getClient() {
         return client;
     }
@@ -115,11 +129,16 @@ public class Scheduling {
         return vehicle;
     }
 
-    public SchedulingStatus getStatus() {
-        return status;
+    public SchedulingStatus getSchedulingStatus() {
+        return schedulingStatus;
+    }
+
+    public void setSchedulingStatus(SchedulingStatus schedulingStatus) {
+        this.schedulingStatus = schedulingStatus;
     }
 
     public List<Service> getServices() {
         return services;
     }
+
 }

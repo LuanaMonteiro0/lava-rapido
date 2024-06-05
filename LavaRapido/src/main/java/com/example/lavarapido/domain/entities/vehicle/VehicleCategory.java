@@ -1,28 +1,31 @@
 package com.example.lavarapido.domain.entities.vehicle;
 
+import java.util.UUID;
+
 public class VehicleCategory {
 
-    private String name;
-    private Long id;
+    UUID uuid = UUID.randomUUID();
+    private String id = uuid.toString();
 
-    public VehicleCategory(Long id, String name) {
+    private String name;
+
+    public VehicleCategory(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public VehicleCategory(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

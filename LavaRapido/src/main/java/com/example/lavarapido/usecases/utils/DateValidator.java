@@ -14,6 +14,6 @@ public class DateValidator extends Validator<LocalDate> {
         if (Objects.requireNonNull(date).isAfter(LocalDate.now()))
             notification.addError("Date cannot be in the future");
 
-        return null;
+        return notification;
     }
 }

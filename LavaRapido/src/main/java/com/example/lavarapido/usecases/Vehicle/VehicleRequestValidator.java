@@ -27,6 +27,6 @@ public class VehicleRequestValidator extends Validator<Vehicle> {
         if (vehicle.getPlate() == null)
             notification.addError("Plate is null");
 
-        return null;
+        return notification;
     }
 }
