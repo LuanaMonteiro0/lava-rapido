@@ -2,6 +2,7 @@ package br.edu.ifps.luana.application.main;
 
 import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.VehicleCategoryDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
@@ -23,6 +24,9 @@ import com.example.lavarapido.usecases.Vehicle.AddVehicleClientUseCase;
 import com.example.lavarapido.usecases.Vehicle.DeleteVehicleClientUseCase;
 import com.example.lavarapido.usecases.Vehicle.ReactiveVehicleClientUseCase;
 import com.example.lavarapido.usecases.Vehicle.UpdateVehicleClientUseCase;
+import com.example.lavarapido.usecases.VehicleCategory.DeleteVehicleCategoryUseCase;
+import com.example.lavarapido.usecases.VehicleCategory.InsertVehicleCategoryUseCase;
+import com.example.lavarapido.usecases.VehicleCategory.UpdateVehicleCategoryUseCase;
 
 import java.util.ArrayList;
 
@@ -46,10 +50,10 @@ public class Main {
         //testando use case UpdateServiceUseCase
         //testeAtualizaServico();
 
-        //testando use case UpdateServiceUseCase
+        //testando use case InactivateServiceUseCase
         //testandoInativarServico();
 
-        //testando use case UpdateServiceUseCase
+        //testando use case ReactiveServiceUseCase
         //testandoReativarServico();
 
         //testando use case AddVehicleClientUseCase
@@ -61,8 +65,17 @@ public class Main {
         //testando use case DeleteVehicleClientUseCase
         //testeRemoveVeiculo();
 
-        //testando use case DeleteVehicleClientUseCase
+        //testando use case ReactiveVehicleClientUseCase
         //testeReativaVeiculo();
+
+        //testando use case InsertVehicleCategoryUseCase
+        //testeInsereCategoriaDeVeiculo();
+
+        //testando use case UpdateVehicleCategoryUseCase
+        //testeUpdateCategoriaDeVeiculo();
+
+        //testando use case DeleteVehicleCategoryUseCase
+        //testeRemoveCategoriaDeVeiculo();
 
     }
 
@@ -210,6 +223,45 @@ public class Main {
         DeleteVehicleClientUseCase dvcUc = new DeleteVehicleClientUseCase(vDaoJdbc);
 
         dvcUc.delete(v);
+
+    }
+
+    public static void testeInsereCategoriaDeVeiculo() {
+
+        VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+
+        VehicleCategory vc = new VehicleCategory("Sedan");
+
+        InsertVehicleCategoryUseCase ivcUc = new InsertVehicleCategoryUseCase(vcDaoJdbc);
+
+        ivcUc.insert(vc);
+
+    }
+
+    public static void testeUpdateCategoriaDeVeiculo() {
+
+        VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+
+        VehicleCategory vc = vcDaoJdbc.findOneByName("Sedan").get();
+
+        vc.setName("SUV");
+
+        UpdateVehicleCategoryUseCase uvcUc = new UpdateVehicleCategoryUseCase(vcDaoJdbc);
+
+        uvcUc.update(vc);
+
+    }
+
+
+    public static void testeRemoveCategoriaDeVeiculo() {
+
+        VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+
+        VehicleCategory vc = vcDaoJdbc.findOneByName("SUV").get();
+
+        DeleteVehicleCategoryUseCase dvcUc = new DeleteVehicleCategoryUseCase(vcDaoJdbc);
+
+        dvcUc.delete(vc);
 
     }
 

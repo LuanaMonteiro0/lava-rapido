@@ -1,9 +1,6 @@
 package com.example.lavarapido.application.repository.daoimplements;
 
-import com.example.lavarapido.domain.entities.client.Client;
-import com.example.lavarapido.domain.entities.general.Status;
-import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
-import com.example.lavarapido.domain.entities.vehicle.Vehicle;
+import com.example.lavarapido.application.repository.database.ConnectionFactory;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.usecases.VehicleCategory.VehicleCategoryDAO;
 

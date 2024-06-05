@@ -1,20 +1,14 @@
 package com.example.lavarapido.application.repository.daoimplements;
 
-import com.example.lavarapido.domain.entities.client.CPF;
-import com.example.lavarapido.domain.entities.client.Client;
-import com.example.lavarapido.domain.entities.client.Telephone;
-import com.example.lavarapido.domain.entities.general.Status;
-import com.example.lavarapido.domain.entities.scheduling.FormOfPayment;
+import com.example.lavarapido.application.repository.database.ConnectionFactory;
 import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.domain.entities.scheduling.SchedulingStatus;
-import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Scheduling.SchedulingDAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

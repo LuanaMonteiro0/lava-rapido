@@ -1,7 +1,5 @@
 package com.example.lavarapido.application.repository.database;
 
-import com.example.lavarapido.application.repository.daoimplements.ConnectionFactory;
-
 //import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
