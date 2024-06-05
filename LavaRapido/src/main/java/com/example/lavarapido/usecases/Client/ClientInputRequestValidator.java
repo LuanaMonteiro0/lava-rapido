@@ -22,8 +22,6 @@ public class ClientInputRequestValidator extends Validator<Client> {
         if (nullOrEmpty(client.getPhone()))
             notification.addError("Phone is null or empty");
 
-
-        //return null; //?
         return notification;
     }
 }

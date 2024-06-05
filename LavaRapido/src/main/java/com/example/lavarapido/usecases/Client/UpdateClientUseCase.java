@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UpdateClientUseCase {
+
     private final ClientDAO clientDAO;
 
     public UpdateClientUseCase(ClientDAO clientDAO) {
@@ -20,6 +21,7 @@ public class UpdateClientUseCase {
     }
 
     public boolean update(Client client) {
+
         Validator<Client> validator = new ClientInputRequestValidator();
         Notification notification = validator.validate(client);
 
@@ -27,8 +29,9 @@ public class UpdateClientUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
 
         String id = client.getId();
-        if (clientDAO.findOne(String.valueOf(id)).isEmpty())
+        if (clientDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Client not found.");
+        }
 
         return clientDAO.update(client);
     }

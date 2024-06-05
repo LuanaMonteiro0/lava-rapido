@@ -27,6 +27,6 @@ public class ReactiveClientUseCase {
             return clientDAO.update(client);
         }
 
-        throw new RuntimeException("Client is already activated.");
+        throw new RuntimeException("Client Status is already ACTIVE.");
     }
 }

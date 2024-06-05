@@ -20,12 +20,13 @@ public class DeleteClientUseCase {
     }
 
     public boolean delete(Client client) {
-        if (client == null || clientDAO.findOneByCPF(client.getCpf()).isEmpty())
+        if (client == null || clientDAO.findOneByCPF(client.getCpf()).isEmpty()) {
             throw new EntityNotFoundException("Client not found.");
+        }
 
-
-        if (client.getSchedulings().isEmpty())
-           return clientDAO.delete(client);
+        if (client.getSchedulings().isEmpty()) {
+            return clientDAO.delete(client);
+        }
 
         client.setStatus(Status.INACTIVE);
         return clientDAO.update(client);
