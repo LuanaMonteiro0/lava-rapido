@@ -45,6 +45,13 @@ public class Client {
         this.phone = phone;
         this.cpf = cpf;
     }
+    public Client(String name, Telephone phone, CPF cpf) {
+        this.name = name;
+        this.phone = phone;
+        this.cpf = cpf;
+    }
+
+    public Client(){this.cpf = null;};
 
     public String getName() {
         return name;

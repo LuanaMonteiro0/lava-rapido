@@ -6,6 +6,7 @@ import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +25,7 @@ public class Scheduling {
     private LocalDate date;
 
     //TODO: change LocalDate to LocalDateTime Class
-    private LocalDate hour; //optional
+    private LocalDateTime hour; //optional
 
     private double totalValue;
 
@@ -81,12 +82,12 @@ public class Scheduling {
         this.date = date;
     }
 
-    public LocalDate getHour() {
+    public LocalDateTime getHour() {
         return hour;
     }
 
     public void setHour(LocalDate hour) {
-        this.hour = hour;
+        this.hour = hour.atStartOfDay();
     }
 
     public double getTotalValue() {

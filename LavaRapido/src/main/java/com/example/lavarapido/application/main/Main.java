@@ -4,6 +4,8 @@ import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc
 import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.VehicleCategoryDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
+import com.example.lavarapido.application.repository.database.DatabaseBuilder;
+import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
@@ -16,6 +18,7 @@ import com.example.lavarapido.usecases.Client.CreateClientUseCase;
 import com.example.lavarapido.usecases.Client.DeleteClientUseCase;
 import com.example.lavarapido.usecases.Client.ReactiveClientUseCase;
 import com.example.lavarapido.usecases.Client.UpdateClientUseCase;
+import com.example.lavarapido.usecases.Scheduling.InsertSchedulingUseCase;
 import com.example.lavarapido.usecases.Service.CreateServiceUseCase;
 import com.example.lavarapido.usecases.Service.InactivateServiceUseCase;
 import com.example.lavarapido.usecases.Service.ReactiveServiceUseCase;
@@ -27,6 +30,7 @@ import com.example.lavarapido.usecases.Vehicle.UpdateVehicleClientUseCase;
 import com.example.lavarapido.usecases.VehicleCategory.DeleteVehicleCategoryUseCase;
 import com.example.lavarapido.usecases.VehicleCategory.InsertVehicleCategoryUseCase;
 import com.example.lavarapido.usecases.VehicleCategory.UpdateVehicleCategoryUseCase;
+import javafx.application.Application;
 
 import java.util.ArrayList;
 
@@ -78,6 +82,15 @@ public class Main {
         //testeRemoveCategoriaDeVeiculo();
 
     }
+
+    public static DeleteClientUseCase deleteClientUseCase;
+    public static DeleteVehicleClientUseCase deleteVehicleClientUseCase;
+    public static CreateClientUseCase createClientUseCase;
+    public static UpdateClientUseCase updateClientUseCase;
+    public static AddVehicleClientUseCase addVehicleClientUseCase;
+    public static UpdateVehicleClientUseCase updateVehicleClientUseCase;
+    public static InsertSchedulingUseCase insertSchedulingUseCase;
+
 
     public static void testeInsereCliente() {
         Client c = new Client("Luana Monteiro",new Telephone("16 99293-5849"), new CPF("428.888.999-16"), Status.ACTIVE);
@@ -178,7 +191,7 @@ public class Main {
 
         VehicleDaoJdbc vDaoJdbc = new VehicleDaoJdbc();
 
-        Vehicle v = new Vehicle(new LicensePlate("CJA0562"), "Vw Gol", "Vermelho", Status.INACTIVE);
+        Vehicle v = new Vehicle(new LicensePlate("CJA0562"), "Vw Gol", "Vermelho");
 
         v.setVehicleCategory(new VehicleCategory("hatch"));
 

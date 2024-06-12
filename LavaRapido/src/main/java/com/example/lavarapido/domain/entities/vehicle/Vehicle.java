@@ -44,12 +44,14 @@ public class Vehicle {
         this.id = id;
     }
 
-    public Vehicle(LicensePlate licensePlate, String model, String color, Status status) {
+    public Vehicle(LicensePlate licensePlate, String model, String color) {
         this.licensePlate = licensePlate;
         this.model = model;
         this.color = color;
-        this.status = status;
+        this.status = Status.INACTIVE;
     }
+
+    public Vehicle(){};
 
     public String getModel() {
         return model;

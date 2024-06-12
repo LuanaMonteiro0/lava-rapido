@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="432.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleManegementUIController">
+    <children>
+        <TableView fx:id="tableView" layoutX="22.0" layoutY="16.0" prefHeight="351.0" prefWidth="643.0">
+            <columns>
+                <TableColumn fx:id="cModel" prefWidth="75.0" text="Modelo" />
+                <TableColumn fx:id="cCategory" prefWidth="75.0" text="Categoria" />
+                <TableColumn fx:id="cColor" prefWidth="75.0" text="Cor" />
+                <TableColumn fx:id="cPlate" prefWidth="75.0" text="Placa" />
+                <TableColumn fx:id="cStatus" prefWidth="75.0" text="Status" />
+                <TableColumn fx:id="cScheduling" prefWidth="132.0" text="Agendamento(s)" />
+            <TableColumn fx:id="cCpfDono" prefWidth="135.0" text="CPF Dono" />
+            </columns>
+        </TableView>
+        <Button fx:id="btnBack" layoutX="22.0" layoutY="383.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="33.0" prefWidth="64.0" text="Voltar" />
+        <Button fx:id="btnDelete" layoutX="353.0" layoutY="383.0" mnemonicParsing="false" onAction="#deleteVehicle" prefHeight="33.0" prefWidth="70.0" text="Deletar" />
+        <Button fx:id="btnDetail" layoutX="435.0" layoutY="383.0" mnemonicParsing="false" onAction="#detailVehicle" prefHeight="33.0" prefWidth="70.0" text="Detalhar" />
+        <Button fx:id="btnEdit" layoutX="519.0" layoutY="383.0" mnemonicParsing="false" onAction="#editVehicle" prefHeight="33.0" prefWidth="70.0" text="Editar" />
+        <Button fx:id="btnCreate" layoutX="601.0" layoutY="383.0" mnemonicParsing="false" onAction="#createVehicle" prefHeight="33.0" prefWidth="64.0" text="Novo" />
+    </children>
+
+</AnchorPane>

@@ -6,9 +6,6 @@ import com.example.lavarapido.usecases.utils.EntityAlreadyExistsException;
 import com.example.lavarapido.usecases.utils.Notification;
 import com.example.lavarapido.usecases.utils.Validator;
 
-import java.util.List;
-import java.util.Optional;
-
 public class CreateClientUseCase {
 
     private final ClientDAO clientDAO;
