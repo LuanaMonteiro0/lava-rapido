@@ -40,7 +40,7 @@ public class Main {
         //testeInsereCliente();
 
         //testando use case UpdateClientUseCase
-        //testeAtualizaCliente();
+        testeAtualizaCliente();
 
         //testando use case DeleteClientUseCase
         //testeRemoveCliente();

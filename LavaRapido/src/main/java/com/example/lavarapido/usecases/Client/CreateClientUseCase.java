@@ -22,8 +22,9 @@ public class CreateClientUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
 
         CPF cpf = client.getCpf();
-        if (clientDAO.findOneByCPF(cpf).isPresent())
-            throw new EntityAlreadyExistsException("This CPF is already in use.");
+        clientDAO.findOneByCPF(cpf)
+                .orElseThrow( ()-> new EntityAlreadyExistsException("This CPF is already in use."));
+
 
         return clientDAO.create(client);
     }
