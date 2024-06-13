@@ -10,13 +10,7 @@
          <font>
             <Font name="JetBrains Mono ExtraLight" size="20.0" />
          </font></Label>
-      <Label layoutX="14.0" layoutY="84.0" prefHeight="28.0" prefWidth="106.0" text="CPF do cliente:">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtCpf" layoutX="120.0" layoutY="86.0" prefHeight="18.0" prefWidth="143.0" />
-      <TableView fx:id="tableView" layoutX="18.0" layoutY="129.0" prefHeight="306.0" prefWidth="567.0">
+      <TableView fx:id="tableView" layoutX="18.0" layoutY="65.0" prefHeight="370.0" prefWidth="567.0">
         <columns>
           <TableColumn fx:id="cClient" prefWidth="51.0" text="Cliente" />
           <TableColumn fx:id="cVehicle" prefWidth="49.0" text="Carro" />
@@ -28,7 +22,6 @@
             <TableColumn fx:id="cStatus" prefWidth="72.0" text="Status" />
         </columns>
       </TableView>
-      <Button fx:id="btnFind" layoutX="273.0" layoutY="85.0" mnemonicParsing="false" onAction="#findClient" prefHeight="25.0" prefWidth="58.0" text="Buscar" />
       <Button fx:id="btnClient" layoutX="18.0" layoutY="461.0" mnemonicParsing="false" onAction="#clientManegement" prefHeight="34.0" prefWidth="122.0" text="Gerenciar Clientes" />
       <Button fx:id="btnVehicle" layoutX="150.0" layoutY="461.0" mnemonicParsing="false" onAction="#vehicleManegement" prefHeight="34.0" prefWidth="122.0" text="Gerenciar Carros" />
       <Button fx:id="btnScheduling" layoutX="453.0" layoutY="463.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="132.0" text="Novo Agendamento" />
