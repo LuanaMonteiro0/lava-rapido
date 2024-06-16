@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleUI">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleUIController">
    <children>
       <Label layoutX="24.0" layoutY="36.0" text="Modelo:" />
       <TextField fx:id="txtModel" layoutX="81.0" layoutY="32.0" prefHeight="25.0" prefWidth="212.0" />
@@ -14,6 +14,6 @@
       <Label layoutX="28.0" layoutY="118.0" text="Cor:" />
       <TextField fx:id="txtColor" layoutX="81.0" layoutY="114.0" prefHeight="25.0" prefWidth="212.0" />
       <Button fx:id="btnCancel" layoutX="444.0" layoutY="339.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="35.0" prefWidth="64.0" text="Cancelar" />
-      <Button fx:id="btnConfirm" layoutX="520.0" layoutY="339.0" mnemonicParsing="false" onAction="#createVehicle" prefHeight="35.0" prefWidth="64.0" text="Salvar" />
+      <Button fx:id="btnConfirm" layoutX="520.0" layoutY="339.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="35.0" prefWidth="64.0" text="Salvar" />
    </children>
 </AnchorPane>

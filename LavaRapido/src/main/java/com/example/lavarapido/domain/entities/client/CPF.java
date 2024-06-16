@@ -12,4 +12,9 @@ public class CPF {
         return cpf;
     }
 
+    @Override
+    public String toString() {
+        return cpf;
+    }
+
 }

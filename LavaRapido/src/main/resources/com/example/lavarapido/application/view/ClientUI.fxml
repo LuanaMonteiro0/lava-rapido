@@ -12,6 +12,6 @@
       <Label layoutX="307.0" layoutY="77.0" prefHeight="17.0" prefWidth="36.0" text="CPF:" />
       <TextField fx:id="txtCPF" layoutX="341.0" layoutY="73.0" prefHeight="25.0" prefWidth="243.0" />
       <Button fx:id="btnCancel" layoutX="444.0" layoutY="339.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="35.0" prefWidth="64.0" text="Cancelar" />
-      <Button fx:id="btnConfirm" layoutX="520.0" layoutY="339.0" mnemonicParsing="false" onAction="#saveOrUpadte" prefHeight="35.0" prefWidth="64.0" text="Salvar" />
+      <Button fx:id="btnConfirm" layoutX="520.0" layoutY="339.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="35.0" prefWidth="64.0" text="Salvar" />
    </children>
 </AnchorPane>
