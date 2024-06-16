@@ -1,15 +1,15 @@
 package br.edu.ifps.luana.application.main;
 
-import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
-import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
-import com.example.lavarapido.application.repository.daoimplements.VehicleCategoryDaoJdbc;
-import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.*;
 import com.example.lavarapido.application.repository.database.DatabaseBuilder;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
 import com.example.lavarapido.domain.entities.general.Status;
+import com.example.lavarapido.domain.entities.scheduling.FormOfPayment;
+import com.example.lavarapido.domain.entities.scheduling.Scheduling;
+import com.example.lavarapido.domain.entities.scheduling.SchedulingStatus;
 import com.example.lavarapido.domain.entities.service.Service;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
@@ -32,7 +32,9 @@ import com.example.lavarapido.usecases.VehicleCategory.InsertVehicleCategoryUseC
 import com.example.lavarapido.usecases.VehicleCategory.UpdateVehicleCategoryUseCase;
 import javafx.application.Application;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -40,7 +42,7 @@ public class Main {
         //testeInsereCliente();
 
         //testando use case UpdateClientUseCase
-        testeAtualizaCliente();
+        //testeAtualizaCliente();
 
         //testando use case DeleteClientUseCase
         //testeRemoveCliente();

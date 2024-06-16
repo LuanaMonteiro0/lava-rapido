@@ -33,7 +33,7 @@ public class ClientUIController {
         WindowLoader.setRoot("ClientManegementUI");
     }
 
-    public void saveOrUpadte(ActionEvent actionEvent) throws IOException {
+    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
         getEntityToView();
         if (client.getCpfString() == null)
             createClientUseCase.insert(client);

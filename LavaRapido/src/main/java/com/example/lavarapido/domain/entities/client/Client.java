@@ -4,6 +4,7 @@ import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +38,7 @@ public class Client {
         this.phone = phone;
         this.cpf = cpf;
         this.status = Status.ACTIVE;
+        this.vehicles = new ArrayList<>();
     }
 
     public Client(String id, String name, CPF cpf, Telephone phone) {
@@ -111,5 +113,9 @@ public class Client {
 
     public void setSchedulings(List<Scheduling> schedulings) {
         this.schedulings = schedulings;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 }

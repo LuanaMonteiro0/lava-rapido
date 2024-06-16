@@ -3,16 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="445.0" prefWidth="647.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.ClientManegementUIController">
+<AnchorPane prefHeight="458.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.ClientManegementUIController">
    <children>
-      <TableView fx:id="tableView" layoutX="22.0" layoutY="16.0" prefHeight="351.0" prefWidth="604.0">
+      <TableView fx:id="tableView" layoutX="22.0" layoutY="16.0" prefHeight="351.0" prefWidth="686.0">
         <columns>
-          <TableColumn fx:id="cName" prefWidth="85.0" text="Nome" />
-          <TableColumn fx:id="cPhone" prefWidth="74.0" text="Telefone" />
-            <TableColumn fx:id="cCPF" prefWidth="74.0" text="CPF" />
-            <TableColumn fx:id="cVehicle" prefWidth="85.0" text="Carro(s)" />
-            <TableColumn fx:id="cStatus" prefWidth="104.0" text="Status" />
-            <TableColumn fx:id="cScheduling" prefWidth="181.0" text="Agendamento(s)" />
+          <TableColumn fx:id="cName" prefWidth="109.0" text="Nome" />
+          <TableColumn fx:id="cPhone" prefWidth="106.0" text="Telefone" />
+            <TableColumn fx:id="cCPF" prefWidth="99.0" text="CPF" />
+            <TableColumn fx:id="cVehicle" prefWidth="175.0" text="Carro(s)" />
+            <TableColumn fx:id="cScheduling" prefWidth="145.0" text="Agendamento(s)" />
         </columns>
       </TableView>
       <Button fx:id="btnBack" layoutX="22.0" layoutY="383.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="33.0" prefWidth="64.0" text="Voltar" />

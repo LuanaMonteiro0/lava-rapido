@@ -34,7 +34,7 @@ public class VehicleUIController {
         WindowLoader.setRoot("VehicleManegementUI");
     }
 
-    public void saveOrUpadate(ActionEvent actionEvent) throws IOException {
+    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
 
         getEntityToView();
         if(vehicle.getPlate() == null) {

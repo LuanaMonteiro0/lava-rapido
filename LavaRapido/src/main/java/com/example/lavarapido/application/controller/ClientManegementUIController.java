@@ -34,8 +34,6 @@ public class ClientManegementUIController {
     @FXML
     private TableColumn<Client, String> cVehicle;
     @FXML
-    private TableColumn<Client, String> cStatus;
-    @FXML
     private TableColumn<Client, String> cScheduling;
 
     private ObservableList<Client> tableData;
@@ -56,14 +54,17 @@ public class ClientManegementUIController {
         cName.setCellValueFactory(new PropertyValueFactory<>("name"));
         cPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         cCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-        cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        //TODO: Veiculo Não é obrigatório existir em cliente.
-        /*cVehicle.setCellValueFactory(param -> {
-            String models = param.getValue().getVehicles().stream()
-                    .map(Vehicle::getModel)
-                    .collect(Collectors.joining(", "));
-            return new SimpleStringProperty(models);
-        });*/
+        cVehicle.setCellValueFactory(param -> {
+            List<Vehicle> vehicles = param.getValue().getVehicles();
+            if (vehicles != null && !vehicles.isEmpty()) {
+                String models = vehicles.stream()
+                        .map(Vehicle::getModel)
+                        .collect(Collectors.joining(", "));
+                return new SimpleStringProperty(models);
+            } else {
+                return new SimpleStringProperty("Sem Carro");
+            }
+        });
         cScheduling.setCellValueFactory(param -> {
             List<Scheduling> schedulings = param.getValue().getSchedulings();
             if (schedulings != null && !schedulings.isEmpty()) {
@@ -74,10 +75,11 @@ public class ClientManegementUIController {
                         .collect(Collectors.joining("; "));
                 return new SimpleStringProperty(schedulingInfo);
             } else {
-                return new SimpleStringProperty("No Scheduling");
+                return new SimpleStringProperty("Sem Agendamento");
             }
         });
     }
+
 
     private void loadDataAndShow() {
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
