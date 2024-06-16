@@ -23,7 +23,7 @@ public class ClientDaoJdbc implements ClientDAO {
                 new CPF(resultSet.getString("cpf")),
                 new Telephone(resultSet.getString("phone"))
         );
-        client.setStatus(Status.valueOf(resultSet.getString("status")));
+        //client.setStatus(Status.valueOf(resultSet.getString("status")));
 
         return client;
     }
@@ -33,7 +33,7 @@ public class ClientDaoJdbc implements ClientDAO {
 
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE name = ?
+                SELECT * FROM Clients WHERE name = ? AND status = "ACTIVE"
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, name);
@@ -58,7 +58,7 @@ public class ClientDaoJdbc implements ClientDAO {
     public Optional<Client> findOneByCPF(CPF cpf) {
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE cpf = ?
+                SELECT * FROM Clients WHERE cpf = ? AND status = "ACTIVE" 
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, cpf.getCpf());
@@ -103,7 +103,7 @@ public class ClientDaoJdbc implements ClientDAO {
     public Optional<Client> findOne(String clientId) {
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE id = ?
+                SELECT * FROM Clients WHERE id = ? AND status = "ACTIVE"
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, clientId);
@@ -127,7 +127,7 @@ public class ClientDaoJdbc implements ClientDAO {
 
         try {
             String targetClient = """
-                SELECT * FROM Clients
+                SELECT * FROM Clients WHERE status = "ACTIVE"
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
 

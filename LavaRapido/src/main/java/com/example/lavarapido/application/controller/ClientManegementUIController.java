@@ -57,12 +57,13 @@ public class ClientManegementUIController {
         cPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         cCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        cVehicle.setCellValueFactory(param -> {
+        //TODO: Veiculo Não é obrigatório existir em cliente.
+        /*cVehicle.setCellValueFactory(param -> {
             String models = param.getValue().getVehicles().stream()
                     .map(Vehicle::getModel)
                     .collect(Collectors.joining(", "));
             return new SimpleStringProperty(models);
-        });
+        });*/
         cScheduling.setCellValueFactory(param -> {
             List<Scheduling> schedulings = param.getValue().getSchedulings();
             if (schedulings != null && !schedulings.isEmpty()) {
