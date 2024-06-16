@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class SchedulingDaoJdbc implements SchedulingDAO {
 
-    private Scheduling createSchedulingFromDbQuery(ResultSet resultSet) throws SQLException {
+    protected Scheduling createSchedulingFromDbQuery(ResultSet resultSet) throws SQLException {
 
         String dateDbResult = resultSet.getString("date");//"2024-06-03"
 

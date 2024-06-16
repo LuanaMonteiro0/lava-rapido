@@ -5,6 +5,7 @@ import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
 import com.example.lavarapido.domain.entities.general.Status;
+import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Client.ClientDAO;
 
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 public class ClientDaoJdbc implements ClientDAO {
 
-    private Client createClientFromDbQuery(ResultSet resultSet) throws SQLException {
+    protected Client createClientFromDbQuery(ResultSet resultSet) throws SQLException {
         Client client = new Client(
                 resultSet.getString("id"),
                 resultSet.getString("name"),
@@ -58,7 +59,7 @@ public class ClientDaoJdbc implements ClientDAO {
     public Optional<Client> findOneByCPF(CPF cpf) {
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE cpf = ? AND status = "ACTIVE" 
+                SELECT * FROM Clients WHERE cpf = ? AND status = "ACTIVE"
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, cpf.getCpf());
@@ -89,6 +90,16 @@ public class ClientDaoJdbc implements ClientDAO {
 
             targetClientStatement.executeUpdate();
 
+            //This Vehicle was already persisted in DB
+            Vehicle vehicle = client.getVehicles().getLast();
+
+            String targetClientVehicles = """
+                INSERT INTO ClientVehicles (clientId, vehicleId) VALUES(?, ?);
+                """;
+            PreparedStatement targetClientVehiclesStatement = ConnectionFactory.createPreparedStatement(targetClientVehicles);
+            targetClientVehiclesStatement.setString(1, client.getId());
+            targetClientVehiclesStatement.setString(2, vehicle.getId());
+
             return "Client inserted";
 
         } catch(SQLException e) {
@@ -103,7 +114,7 @@ public class ClientDaoJdbc implements ClientDAO {
     public Optional<Client> findOne(String clientId) {
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE id = ? AND status = "ACTIVE"
+                SELECT * FROM Clients C WHERE id = ? AND status = "ACTIVE"
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, clientId);
@@ -111,7 +122,22 @@ public class ClientDaoJdbc implements ClientDAO {
             ResultSet res = targetClientStatement.executeQuery();
             if (res.next()) {
                 Client myClient = createClientFromDbQuery(res);
+
+                String targetVehicles = """
+                SELECT vehicleId FROM ClientVehicles WHERE idClient = ?
+                """;
+                PreparedStatement targetVehiclesStatement = ConnectionFactory.createPreparedStatement(targetVehicles);
+                targetVehiclesStatement.setString(1, clientId);
+
+                ResultSet resVehicles = targetVehiclesStatement.executeQuery();
+                while (resVehicles.next()) {
+                    VehicleDaoJdbc vdaoJdbc = new VehicleDaoJdbc();
+                    Vehicle vTarget = vdaoJdbc.findOne(resVehicles.getString("vehicleId")).get();
+                    myClient.addVehicle(vTarget);
+                }
+
                 return Optional.of(myClient);
+
             }
         } catch(SQLException e) {
             e.printStackTrace();

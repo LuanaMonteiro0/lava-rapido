@@ -51,6 +51,18 @@ public class Client {
         this.cpf = cpf;
     }
 
+    public void addVehicle(Vehicle vehicle) {
+        if (vehicle != null) {
+            vehicles.add(vehicle);
+        }
+    }
+
+    public void addScheduling(Scheduling scheduling) {
+        if (scheduling != null) {
+            schedulings.add(scheduling);
+        }
+    }
+
     public Client(){this.cpf = null;};
 
     public String getName() {

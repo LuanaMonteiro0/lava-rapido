@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class ServiceDaoJdbc implements ServiceDAO {
 
-    private Service createServiceFromDbQuery(ResultSet rs) throws SQLException {
+    protected Service createServiceFromDbQuery(ResultSet rs) throws SQLException {
         Service service = new Service(
             rs.getString("id"), rs.getString("name")
         );

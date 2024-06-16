@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class VehicleCategoryDaoJdbc implements VehicleCategoryDAO {
 
-    private VehicleCategory createVehicleCategory(ResultSet resultSet) throws SQLException {
+    protected VehicleCategory createVehicleCategoryFromDbQuery(ResultSet resultSet) throws SQLException {
 
         return new VehicleCategory(
                 resultSet.getString("id"),
@@ -104,7 +104,7 @@ public class VehicleCategoryDaoJdbc implements VehicleCategoryDAO {
             ResultSet res = targetVehicleCategoryStatement.executeQuery();
 
             while(res.next()){
-                myVehicleCategories.add(createVehicleCategory(res));
+                myVehicleCategories.add(createVehicleCategoryFromDbQuery(res));
             }
             return myVehicleCategories;
 
@@ -127,7 +127,7 @@ public class VehicleCategoryDaoJdbc implements VehicleCategoryDAO {
             ResultSet res = targetVehicleCategoryStatement.executeQuery();
 
             if (res.next()) {
-                VehicleCategory myVehicleCategory = createVehicleCategory(res);
+                VehicleCategory myVehicleCategory = createVehicleCategoryFromDbQuery(res);
                 return Optional.of(myVehicleCategory);
             }
         } catch(SQLException e) {
@@ -147,7 +147,7 @@ public class VehicleCategoryDaoJdbc implements VehicleCategoryDAO {
 
             ResultSet res = targetVehicleCategoryStatement.executeQuery();
 
-            return Optional.of(createVehicleCategory(res));
+            return Optional.of(createVehicleCategoryFromDbQuery(res));
 
         } catch(SQLException e) {
             e.printStackTrace();

@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class VehicleDaoJdbc implements VehicleDAO {
 
-    private Vehicle createVehicleFromDbQuery(ResultSet resultSet) throws SQLException {
+    protected Vehicle createVehicleFromDbQuery(ResultSet resultSet) throws SQLException {
         Vehicle vehicle = new Vehicle(
                 new LicensePlate(resultSet.getString("licensePlate")),
                 resultSet.getString("color"),
