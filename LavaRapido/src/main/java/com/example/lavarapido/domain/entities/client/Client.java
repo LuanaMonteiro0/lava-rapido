@@ -19,11 +19,11 @@ public class Client {
 
     private final CPF cpf;
 
-    private List<Vehicle> vehicles;
+    private List<Vehicle> vehicles = new ArrayList<>();
 
     private Status status;
 
-    private List<Scheduling> schedulings;
+    private List<Scheduling> schedulings = new ArrayList<>();
 
     public Client(String name, Telephone phone, CPF cpf, Status status) {
         this.name = name;

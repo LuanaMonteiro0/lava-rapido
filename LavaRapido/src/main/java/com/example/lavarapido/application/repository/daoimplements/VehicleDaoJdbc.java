@@ -108,7 +108,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
 
         try {
             String targetVehicle = """
-                SELECT * FROM Vehicles
+                SELECT * FROM Vehicles WHERE status LIKE 'A%'
                 """;
             PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
 
@@ -130,7 +130,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
     public Optional<Vehicle> findOne(String vehicleId) {
         try {
             String targetVehicle = """
-                SELECT * FROM Vehicles WHERE id = ?
+                SELECT * FROM Vehicles WHERE id = ? AND status LIKE 'A%'
                 """;
             PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
             targetVehicleStatement.setString(1, vehicleId);
@@ -151,7 +151,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
 
         try {
             String targetVehicle = """
-                SELECT * FROM Vehicles WHERE licensePlate = ?
+                SELECT * FROM Vehicles WHERE licensePlate = ? AND status LIKE 'A%'
                 """;
             PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
             targetVehicleStatement.setString(1, licensePlate.getLicensePlate());

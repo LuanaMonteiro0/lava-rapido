@@ -8,6 +8,7 @@ import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Client.ClientDAO;
 
+import java.lang.annotation.Documented;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,12 +33,13 @@ public class ClientDaoJdbc implements ClientDAO {
         return client;
     }
 
+    //Não usar o método abaixo
     @Override
     public Optional<List<Client>> findByName(String name) {
 
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE name = ? AND status = "ACTIVE"
+                SELECT * FROM Clients WHERE name = ? AND status LIKE 'A%'
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, name);
@@ -62,16 +64,18 @@ public class ClientDaoJdbc implements ClientDAO {
     public Optional<Client> findOneByCPF(CPF cpf) {
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE cpf = ? AND status = "ACTIVE"
+                SELECT id FROM Clients WHERE cpf = ? AND status LIKE 'A%'
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, cpf.getCpf());
 
             ResultSet res = targetClientStatement.executeQuery();
+
             if (res.next()) {
-                Client myClient = createClientFromDbQuery(res);
-                return Optional.of(myClient);
+                Optional<Client> myClientOptional = findOne(res.getString("id"));
+                return myClientOptional;
             }
+
         } catch(SQLException e) {
             e.printStackTrace();
         }
@@ -117,7 +121,7 @@ public class ClientDaoJdbc implements ClientDAO {
     public Optional<Client> findOne(String clientId) {
         try {
             String targetClient = """
-                SELECT * FROM Clients C WHERE id = ? AND status = "ACTIVE"
+                SELECT * FROM Clients C WHERE id = ? AND status LIKE 'A%'
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, clientId);
@@ -127,7 +131,7 @@ public class ClientDaoJdbc implements ClientDAO {
                 Client myClient = createClientFromDbQuery(res);
 
                 String targetVehicles = """
-                SELECT vehicleId FROM ClientVehicles WHERE idClient = ?
+                SELECT vehicleId FROM ClientVehicles WHERE clientId = ?
                 """;
                 PreparedStatement targetVehiclesStatement = ConnectionFactory.createPreparedStatement(targetVehicles);
                 targetVehiclesStatement.setString(1, clientId);
@@ -156,7 +160,7 @@ public class ClientDaoJdbc implements ClientDAO {
 
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE status = "ACTIVE"
+                SELECT * FROM Clients WHERE status LIKE 'A%'
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
 

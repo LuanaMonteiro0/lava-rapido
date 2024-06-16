@@ -39,7 +39,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         //testando use case createClientUseCase
-        //testeInsereCliente();
+        testeInsereCliente();
 
         //testando use case UpdateClientUseCase
         //testeAtualizaCliente();
@@ -95,13 +95,18 @@ public class Main {
 
 
     public static void testeInsereCliente() {
-        Client c = new Client("Luana Monteiro",new Telephone("16 99293-5849"), new CPF("428.888.999-16"), Status.ACTIVE);
+        Client c = new Client("Serjão",new Telephone("16 98535-5849"), new CPF("488.089.321-16"), Status.ACTIVE);
+
+        Vehicle v = new Vehicle(new LicensePlate("SD1123"), "Sedan", "Black");
+        v.setVehicleCategory(new VehicleCategory("hatch"));
+        c.addVehicle(v);
 
         ClientDaoJdbc cjdbc = new ClientDaoJdbc();
 
         CreateClientUseCase ucc = new CreateClientUseCase(cjdbc);
 
         ucc.insert(c);
+
     }
 
     public static void testeAtualizaCliente() {
