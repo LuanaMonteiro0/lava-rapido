@@ -3,14 +3,13 @@ package com.example.lavarapido.application.repository.daoimplements;
 import com.example.lavarapido.application.repository.database.ConnectionFactory;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.service.Service;
+import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.usecases.Service.ServiceDAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ServiceDaoJdbc implements ServiceDAO {
 
@@ -26,15 +25,15 @@ public class ServiceDaoJdbc implements ServiceDAO {
     public Optional<Service> findOneByName(String name) {
         try {
             String targetService = """
-                SELECT * FROM Services WHERE name = ?
+                SELECT id FROM Services WHERE name = ? AND status LIKE 'A%'
                 """;
             PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService);
             targetServiceStatement.setString(1, name);
 
             ResultSet res = targetServiceStatement.executeQuery();
             if (res.next()) {
-                Service s = createServiceFromDbQuery(res);
-                return Optional.of(s);
+                Optional<Service> myServiceOptional = findOne(res.getString("id"));
+                return myServiceOptional;
             }
         } catch(SQLException e) {
             e.printStackTrace();
@@ -57,6 +56,28 @@ public class ServiceDaoJdbc implements ServiceDAO {
 
             targetClientStatement.executeUpdate();
 
+            Map<VehicleCategory, Double> servicesPrices = service.getPrice();
+
+            List<VehicleCategory> servicesVehicleCategoriesList = new ArrayList<>();
+            List<Double> servicesPricesList = new ArrayList<>();
+
+            servicesPrices.forEach((key, value) -> {
+                servicesVehicleCategoriesList.add(key);
+                servicesPricesList.add(value);
+            });
+
+            for (int i = 0; i < servicesVehicleCategoriesList.size(); i++) {
+                String targetServicesPrices = """
+               INSERT INTO ServicesPrices(idService, idVehicleCategory, price) VALUES(?, ?, ?)
+               """;
+                PreparedStatement targetServicesPricesStatement = ConnectionFactory.createPreparedStatement(targetServicesPrices);
+                targetServicesPricesStatement.setString(1, service.getId());
+                targetServicesPricesStatement.setString(2, servicesVehicleCategoriesList.get(i).getId());
+                targetServicesPricesStatement.setString(3, servicesPricesList.get(i).toString());
+
+                targetServicesPricesStatement.executeUpdate();
+            }
+
             return "Service inserted";
 
         } catch(SQLException e) {
@@ -70,15 +91,43 @@ public class ServiceDaoJdbc implements ServiceDAO {
     public Optional<Service> findOne(String serviceId) {
         try {
             String targetService = """
-                SELECT * FROM Services WHERE id = ?
+                SELECT * FROM Services WHERE id = ? AND status LIKE 'A%' 
                 """;
             PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService);
             targetServiceStatement.setString(1, serviceId);
 
             ResultSet res = targetServiceStatement.executeQuery();
 
-            Service s = createServiceFromDbQuery(res);
-            return Optional.of(s);
+            if (res.next()) {
+
+                Service service = createServiceFromDbQuery(res);
+
+                String targetServicesPrices = """
+                SELECT * FROM ServicesPrices WHERE idService = ?
+                """;
+                PreparedStatement targetServicesPricesStatement = ConnectionFactory.createPreparedStatement(targetServicesPrices);
+                targetServicesPricesStatement.setString(1, serviceId);
+                ResultSet resultSetServicesPrices = targetServicesPricesStatement.executeQuery();
+
+                while (resultSetServicesPrices.next()) {
+
+                    String targetVehicleCategories = """
+                    SELECT * FROM VehicleCategories WHERE idVehicleCategory = ?
+                    """;
+                    PreparedStatement targetVehicleCategoriesStatement = ConnectionFactory.createPreparedStatement(targetVehicleCategories);
+                    targetVehicleCategoriesStatement.setString(1, serviceId);
+                    ResultSet resultSetVehicleCategory = targetServicesPricesStatement.executeQuery();
+
+                    VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+                    VehicleCategory vCat = vcDaoJdbc.findOne(resultSetVehicleCategory.getString("id")).get();
+
+                    service.setPrice(vCat, resultSetServicesPrices.getDouble("price"));
+
+                }
+
+                return Optional.of(service);
+
+            }
 
         } catch(SQLException e) {
             e.printStackTrace();
@@ -115,6 +164,8 @@ public class ServiceDaoJdbc implements ServiceDAO {
     @Override
     public boolean update(Service service) {
         try {
+
+            //TODO: Submenu de atualização ServicesPrices (criar ServicesPricesDaoJdbc)
             String targetService = """
                 UPDATE Services SET name = ?, status = ? WHERE id = ?
                 """;

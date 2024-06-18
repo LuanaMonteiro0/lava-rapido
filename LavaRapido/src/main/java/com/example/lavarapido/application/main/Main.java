@@ -39,7 +39,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         //testando use case createClientUseCase
-        testeInsereCliente();
+        //testeInsereCliente();
 
         //testando use case UpdateClientUseCase
         //testeAtualizaCliente();
@@ -51,7 +51,7 @@ public class Main {
         //testeReativarCliente();
 
         //testando use case CreateServiceUseCase
-        //testeInsereServico();
+        testeInsereServico();
 
         //testando use case UpdateServiceUseCase
         //testeAtualizaServico();
@@ -150,15 +150,17 @@ public class Main {
     }
 
     public static void testeInsereServico() {
+
         ServiceDaoJdbc sjdbc = new ServiceDaoJdbc();
 
-        Service s = new Service(Status.ACTIVE, "Lavar carro");
+        Service lavagem = new Service("Lavagem", Status.ACTIVE);
 
-        s.setPrice(new VehicleCategory("jepe"), 200.0);
+        lavagem.setPrice(new VehicleCategory("Hatch"), 120.0);
+        lavagem.setPrice(new VehicleCategory("Sedan"), 100.0);
 
         CreateServiceUseCase ucs = new CreateServiceUseCase(sjdbc);
 
-        ucs.insert(s);
+        ucs.insert(lavagem);
 
     }
 

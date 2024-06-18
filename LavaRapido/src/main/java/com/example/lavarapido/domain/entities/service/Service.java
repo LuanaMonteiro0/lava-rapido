@@ -19,10 +19,6 @@ public class Service {
         this.status = Status.ACTIVE;
     }
 
-    public Service(Status status, String name) {
-        this(null, status, name, new HashMap<>());
-    }
-
     public Service(String id, Status status, String name) {
         this(id, status, name, new HashMap<>());
     }
@@ -38,6 +34,11 @@ public class Service {
         if (price != null) {
             this.price.putAll(price);
         }
+    }
+
+    public Service(String name, Status status) {
+        this.name = name;
+        this.status = status;
     }
 
     public void setStatus(Status status) {

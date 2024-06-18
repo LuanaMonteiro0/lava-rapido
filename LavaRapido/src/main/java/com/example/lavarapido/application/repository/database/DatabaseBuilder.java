@@ -33,9 +33,9 @@ public class DatabaseBuilder {
 
     private final String tableServicesPrices = """
             CREATE TABLE ServicesPrices (
-                price REAL,
                 idService TEXT NOT NULL,
                 idVehicleCategory TEXT NOT NULL,
+                price REAL,
                 FOREIGN KEY(idVehicleCategory) REFERENCES VehicleCategories(id),
                 FOREIGN KEY(idService) REFERENCES Services(id)
                 PRIMARY KEY (idService, idVehicleCategory)

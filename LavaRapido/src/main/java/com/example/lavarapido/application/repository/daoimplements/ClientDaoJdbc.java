@@ -107,6 +107,8 @@ public class ClientDaoJdbc implements ClientDAO {
             targetClientVehiclesStatement.setString(1, client.getId());
             targetClientVehiclesStatement.setString(2, vehicle.getId());
 
+            targetClientVehiclesStatement.executeUpdate();
+
             return "Client inserted";
 
         } catch(SQLException e) {
@@ -121,7 +123,7 @@ public class ClientDaoJdbc implements ClientDAO {
     public Optional<Client> findOne(String clientId) {
         try {
             String targetClient = """
-                SELECT * FROM Clients C WHERE id = ? AND status LIKE 'A%'
+                SELECT * FROM Clients WHERE id = ? AND status LIKE 'A%'
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, clientId);
