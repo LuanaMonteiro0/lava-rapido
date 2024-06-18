@@ -25,7 +25,6 @@ public class CreateClientUseCase {
         clientDAO.findOneByCPF(cpf).ifPresent( it ->
         {throw new EntityAlreadyExistsException("This CPF is already in use.");
         });
-        //clientDAO.findOneByCPF(cpf);
 
         return clientDAO.create(client);
     }

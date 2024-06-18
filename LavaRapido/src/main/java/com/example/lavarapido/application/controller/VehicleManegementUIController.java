@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.edu.ifps.luana.application.main.Main.deleteVehicleClientUseCase;
+import static com.example.lavarapido.application.main.Main.deleteVehicleClientUseCase;
+
+//import static br.edu.ifps.luana.application.main.Main.deleteVehicleClientUseCase;
 
 public class VehicleManegementUIController {
 

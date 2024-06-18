@@ -20,8 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static br.edu.ifps.luana.application.main.Main.createClientUseCase;
-import static br.edu.ifps.luana.application.main.Main.updateClientUseCase;
+//import static br.edu.ifps.luana.application.main.Main.createClientUseCase;
+//import static br.edu.ifps.luana.application.main.Main.updateClientUseCase;
 
 public class SchedulingUIController implements Initializable {
 

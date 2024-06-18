@@ -84,39 +84,27 @@ public class ClientDaoJdbc implements ClientDAO {
 
     @Override
     public String create(Client client) {
-        try {
-            String targetClient = """
+        String targetClient = """
                 INSERT INTO Clients (id, name, cpf, phone, status) VALUES(?, ?, ?, ?, ?);
                 """;
-            PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
+        try(PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient)) {
+
             targetClientStatement.setString(1, client.getId());
             targetClientStatement.setString(2, client.getName());
             targetClientStatement.setString(3, client.getCpfString());
             targetClientStatement.setString(4, client.getPhone());
             targetClientStatement.setString(5, String.valueOf(client.getStatus()));
 
-            targetClientStatement.executeUpdate();
+            targetClientStatement.execute();
 
-            //This Vehicle was already persisted in DB
-            Vehicle vehicle = client.getVehicles().getLast();
+            ResultSet resultSet = targetClientStatement.getGeneratedKeys();
 
-            String targetClientVehicles = """
-                INSERT INTO ClientVehicles (clientId, vehicleId) VALUES(?, ?);
-                """;
-            PreparedStatement targetClientVehiclesStatement = ConnectionFactory.createPreparedStatement(targetClientVehicles);
-            targetClientVehiclesStatement.setString(1, client.getId());
-            targetClientVehiclesStatement.setString(2, vehicle.getId());
-
-            targetClientVehiclesStatement.executeUpdate();
-
-            return "Client inserted";
+            return resultSet.getString(1);
 
         } catch(SQLException e) {
             e.printStackTrace();
         }
-
-        return "Client not inserted";
-
+        return null;
     }
 
     @Override

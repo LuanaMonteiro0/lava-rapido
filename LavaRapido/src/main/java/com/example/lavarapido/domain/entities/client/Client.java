@@ -51,6 +51,7 @@ public class Client {
         this.name = name;
         this.phone = phone;
         this.cpf = cpf;
+        this.status = Status.ACTIVE;
     }
 
     public void addVehicle(Vehicle vehicle) {

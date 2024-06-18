@@ -11,7 +11,9 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-import static br.edu.ifps.luana.application.main.Main.*;
+//import static br.edu.ifps.luana.application.main.Main.*;
+import static com.example.lavarapido.application.main.Main.addVehicleClientUseCase;
+import static com.example.lavarapido.application.main.Main.updateVehicleClientUseCase;
 
 public class VehicleUIController {
 

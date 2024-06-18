@@ -1,4 +1,4 @@
-package br.edu.ifps.luana.application.main;
+package com.example.lavarapido.application.main;
 
 import com.example.lavarapido.application.repository.daoimplements.*;
 import com.example.lavarapido.application.repository.database.DatabaseBuilder;
@@ -14,10 +14,7 @@ import com.example.lavarapido.domain.entities.service.Service;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
-import com.example.lavarapido.usecases.Client.CreateClientUseCase;
-import com.example.lavarapido.usecases.Client.DeleteClientUseCase;
-import com.example.lavarapido.usecases.Client.ReactiveClientUseCase;
-import com.example.lavarapido.usecases.Client.UpdateClientUseCase;
+import com.example.lavarapido.usecases.Client.*;
 import com.example.lavarapido.usecases.Scheduling.InsertSchedulingUseCase;
 import com.example.lavarapido.usecases.Service.CreateServiceUseCase;
 import com.example.lavarapido.usecases.Service.InactivateServiceUseCase;
@@ -38,51 +35,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        //testando use case createClientUseCase
-        //testeInsereCliente();
+        configureInjection();
 
-        //testando use case UpdateClientUseCase
-        //testeAtualizaCliente();
-
-        //testando use case DeleteClientUseCase
-        //testeRemoveCliente();
-
-        //testando use case ReactiveClientUseCase
-        //testeReativarCliente();
-
-        //testando use case CreateServiceUseCase
-        //testeInsereServico();
-
-        //testando use case UpdateServiceUseCase
-        //testeAtualizaServico();
-
-        //testando use case InactivateServiceUseCase
-        //testandoInativarServico();
-
-        //testando use case ReactiveServiceUseCase
-        //testandoReativarServico();
-
-        //testando use case AddVehicleClientUseCase
-        //testeInsereVeiculo();
-
-        //testando use case UpdateVehicleClientUseCase
-        //testeAtualizaVeiculo();
-
-        //testando use case DeleteVehicleClientUseCase
-        //testeRemoveVeiculo();
-
-        //testando use case ReactiveVehicleClientUseCase
-        //testeReativaVeiculo();
-
-        //testando use case InsertVehicleCategoryUseCase
-        //testeInsereCategoriaDeVeiculo();
-
-        //testando use case UpdateVehicleCategoryUseCase
-        //testeUpdateCategoriaDeVeiculo();
-
-        //testando use case DeleteVehicleCategoryUseCase
-        //testeRemoveCategoriaDeVeiculo();
-
+        WindowLoader.main(args);
     }
 
     public static DeleteClientUseCase deleteClientUseCase;
@@ -93,6 +48,14 @@ public class Main {
     public static UpdateVehicleClientUseCase updateVehicleClientUseCase;
     public static InsertSchedulingUseCase insertSchedulingUseCase;
 
+    private static void configureInjection() {
+        ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
+        createClientUseCase = new CreateClientUseCase(clientDaoJdbc);
+        updateClientUseCase = new UpdateClientUseCase(clientDaoJdbc);
+        deleteClientUseCase = new DeleteClientUseCase(clientDaoJdbc);
+
+        //fazer os proximos use cases!
+    }
 
     public static void testeInsereCliente() {
         Client c = new Client("Serjão",new Telephone("16 98535-5849"), new CPF("488.089.321-16"), Status.ACTIVE);

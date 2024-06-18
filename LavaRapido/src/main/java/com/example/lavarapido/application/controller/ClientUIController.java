@@ -13,8 +13,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-import static br.edu.ifps.luana.application.main.Main.createClientUseCase;
-import static br.edu.ifps.luana.application.main.Main.updateClientUseCase;
+import static com.example.lavarapido.application.main.Main.createClientUseCase;
+import static com.example.lavarapido.application.main.Main.updateClientUseCase;
 
 public class ClientUIController {
 
@@ -38,15 +38,17 @@ public class ClientUIController {
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
         getEntityToView();
 
-        CreateClientUseCase createClientUseCase = new CreateClientUseCase(new ClientDaoJdbc());
-
-        try {
-            createClientUseCase.insert(client);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (client.getId() == null) {
+            try {
+                createClientUseCase.insert(client);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            updateClientUseCase.update(client);
         }
-        WindowLoader.setRoot("ClientManegementUI");
 
+        WindowLoader.setRoot("ClientManegementUI");
     }
 
     public void getEntityToView() {
