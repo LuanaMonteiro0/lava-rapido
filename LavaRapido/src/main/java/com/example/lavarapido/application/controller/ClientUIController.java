@@ -1,11 +1,9 @@
 package com.example.lavarapido.application.controller;
 
-import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
-import com.example.lavarapido.usecases.Client.CreateClientUseCase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
