@@ -23,7 +23,8 @@ public class ClientDaoJdbc implements ClientDAO {
                 resultSet.getString("id"),
                 resultSet.getString("name"),
                 new CPF(resultSet.getString("cpf")),
-                new Telephone(resultSet.getString("phone"))
+                new Telephone(resultSet.getString("phone")),
+                Status.fromLabel(resultSet.getString("status"))
         );
 
         if (client.getVehicles() == null) {
@@ -129,8 +130,12 @@ public class ClientDaoJdbc implements ClientDAO {
                 ResultSet resVehicles = targetVehiclesStatement.executeQuery();
                 while (resVehicles.next()) {
                     VehicleDaoJdbc vdaoJdbc = new VehicleDaoJdbc();
-                    Vehicle vTarget = vdaoJdbc.findOne(resVehicles.getString("vehicleId")).get();
-                    myClient.addVehicle(vTarget);
+                    Optional<Vehicle> optionalVehicle = vdaoJdbc.findOne(resVehicles.getString("vehicleId"));
+
+                    if (optionalVehicle.isPresent()) {
+                        Vehicle vTarget = optionalVehicle.get();
+                        myClient.addVehicle(vTarget);
+                    }
                 }
 
                 return Optional.of(myClient);

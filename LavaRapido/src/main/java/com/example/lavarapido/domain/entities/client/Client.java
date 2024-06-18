@@ -41,11 +41,12 @@ public class Client {
         this.vehicles = new ArrayList<>();
     }
 
-    public Client(String id, String name, CPF cpf, Telephone phone) {
+    public Client(String id, String name, CPF cpf, Telephone phone, Status status) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.cpf = cpf;
+        this.status = status;
     }
     public Client(String name, Telephone phone, CPF cpf) {
         this.name = name;
