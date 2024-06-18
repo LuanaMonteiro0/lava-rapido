@@ -1,9 +1,11 @@
 package com.example.lavarapido.application.controller;
 
+import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
+import com.example.lavarapido.usecases.Client.CreateClientUseCase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,10 +37,14 @@ public class ClientUIController {
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
         getEntityToView();
-        if (client.getCpfString() == null)
+
+        CreateClientUseCase createClientUseCase = new CreateClientUseCase(new ClientDaoJdbc());
+
+        try {
             createClientUseCase.insert(client);
-        else
-            updateClientUseCase.update(client);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         WindowLoader.setRoot("ClientManegementUI");
 
     }

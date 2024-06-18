@@ -31,12 +31,7 @@ public class VehicleManegementUIController {
     private TableColumn<Vehicle, String> cColor;
     @FXML
     private TableColumn<Vehicle, String> cPlate;
-    @FXML
-    private TableColumn<Vehicle, String> cStatus;
-    @FXML
-    private TableColumn<Vehicle, String> cScheduling;
-    /*@FXML
-    private TableColumn<Vehicle, String> cCpfDono;*/
+
     private ObservableList<Vehicle> tableData;
 
     @FXML
@@ -56,7 +51,7 @@ public class VehicleManegementUIController {
         cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         cColor.setCellValueFactory(new PropertyValueFactory<>("color"));
         cPlate.setCellValueFactory(new PropertyValueFactory<>("licensePlate"));
-        cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        /*cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         cScheduling.setCellValueFactory(param -> {
             Scheduling scheduling = param.getValue().getScheduling();
             if (scheduling != null) {
@@ -67,7 +62,7 @@ public class VehicleManegementUIController {
             } else {
                 return new SimpleStringProperty("No Scheduling");
             }
-        });
+        });*/
     }
 
     private void loadDataAndShow() {
@@ -75,6 +70,8 @@ public class VehicleManegementUIController {
         List<Vehicle> vehicles = vehicleDaoJdbc.findAll();
         tableData.clear();
         tableData.addAll(vehicles);
+
+        System.out.println("Total de veiculos carregados: " + vehicles.size());
     }
 
     private void showVehicleInMode(UIMode mode) throws IOException {

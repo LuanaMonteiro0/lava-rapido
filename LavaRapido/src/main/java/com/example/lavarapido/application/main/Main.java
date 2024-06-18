@@ -51,7 +51,7 @@ public class Main {
         //testeReativarCliente();
 
         //testando use case CreateServiceUseCase
-        testeInsereServico();
+        //testeInsereServico();
 
         //testando use case UpdateServiceUseCase
         //testeAtualizaServico();

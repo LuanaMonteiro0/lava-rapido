@@ -31,10 +31,6 @@ public class ClientManegementUIController {
     private TableColumn<Client, String> cPhone;
     @FXML
     private TableColumn<Client, String> cCPF;
-    @FXML
-    private TableColumn<Client, String> cVehicle;
-    @FXML
-    private TableColumn<Client, String> cScheduling;
 
     private ObservableList<Client> tableData;
 
@@ -54,7 +50,7 @@ public class ClientManegementUIController {
         cName.setCellValueFactory(new PropertyValueFactory<>("name"));
         cPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         cCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-        cVehicle.setCellValueFactory(param -> {
+        /*cVehicle.setCellValueFactory(param -> {
             List<Vehicle> vehicles = param.getValue().getVehicles();
             if (vehicles != null && !vehicles.isEmpty()) {
                 String models = vehicles.stream()
@@ -77,7 +73,7 @@ public class ClientManegementUIController {
             } else {
                 return new SimpleStringProperty("Sem Agendamento");
             }
-        });
+        });*/
     }
 
 
@@ -86,6 +82,8 @@ public class ClientManegementUIController {
         List<Client> clients = clientDaoJdbc.findAll();
         tableData.clear();
         tableData.addAll(clients);
+
+        System.out.println("Total de clientes carregados: " + clients.size());
     }
 
     private void showClientInMode(UIMode mode) throws IOException {

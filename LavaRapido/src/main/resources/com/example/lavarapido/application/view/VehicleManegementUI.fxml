@@ -7,13 +7,10 @@
     <children>
         <TableView fx:id="tableView" layoutX="22.0" layoutY="16.0" prefHeight="351.0" prefWidth="643.0">
             <columns>
-                <TableColumn fx:id="cModel" prefWidth="75.0" text="Modelo" />
-                <TableColumn fx:id="cCategory" prefWidth="75.0" text="Categoria" />
-                <TableColumn fx:id="cColor" prefWidth="75.0" text="Cor" />
-                <TableColumn fx:id="cPlate" prefWidth="75.0" text="Placa" />
-                <TableColumn fx:id="cStatus" prefWidth="75.0" text="Status" />
-                <TableColumn fx:id="cScheduling" prefWidth="132.0" text="Agendamento(s)" />
-            <TableColumn fx:id="cCpfDono" prefWidth="135.0" text="CPF Dono" />
+                <TableColumn fx:id="cModel" prefWidth="155.0" text="Modelo" />
+                <TableColumn fx:id="cCategory" prefWidth="176.0" text="Categoria" />
+                <TableColumn fx:id="cColor" prefWidth="154.0" text="Cor" />
+                <TableColumn fx:id="cPlate" prefWidth="157.0" text="Placa" />
             </columns>
         </TableView>
         <Button fx:id="btnBack" layoutX="22.0" layoutY="383.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="33.0" prefWidth="64.0" text="Voltar" />
