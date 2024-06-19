@@ -37,12 +37,18 @@ public class ClientUIController {
 
     private Client client;
 
+    @FXML
+    public void initialize() {
+        configureVehicleComboBox();
+        loadAllVehicles();
+    }
+
     public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("ClientManegementUI");
     }
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
-        getEntityToView();
+        getEntityFromView();
 
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
 
@@ -67,11 +73,10 @@ public class ClientUIController {
         return clientDaoJdbc.findOneByCPF(cpf).isPresent();
     }
 
-    public void getEntityToView() {
-        if(client == null) {
+    private void getEntityFromView() {
+        if (client == null) {
             client = new Client(txtName.getText(), new Telephone(txtPhone.getText()), new CPF(txtCPF.getText()));
-        }
-        else {
+        } else {
             client.setName(txtName.getText());
             client.setPhone(new Telephone(txtPhone.getText()));
         }
@@ -81,7 +86,7 @@ public class ClientUIController {
         }
     }
 
-    public void setEntityToview() {
+    private void setEntityToView() {
         if (client != null) {
             txtName.setText(client.getName());
             txtPhone.setText(client.getPhone().toString());
@@ -94,14 +99,12 @@ public class ClientUIController {
     }
 
     public void setClient(Client client, UIMode mode) {
-        if(client == null)
-            throw new IllegalArgumentException("Client can not be null.");
+        if (client == null) throw new IllegalArgumentException("Client can not be null.");
 
         this.client = client;
-        setEntityToview();
+        setEntityToView();
 
-        if(mode == UIMode.VIEW)
-            configureViewMode();
+        if (mode == UIMode.VIEW) configureViewMode();
     }
 
     private void configureViewMode() {
@@ -127,16 +130,23 @@ public class ClientUIController {
         cbVehicles.setConverter(new StringConverter<>() {
             @Override
             public String toString(Vehicle vehicle) {
-                return vehicle != null ? vehicle.getModel() : "";
+                return vehicle != null ? vehicle.getPlate().toString() : "";
             }
 
             @Override
             public Vehicle fromString(String string) {
                 return cbVehicles.getItems().stream()
-                        .filter(vehicle -> vehicle.getModel().equals(string))
+                        .filter(vehicle -> vehicle.getPlate().toString().equals(string))
                         .findFirst()
                         .orElse(null);
             }
         });
+    }
+
+    private void loadAllVehicles() {
+        VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
+        List<Vehicle> vehicles = vehicleDaoJdbc.findAll();
+        cbVehicles.getItems().clear();
+        cbVehicles.getItems().addAll(vehicles);
     }
 }

@@ -12,4 +12,8 @@ public class LicensePlate {
         return licensePlate;
     }
 
+    @Override
+    public String toString() {
+        return  licensePlate;
+    }
 }

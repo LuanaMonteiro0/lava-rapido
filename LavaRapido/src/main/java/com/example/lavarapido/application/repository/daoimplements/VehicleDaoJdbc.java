@@ -20,7 +20,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
                 resultSet.getString("model"),
                 resultSet.getString("id")
         );
-        vehicle.setStatus(Status.valueOf(resultSet.getString("status")));
+        vehicle.setStatus(Status.toEnum(resultSet.getString("status")));
 
         return vehicle;
     }

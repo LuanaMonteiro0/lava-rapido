@@ -1,5 +1,6 @@
 package com.example.lavarapido.domain.entities.general;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,13 +9,6 @@ public enum Status {
     INACTIVE("Inativo");
 
     private String label;
-    private static final Map<String, Status> BY_LABEL = new HashMap<>();
-
-    static {
-        for (Status status : values()) {
-            BY_LABEL.put(status.label, status);
-        }
-    }
 
     Status(String label) {
         this.label = label;
@@ -25,7 +19,10 @@ public enum Status {
         return label;
     }
 
-    public static Status fromLabel(String label) {
-        return BY_LABEL.get(label);
+    public static Status toEnum(String value) {
+        return Arrays.stream(Status.values())
+                .filter(c -> value.equals(c.toString()))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

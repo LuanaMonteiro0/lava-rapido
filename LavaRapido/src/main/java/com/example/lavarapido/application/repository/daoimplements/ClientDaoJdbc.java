@@ -24,7 +24,7 @@ public class ClientDaoJdbc implements ClientDAO {
                 resultSet.getString("name"),
                 new CPF(resultSet.getString("cpf")),
                 new Telephone(resultSet.getString("phone")),
-                Status.fromLabel(resultSet.getString("status"))
+                Status.toEnum(resultSet.getString("status"))
         );
 
         if (client.getVehicles() == null) {
