@@ -72,9 +72,9 @@ public class VehicleUIController {
 
     public void setEntityToview() {
         txtModel.setText(vehicle.getModel());
-        txtCategory.setText(vehicle.getVehicleCategory().getName());
+//        txtCategory.setText(vehicle.getVehicleCategory().getName());
         txtColor.setText(vehicle.getColor());
-        txtPlate.setText(vehicle.getPlate().getLicensePlate());
+        txtPlate.setText(vehicle.getPlate().toString());
     }
 
     private void configureViewMode() {

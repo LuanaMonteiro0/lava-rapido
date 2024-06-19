@@ -52,8 +52,23 @@ public class VehicleManegementUIController {
     private void bindColumnsToValueSources() {
         cModel.setCellValueFactory(new PropertyValueFactory<>("model"));
         cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        cCategory.setCellValueFactory(param -> {
+            Vehicle vehicle = param.getValue();
+            if (vehicle != null && vehicle.getVehicleCategory() != null) {
+                return new SimpleStringProperty(vehicle.getVehicleCategory().toString());
+            } else {
+                return new SimpleStringProperty("");
+            }
+        });
         cColor.setCellValueFactory(new PropertyValueFactory<>("color"));
-        cPlate.setCellValueFactory(new PropertyValueFactory<>("licensePlate"));
+        cPlate.setCellValueFactory(param -> {
+            Vehicle vehicle = param.getValue();
+            if (vehicle != null && vehicle.getPlate() != null) {
+                return new SimpleStringProperty(vehicle.getPlate().toString());
+            } else {
+                return new SimpleStringProperty("");
+            }
+        });
         /*cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         cScheduling.setCellValueFactory(param -> {
             Scheduling scheduling = param.getValue().getScheduling();
