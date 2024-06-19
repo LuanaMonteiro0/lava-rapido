@@ -35,6 +35,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
+        testeInsereVeiculo();
+        //testeInsereCliente();
         configureInjection();
 
         WindowLoader.main(args);
@@ -45,22 +48,26 @@ public class Main {
     public static CreateClientUseCase createClientUseCase;
     public static UpdateClientUseCase updateClientUseCase;
     public static AddVehicleClientUseCase addVehicleClientUseCase;
+    public static ReactiveVehicleClientUseCase reactiveVehicleClientUseCase;
     public static UpdateVehicleClientUseCase updateVehicleClientUseCase;
     public static InsertSchedulingUseCase insertSchedulingUseCase;
 
     private static void configureInjection() {
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
+        VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
         createClientUseCase = new CreateClientUseCase(clientDaoJdbc);
         updateClientUseCase = new UpdateClientUseCase(clientDaoJdbc);
         deleteClientUseCase = new DeleteClientUseCase(clientDaoJdbc);
+        addVehicleClientUseCase = new AddVehicleClientUseCase(vehicleDaoJdbc);
+        reactiveVehicleClientUseCase = new ReactiveVehicleClientUseCase(vehicleDaoJdbc);
 
         //fazer os proximos use cases!
     }
 
     public static void testeInsereCliente() {
-        Client c = new Client("Serjão",new Telephone("16 98535-5849"), new CPF("488.089.321-16"), Status.ACTIVE);
+        Client c = new Client("Pedro",new Telephone("16 98535-5849"), new CPF("321.123.221-56"), Status.ACTIVE);
 
-        Vehicle v = new Vehicle(new LicensePlate("SD1123"), "Sedan", "Black");
+        Vehicle v = new Vehicle(new LicensePlate("FJ1243"), "Sedan", "Black");
         v.setVehicleCategory(new VehicleCategory("hatch"));
         c.addVehicle(v);
 
@@ -167,7 +174,11 @@ public class Main {
 
         v.setVehicleCategory(new VehicleCategory("hatch"));
 
+        v.setStatus(Status.ACTIVE);
+
         AddVehicleClientUseCase avcUc = new AddVehicleClientUseCase(vDaoJdbc);
+
+
 
         avcUc.insert(v);
 

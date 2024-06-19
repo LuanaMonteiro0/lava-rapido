@@ -11,7 +11,9 @@
       <TextField fx:id="txtPhone" layoutX="65.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
       <Label layoutX="307.0" layoutY="77.0" prefHeight="17.0" prefWidth="36.0" text="CPF:" />
       <TextField fx:id="txtCPF" layoutX="341.0" layoutY="73.0" prefHeight="25.0" prefWidth="243.0" />
+      <ComboBox fx:id="cbVehicles" layoutX="65.0" layoutY="121.0" prefWidth="200.0" />
       <Button fx:id="btnCancel" layoutX="444.0" layoutY="339.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="35.0" prefWidth="64.0" text="Cancelar" />
       <Button fx:id="btnConfirm" layoutX="520.0" layoutY="339.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="35.0" prefWidth="64.0" text="Salvar" />
+      <Label layoutX="11.0" layoutY="125.0" text="Carro(s):" />
    </children>
 </AnchorPane>

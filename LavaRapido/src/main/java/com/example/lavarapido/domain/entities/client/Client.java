@@ -55,11 +55,6 @@ public class Client {
         this.status = Status.ACTIVE;
     }
 
-    public void addVehicle(Vehicle vehicle) {
-        if (vehicle != null) {
-            vehicles.add(vehicle);
-        }
-    }
 
     public void addScheduling(Scheduling scheduling) {
         if (scheduling != null) {
@@ -120,4 +115,9 @@ public class Client {
     public void setVehicles(List<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
+
+    public void addVehicle(Vehicle vehicle) {
+        this.vehicles.add(vehicle);
+    }
+
 }

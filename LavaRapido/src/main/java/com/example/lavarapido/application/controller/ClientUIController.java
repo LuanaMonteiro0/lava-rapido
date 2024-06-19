@@ -1,15 +1,21 @@
 package com.example.lavarapido.application.controller;
 
+import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
+import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.example.lavarapido.application.main.Main.createClientUseCase;
 import static com.example.lavarapido.application.main.Main.updateClientUseCase;
@@ -22,6 +28,8 @@ public class ClientUIController {
     private TextField txtPhone;
     @FXML
     private TextField txtCPF;
+    @FXML
+    private ComboBox<Vehicle> cbVehicles;
     @FXML
     private Button btnCancel;
     @FXML
@@ -36,17 +44,27 @@ public class ClientUIController {
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
         getEntityToView();
 
-        if (client.getId() == null) {
+        ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
+
+        if (clientExists(client.getCpf(), clientDaoJdbc)) {
+            try {
+                updateClientUseCase.update(client);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
             try {
                 createClientUseCase.insert(client);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            updateClientUseCase.update(client);
         }
 
         WindowLoader.setRoot("ClientManegementUI");
+    }
+
+    private boolean clientExists(CPF cpf, ClientDaoJdbc clientDaoJdbc) {
+        return clientDaoJdbc.findOneByCPF(cpf).isPresent();
     }
 
     public void getEntityToView() {
@@ -57,12 +75,22 @@ public class ClientUIController {
             client.setName(txtName.getText());
             client.setPhone(new Telephone(txtPhone.getText()));
         }
+        Vehicle selectedVehicle = cbVehicles.getSelectionModel().getSelectedItem();
+        if (selectedVehicle != null && !client.getVehicles().contains(selectedVehicle)) {
+            client.addVehicle(selectedVehicle);
+        }
     }
 
     public void setEntityToview() {
-        txtName.setText(client.getName());
-        txtPhone.setText(client.getPhone());
-        txtCPF.setText(client.getCpfString());
+        if (client != null) {
+            txtName.setText(client.getName());
+            txtPhone.setText(client.getPhone().toString());
+            txtCPF.setText(client.getCpfString());
+            cbVehicles.getSelectionModel().clearSelection();
+            if (!client.getVehicles().isEmpty()) {
+                cbVehicles.setValue(client.getVehicles().get(0));
+            }
+        }
     }
 
     public void setClient(Client client, UIMode mode) {
@@ -86,5 +114,29 @@ public class ClientUIController {
         txtName.setDisable(true);
         txtPhone.setDisable(true);
         txtCPF.setDisable(true);
+        cbVehicles.setDisable(true);
+    }
+
+    /*private void loadUnassociatedVehicles() {
+        VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
+        List<Vehicle> vehicles = vehicleDaoJdbc.findAllUnassociated();
+        cbVehicles.getItems().addAll(vehicles);
+    }*/
+
+    private void configureVehicleComboBox() {
+        cbVehicles.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Vehicle vehicle) {
+                return vehicle != null ? vehicle.getModel() : "";
+            }
+
+            @Override
+            public Vehicle fromString(String string) {
+                return cbVehicles.getItems().stream()
+                        .filter(vehicle -> vehicle.getModel().equals(string))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
     }
 }

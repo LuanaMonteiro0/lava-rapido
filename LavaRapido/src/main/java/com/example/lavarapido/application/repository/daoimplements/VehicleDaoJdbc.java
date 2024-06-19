@@ -6,9 +6,7 @@ import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Vehicle.VehicleDAO;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -171,5 +169,29 @@ public class VehicleDaoJdbc implements VehicleDAO {
         return Optional.empty();
 
     }
+
+    /*public List<Vehicle> findAllUnassociated() {
+        List<Vehicle> vehicles = new ArrayList<>();
+        String sql = """
+        SELECT v.* FROM Vehicles v
+        LEFT JOIN ClientVehicles cv ON v.id = cv.vehicleId
+        WHERE cv.clientId IS NULL
+        """;
+
+        try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Vehicle vehicle = createVehicleFromDbQuery(rs);
+                vehicles.add(vehicle);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return vehicles;
+    }*/
+
 
 }

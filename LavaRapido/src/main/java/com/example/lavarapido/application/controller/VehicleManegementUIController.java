@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.example.lavarapido.application.main.Main.deleteVehicleClientUseCase;
+import static com.example.lavarapido.application.main.Main.testeReativaVeiculo;
 
 //import static br.edu.ifps.luana.application.main.Main.deleteVehicleClientUseCase;
 
