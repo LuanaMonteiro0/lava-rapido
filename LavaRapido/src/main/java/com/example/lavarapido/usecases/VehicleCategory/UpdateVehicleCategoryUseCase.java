@@ -27,11 +27,11 @@ public class UpdateVehicleCategoryUseCase {
 
         String id = vehicleCategory.getId();
         if (vehicleCategoryDAO.findOne(id).isEmpty())
-            throw new EntityNotFoundException("Client not found by ID.");
+            throw new EntityNotFoundException("Category not found by ID.");
 
         String name = vehicleCategory.getName();
         if (vehicleCategoryDAO.findOneByName(name).isEmpty())
-            throw new EntityNotFoundException("Client not found by name.");
+            throw new EntityNotFoundException("Category not found by name.");
 
         return vehicleCategoryDAO.update(vehicleCategory);
     }

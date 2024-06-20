@@ -20,8 +20,8 @@ public class InsertVehicleCategoryUseCase {
         if (notification.hasErrors())
             throw new IllegalArgumentException(notification.errorMessage());
 
-        String id = vehicleCategory.getId();
-        if (vehicleCategoryDAO.findOne(id).isPresent())
+        String name = vehicleCategory.getName();
+        if (vehicleCategoryDAO.findOneByName(name).isPresent())
             throw new EntityAlreadyExistsException("This category name is already in use.");
 
         return vehicleCategoryDAO.create(vehicleCategory);

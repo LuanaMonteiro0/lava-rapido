@@ -111,6 +111,7 @@ public class ClientManegementUIController {
 
     public void createClient(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("ClientUI");
+
     }
 
     public void detailClient(ActionEvent actionEvent) throws IOException {

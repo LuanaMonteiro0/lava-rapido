@@ -52,14 +52,27 @@ public class Main {
     public static UpdateVehicleClientUseCase updateVehicleClientUseCase;
     public static InsertSchedulingUseCase insertSchedulingUseCase;
 
+    public static InsertVehicleCategoryUseCase insertVehicleCategoryUseCase;
+    public static UpdateVehicleCategoryUseCase updateVehicleCategoryUseCase;
+    public static DeleteVehicleCategoryUseCase deleteVehicleCategoryUseCase;
+
     private static void configureInjection() {
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
         VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
+        VehicleCategoryDaoJdbc vehicleCategoryDaoJdbc = new VehicleCategoryDaoJdbc();
+
         createClientUseCase = new CreateClientUseCase(clientDaoJdbc);
         updateClientUseCase = new UpdateClientUseCase(clientDaoJdbc);
         deleteClientUseCase = new DeleteClientUseCase(clientDaoJdbc);
+
         addVehicleClientUseCase = new AddVehicleClientUseCase(vehicleDaoJdbc);
         reactiveVehicleClientUseCase = new ReactiveVehicleClientUseCase(vehicleDaoJdbc);
+        updateVehicleClientUseCase = new UpdateVehicleClientUseCase(vehicleDaoJdbc);
+        deleteVehicleClientUseCase = new DeleteVehicleClientUseCase(vehicleDaoJdbc);
+
+        insertVehicleCategoryUseCase = new InsertVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
+        updateVehicleCategoryUseCase = new UpdateVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
+        deleteVehicleCategoryUseCase = new DeleteVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
 
         //fazer os proximos use cases!
     }

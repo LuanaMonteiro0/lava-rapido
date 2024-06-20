@@ -4,9 +4,7 @@ import java.util.UUID;
 
 public class VehicleCategory {
 
-    UUID uuid = UUID.randomUUID();
-    private String id = uuid.toString();
-
+    private final String id;
     private String name;
 
     public VehicleCategory(String id, String name) {
@@ -16,6 +14,7 @@ public class VehicleCategory {
 
     public VehicleCategory(String name) {
         this.name = name;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {

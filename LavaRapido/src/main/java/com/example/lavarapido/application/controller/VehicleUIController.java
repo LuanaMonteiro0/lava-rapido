@@ -68,6 +68,9 @@ public class VehicleUIController {
 
         if(mode == UIMode.VIEW)
             configureViewMode();
+        else if (mode == UIMode.UPDATE) {
+            configureUpdateMode();
+        }
     }
 
     public void setEntityToview() {
@@ -75,6 +78,10 @@ public class VehicleUIController {
 //        txtCategory.setText(vehicle.getVehicleCategory().getName());
         txtColor.setText(vehicle.getColor());
         txtPlate.setText(vehicle.getPlate().toString());
+    }
+
+    private void configureUpdateMode() {
+        txtPlate.setDisable(true);
     }
 
     private void configureViewMode() {

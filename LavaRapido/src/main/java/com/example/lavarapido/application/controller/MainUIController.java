@@ -37,4 +37,8 @@ public class MainUIController {
     public void vehicleManegement(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("VehicleManegementUI");
     }
+
+    public void vehicleCategoryManegement(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("VehicleCategoryManegementUI");
+    }
 }
