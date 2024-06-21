@@ -23,7 +23,14 @@ public class VehicleCategoryDaoJdbc implements VehicleCategoryDAO {
 
     @Override
     public String create(VehicleCategory vehicleCategory) {
-            try {
+
+        Optional<VehicleCategory> existCategory = findOneByName(vehicleCategory.getName());
+
+        if (existCategory.isPresent()) {
+            return "Catedory already exists";
+        }
+
+        try {
                 String targetVehicleCategory = """
                 INSERT INTO VehicleCategories (id, name) VALUES(?, ?)
                 """;
@@ -39,7 +46,7 @@ public class VehicleCategoryDaoJdbc implements VehicleCategoryDAO {
                 e.printStackTrace();
             }
 
-            return "VehicleCategory not inserted";
+            return null;
     }
 
     @Override
@@ -138,16 +145,20 @@ public class VehicleCategoryDaoJdbc implements VehicleCategoryDAO {
 
     @Override
     public Optional<VehicleCategory> findOneByName(String name) {
-        try {
-            String targetVehicleCategory = """
-                SELECT * FROM VehicleCategories WHERE name = ?
-                """;
-            PreparedStatement targetVehicleCategoryStatement = ConnectionFactory.createPreparedStatement(targetVehicleCategory);
+        String targetVehicleCategory = """
+        SELECT * FROM VehicleCategories WHERE name = ?
+        """;
+
+        try (PreparedStatement targetVehicleCategoryStatement = ConnectionFactory.createPreparedStatement(targetVehicleCategory)) {
             targetVehicleCategoryStatement.setString(1, name);
 
-            ResultSet res = targetVehicleCategoryStatement.executeQuery();
-
-            return Optional.of(createVehicleCategoryFromDbQuery(res));
+            try (ResultSet res = targetVehicleCategoryStatement.executeQuery()) {
+                if (res.next()) {
+                    return Optional.of(createVehicleCategoryFromDbQuery(res));
+                } else {
+                    return Optional.empty();
+                }
+            }
 
         } catch(SQLException e) {
             e.printStackTrace();
@@ -155,4 +166,5 @@ public class VehicleCategoryDaoJdbc implements VehicleCategoryDAO {
 
         return Optional.empty();
     }
+
 }

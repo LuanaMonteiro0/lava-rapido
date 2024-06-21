@@ -5,17 +5,19 @@ import com.example.lavarapido.application.repository.daoimplements.VehicleCatego
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
+import com.example.lavarapido.usecases.VehicleCategory.InsertVehicleCategoryUseCase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
+import static com.example.lavarapido.application.main.Main.deleteVehicleCategoryUseCase;
 
 public class VehicleCategoryManegementUIController {
 
@@ -65,28 +67,77 @@ public class VehicleCategoryManegementUIController {
         System.out.println("Total de categorias carregadas: " + vehicleCategories.size());
     }
 
-    private void showClientInMode(UIMode mode) throws IOException {
-        VehicleCategory selectedItem = tableView.getSelectionModel().getSelectedItem();
-        if(selectedItem != null){
-            WindowLoader.setRoot("VehicleCategoryUI");
-            VehicleCategoryUIController controller = (VehicleCategoryUIController) WindowLoader.getController();
-            controller.setCategory(selectedItem, mode);
-        }
-    }
-
     public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("MainUI");
     }
 
     public void deleteCategory(ActionEvent actionEvent) {
-
+        VehicleCategory selectedCategory = tableView.getSelectionModel().getSelectedItem();
+        if (selectedCategory != null) {
+            deleteVehicleCategoryUseCase.delete(selectedCategory);
+        }
+        loadDataAndShow();
     }
 
     public void updateCategory(ActionEvent actionEvent) {
+        VehicleCategory selectedCategory = tableView.getSelectionModel().getSelectedItem();
 
+        if (selectedCategory != null) {
+            TextInputDialog dialog = new TextInputDialog(selectedCategory.getName());
+            dialog.setTitle("Edit Category");
+            dialog.setHeaderText("Enter the new name for the category:");
+            dialog.setContentText("Name:");
+
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()) {
+                String newName = result.get();
+
+                VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+                selectedCategory.setName(newName);
+                vcDaoJdbc.update(selectedCategory);
+
+                tableView.refresh();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("No category selected.");
+
+            alert.showAndWait();
+        }
     }
 
     public void createCategory(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("VehicleCategoryUI");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Create Category");
+        dialog.setHeaderText("Enter the name for the new category:");
+        dialog.setContentText("Name:");
+
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            String categoryName = result.get();
+
+            VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+            Optional<VehicleCategory> existingCategory = vcDaoJdbc.findOneByName(categoryName);
+
+            if (existingCategory.isPresent()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("This name is already in use. Please enter a different name.");
+
+                alert.showAndWait();
+            } else {
+                VehicleCategory newCategory = new VehicleCategory(categoryName);
+                InsertVehicleCategoryUseCase ivcUc = new InsertVehicleCategoryUseCase(vcDaoJdbc);
+                ivcUc.insert(newCategory);
+
+                loadDataAndShow();
+            }
+        }
     }
+
 }
