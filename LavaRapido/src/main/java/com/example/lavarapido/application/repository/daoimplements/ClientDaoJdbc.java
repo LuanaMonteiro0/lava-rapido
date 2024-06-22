@@ -166,8 +166,8 @@ public class ClientDaoJdbc implements ClientDAO {
             String targetClient = """
                 SELECT * FROM Clients WHERE status LIKE 'A%'
                 """;
-            PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
 
+            PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             ResultSet res = targetClientStatement.executeQuery();
 
             while(res.next()){
