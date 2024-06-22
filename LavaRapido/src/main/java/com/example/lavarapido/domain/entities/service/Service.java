@@ -73,4 +73,6 @@ public class Service {
         this.name = name;
     }
 
+    public Double getPriceForCategory(VehicleCategory category) { return this.price.get(category); }
+
 }

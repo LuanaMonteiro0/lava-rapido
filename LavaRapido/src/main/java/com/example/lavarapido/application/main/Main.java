@@ -16,10 +16,7 @@ import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Client.*;
 import com.example.lavarapido.usecases.Scheduling.InsertSchedulingUseCase;
-import com.example.lavarapido.usecases.Service.CreateServiceUseCase;
-import com.example.lavarapido.usecases.Service.InactivateServiceUseCase;
-import com.example.lavarapido.usecases.Service.ReactiveServiceUseCase;
-import com.example.lavarapido.usecases.Service.UpdateServiceUseCase;
+import com.example.lavarapido.usecases.Service.*;
 import com.example.lavarapido.usecases.Vehicle.AddVehicleClientUseCase;
 import com.example.lavarapido.usecases.Vehicle.DeleteVehicleClientUseCase;
 import com.example.lavarapido.usecases.Vehicle.ReactiveVehicleClientUseCase;
@@ -43,23 +40,32 @@ public class Main {
         WindowLoader.main(args);
     }
 
-    public static DeleteClientUseCase deleteClientUseCase;
-    public static DeleteVehicleClientUseCase deleteVehicleClientUseCase;
+    public static InsertSchedulingUseCase insertSchedulingUseCase;
+
     public static CreateClientUseCase createClientUseCase;
+    public static DeleteClientUseCase deleteClientUseCase;
     public static UpdateClientUseCase updateClientUseCase;
+
+    public static DeleteVehicleClientUseCase deleteVehicleClientUseCase;
     public static AddVehicleClientUseCase addVehicleClientUseCase;
     public static ReactiveVehicleClientUseCase reactiveVehicleClientUseCase;
     public static UpdateVehicleClientUseCase updateVehicleClientUseCase;
-    public static InsertSchedulingUseCase insertSchedulingUseCase;
 
     public static InsertVehicleCategoryUseCase insertVehicleCategoryUseCase;
     public static UpdateVehicleCategoryUseCase updateVehicleCategoryUseCase;
     public static DeleteVehicleCategoryUseCase deleteVehicleCategoryUseCase;
 
+    public static CreateServiceUseCase createServiceUseCase;
+    public static InactivateServiceUseCase inactivateServiceUseCase;
+    public static ReactiveServiceUseCase reactiveServiceUseCase;
+    public static ServiceInputRequestValidator serviceInputRequestValidator;
+    public static UpdateServiceUseCase updateServiceUseCase;
+
     private static void configureInjection() {
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
         VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
         VehicleCategoryDaoJdbc vehicleCategoryDaoJdbc = new VehicleCategoryDaoJdbc();
+        ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
 
         createClientUseCase = new CreateClientUseCase(clientDaoJdbc);
         updateClientUseCase = new UpdateClientUseCase(clientDaoJdbc);
@@ -73,6 +79,9 @@ public class Main {
         insertVehicleCategoryUseCase = new InsertVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
         updateVehicleCategoryUseCase = new UpdateVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
         deleteVehicleCategoryUseCase = new DeleteVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
+
+        createServiceUseCase = new CreateServiceUseCase(serviceDaoJdbc);
+        updateServiceUseCase = new UpdateServiceUseCase(serviceDaoJdbc);
 
         //fazer os proximos use cases!
     }
