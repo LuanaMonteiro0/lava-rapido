@@ -4,6 +4,7 @@ import com.example.lavarapido.application.repository.database.ConnectionFactory;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.domain.entities.scheduling.SchedulingStatus;
+import com.example.lavarapido.domain.entities.service.Service;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Scheduling.SchedulingDAO;
 
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,21 +31,29 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
 
 
         String dateDbResult = resultSet.getString("date");//"2024-06-03"
+        String timeDbResult = resultSet.getString("time");
 
         String [] localDateArgumentsInStringFormat = dateDbResult.split("-");
         int year = Integer.parseInt(localDateArgumentsInStringFormat[0]);
         int month = Integer.parseInt(localDateArgumentsInStringFormat[1]);
         int day = Integer.parseInt(localDateArgumentsInStringFormat[2]);
 
-        //TODO: add a client and a vehicle to the scheduling
+        String [] localTimeArgumentsInStringFormat = timeDbResult.split(":");
+        int hour = Integer.parseInt(localTimeArgumentsInStringFormat[0]);
+        int minute = Integer.parseInt(localTimeArgumentsInStringFormat[1]);
+        int second = Integer.parseInt(localTimeArgumentsInStringFormat[2]);
+
         Scheduling scheduling = new Scheduling(
                 resultSet.getString("id"),
                 resultSet.getDouble("totalValue"),
                 resultSet.getDouble("discount"),
-                LocalDate.of(year, month, day)
+                LocalDate.of(year, month, day),
+                LocalTime.of(hour, minute, second)
         );
 
         scheduling.setSchedulingStatus(SchedulingStatus.valueOf(resultSet.getString("schedulingStatus")));
+        scheduling.setClient(client);
+        scheduling.setVehicle(vehicle);
 
         return scheduling;
     }
@@ -53,7 +63,7 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
         try {
 
             String targetScheduling = """
-                INSERT INTO Schedulings(id, formOfPayment, date, totalValue, schedulingStatus, discount) VALUES(?, ?, ?, ?, ?, ?);
+                INSERT INTO Schedulings(id, formOfPayment, date, totalValue, schedulingStatus, discount, time, client, vehicle) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);
                 """;
             PreparedStatement targetSchedulingStatement = ConnectionFactory.createPreparedStatement(targetScheduling);
             targetSchedulingStatement.setString(1, scheduling.getId());
@@ -62,8 +72,16 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
             targetSchedulingStatement.setString(4, String.valueOf(scheduling.getTotalValue()));
             targetSchedulingStatement.setString(5, String.valueOf(scheduling.getSchedulingStatus()));
             targetSchedulingStatement.setString(6, String.valueOf(scheduling.getDiscount()));
+            targetSchedulingStatement.setString(7, String.valueOf(scheduling.getHour()));
+            targetSchedulingStatement.setString(8, scheduling.getClient().getId());
+            targetSchedulingStatement.setString(9, scheduling.getVehicle().getId());
 
             targetSchedulingStatement.executeUpdate();
+
+            scheduling.getServices().forEach(service -> {
+                SchedulingServicesDaoJdbc ssDaoJdbc = new SchedulingServicesDaoJdbc();
+                ssDaoJdbc.create(scheduling.getId(), service.getId());
+            });
 
             return "Scheduling inserted";
 
@@ -118,6 +136,21 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
             ResultSet res = targetSchedulingStatement.executeQuery();
             if (res.next()) {
                 Scheduling myScheduling = createSchedulingFromDbQuery(res);
+
+                SchedulingServicesDaoJdbc ssDaoJdbc = new SchedulingServicesDaoJdbc();
+
+                List<String> servicesId = ssDaoJdbc.findAll(myScheduling.getId());
+
+                ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
+
+                List<Service> services = new ArrayList<>();
+
+                for (String id : servicesId) {
+                    services.add(serviceDaoJdbc.findOne(id).get());
+                }
+
+                myScheduling.addAllServices(services);
+
                 return Optional.of(myScheduling);
             }
         } catch(SQLException e) {
@@ -237,6 +270,11 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
             targetSchedulingStatement.setString(1, schedulingId);
 
             targetSchedulingStatement.executeUpdate();
+
+            SchedulingServicesDaoJdbc ssDaoJdbc = new SchedulingServicesDaoJdbc();
+
+            ssDaoJdbc.deleteByKey(schedulingId);
+
             return true;
 
         } catch(SQLException e) {

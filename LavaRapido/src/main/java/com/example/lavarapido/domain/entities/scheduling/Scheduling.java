@@ -59,11 +59,16 @@ public class Scheduling {
         this.vehicle = vehicle;
     }
 
-    public Scheduling(String id, double totalValue, double discount, LocalDate date) {
+    public Scheduling(String id, double totalValue, double discount, LocalDate date, LocalTime hour) {
         this.id = id;
         this.totalValue = totalValue;
         this.discount = discount;
         this.date = date;
+        this.hour = hour;
+    }
+
+    public void addAllServices(List<Service> myServices) {
+        this.services.addAll(myServices);
     }
 
     public boolean verifyDate() {
@@ -94,12 +99,12 @@ public class Scheduling {
         this.date = date;
     }
 
-    public LocalDateTime getHour() {
+    public LocalTime getHour() {
         return hour;
     }
 
-    public void setHour(LocalDate hour) {
-        this.hour = hour.atStartOfDay();
+    public void setHour(LocalTime hour) {
+        this.hour = hour;
     }
 
     public double getTotalValue() {
@@ -154,4 +159,11 @@ public class Scheduling {
         return services;
     }
 
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 }
