@@ -197,6 +197,11 @@ public class ServiceDaoJdbc implements ServiceDAO {
             targetServiceStatement.setString(1, serviceId);
 
             targetServiceStatement.executeUpdate();
+
+            //Apagando as tuplas de ServicesPrices referentes ao Service apagado
+            ServicesPricesDaoJdbc spDaoJdbc = new ServicesPricesDaoJdbc();
+            spDaoJdbc.deleteByKey(serviceId);
+
             return true;
 
         } catch(SQLException e) {
