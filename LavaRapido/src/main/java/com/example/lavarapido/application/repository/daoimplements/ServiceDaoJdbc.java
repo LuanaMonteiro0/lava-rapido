@@ -166,7 +166,6 @@ public class ServiceDaoJdbc implements ServiceDAO {
     public boolean update(Service service) {
         try {
 
-            //TODO: Submenu de atualização ServicesPrices (criar ServicesPricesDaoJdbc)
             String targetService = """
                 UPDATE Services SET name = ?, status = ? WHERE id = ?
                 """;
@@ -177,6 +176,16 @@ public class ServiceDaoJdbc implements ServiceDAO {
             targetClientStatement.setString(3, service.getId());
 
             targetClientStatement.executeUpdate();
+
+            //Dando update (por consequência do update em Service), na tabela ServicesPrices,
+            // apenas no caso de os dois HashMaps serem diferentes
+            if (!(findOne(service.getId()).get().getPrice().values().equals(service.getPrice().values()))) {
+                ServicesPricesDaoJdbc spDaoJdbc = new ServicesPricesDaoJdbc();
+                var pricesMap = service.getPrice();
+                pricesMap.forEach((vCategory, price) -> {
+                    spDaoJdbc.update(price, service.getId(), vCategory.getId());
+                });
+            }
 
             return true;
 

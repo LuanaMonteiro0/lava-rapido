@@ -12,18 +12,16 @@ public class ServicesPricesDaoJdbc {
     public boolean update(Double price, String serviceId, String vehicleId) {
         try {
 
-            //TODO: Submenu de atualização ServicesPrices (criar ServicesPricesDaoJdbc)
             String targetServicesPrices = """
                 UPDATE ServicesPrices SET price = ? WHERE serviceId = ? AND vehicleId = ?
                 """;
 
-            PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetServicesPrices);
-            targetClientStatement.setString(1, price.toString());
-            targetClientStatement.setString(2, serviceId);
-            targetClientStatement.setString(3, vehicleId);
+            PreparedStatement targetServicesPricesStatement = ConnectionFactory.createPreparedStatement(targetServicesPrices);
+            targetServicesPricesStatement.setString(1, price.toString());
+            targetServicesPricesStatement.setString(2, serviceId);
+            targetServicesPricesStatement.setString(3, vehicleId);
 
-
-            targetClientStatement.executeUpdate();
+            targetServicesPricesStatement.executeUpdate();
 
             return true;
 
