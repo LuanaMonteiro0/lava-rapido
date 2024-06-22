@@ -4,6 +4,7 @@ import com.example.lavarapido.application.repository.database.ConnectionFactory;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
+import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.usecases.Vehicle.VehicleDAO;
 
 import java.sql.*;
@@ -14,11 +15,17 @@ import java.util.Optional;
 public class VehicleDaoJdbc implements VehicleDAO {
 
     protected Vehicle createVehicleFromDbQuery(ResultSet resultSet) throws SQLException {
+
+        VehicleCategory vehicleCategory = new VehicleCategory();
+        VehicleCategoryDaoJdbc vcDaoJdb = new VehicleCategoryDaoJdbc();
+        vehicleCategory = vcDaoJdb.findOne(resultSet.getString("category")).get();
+
         Vehicle vehicle = new Vehicle(
                 new LicensePlate(resultSet.getString("licensePlate")),
                 resultSet.getString("color"),
                 resultSet.getString("model"),
-                resultSet.getString("id")
+                resultSet.getString("id"),
+                vehicleCategory
         );
         vehicle.setStatus(Status.toEnum(resultSet.getString("status")));
 
@@ -29,7 +36,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
     public String create(Vehicle vehicle) {
         try {
             String targetVehicle = """
-                INSERT INTO Vehicles (id, status, model, color, licensePlate) VALUES(?, ?, ?, ?, ?);
+                INSERT INTO Vehicles (id, status, model, color, licensePlate, category) VALUES(?, ?, ?, ?, ?, ?);
                 """;
             PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
             targetVehicleStatement.setString(1, vehicle.getId());
@@ -37,6 +44,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
             targetVehicleStatement.setString(3, vehicle.getModel());
             targetVehicleStatement.setString(4, vehicle.getColor());
             targetVehicleStatement.setString(5, String.valueOf(vehicle.getPlate()));
+            targetVehicleStatement.setString(6, vehicle.getVehicleCategory().getId());
 
             targetVehicleStatement.executeUpdate();
 
@@ -54,13 +62,14 @@ public class VehicleDaoJdbc implements VehicleDAO {
 
         try {
             String targetVehicle = """
-                UPDATE Vehicles SET status = ?, color = ?, model = ? WHERE id = ?
+                UPDATE Vehicles SET status = ?, color = ?, model = ?, category = ? WHERE id = ?
                 """;
 
             PreparedStatement targetVehicleStatement = ConnectionFactory.createPreparedStatement(targetVehicle);
             targetVehicleStatement.setString(1, String.valueOf(vehicle.getStatus()));
             targetVehicleStatement.setString(2, vehicle.getColor());
             targetVehicleStatement.setString(3, vehicle.getModel());
+            targetVehicleStatement.setString(3, vehicle.getVehicleCategory().getId());
 
             targetVehicleStatement.executeUpdate();
 

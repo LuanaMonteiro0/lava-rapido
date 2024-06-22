@@ -39,7 +39,7 @@ public class VehicleUIController {
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
 
         getEntityToView();
-        if(vehicle.getPlate() == null) {
+        if((vehicle.getPlate() == null)) {
             addVehicleClientUseCase.insert(vehicle);
         } else {
             updateVehicleClientUseCase.update(vehicle);

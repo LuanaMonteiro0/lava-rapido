@@ -37,11 +37,12 @@ public class Vehicle {
         this.color = color;
     }
 
-    public Vehicle(LicensePlate licensePlate, String color, String model, String id) {
+    public Vehicle(LicensePlate licensePlate, String color, String model, String id, VehicleCategory vc) {
         this.licensePlate = licensePlate;
         this.color = color;
         this.model = model;
         this.id = id;
+        this.vehicleCategory = vc;
     }
 
     public Vehicle(LicensePlate licensePlate, String model, String color) {
