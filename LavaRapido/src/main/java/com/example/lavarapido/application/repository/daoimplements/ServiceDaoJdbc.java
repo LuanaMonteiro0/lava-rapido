@@ -50,12 +50,12 @@ public class ServiceDaoJdbc implements ServiceDAO {
                INSERT INTO Services(id, name, status) VALUES(?, ?, ?)
                """;
 
-            PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetService);
-            targetClientStatement.setString(1, service.getId());
-            targetClientStatement.setString(2, service.getName());
-            targetClientStatement.setString(3, String.valueOf(service.getStatus()));
+            PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService);
+            targetServiceStatement.setString(1, service.getId());
+            targetServiceStatement.setString(2, service.getName());
+            targetServiceStatement.setString(3, String.valueOf(service.getStatus()));
 
-            targetClientStatement.executeUpdate();
+            targetServiceStatement.executeUpdate();
 
             Map<VehicleCategory, Double> servicesPrices = service.getPrice();
 
