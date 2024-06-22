@@ -1,8 +1,10 @@
 package com.example.lavarapido.application.repository.daoimplements;
 
 import com.example.lavarapido.application.repository.database.ConnectionFactory;
+import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.domain.entities.scheduling.SchedulingStatus;
+import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Scheduling.SchedulingDAO;
 
 import java.sql.PreparedStatement;
@@ -16,6 +18,15 @@ import java.util.Optional;
 public class SchedulingDaoJdbc implements SchedulingDAO {
 
     protected Scheduling createSchedulingFromDbQuery(ResultSet resultSet) throws SQLException {
+
+        Client client = new Client();
+        ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
+        client = clientDaoJdbc.findOne(resultSet.getString("client")).get();
+
+        Vehicle vehicle = new Vehicle();
+        VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
+        vehicle = vehicleDaoJdbc.findOne(resultSet.getString("vehicle")).get();
+
 
         String dateDbResult = resultSet.getString("date");//"2024-06-03"
 
@@ -40,6 +51,7 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
     @Override
     public String create(Scheduling scheduling) {
         try {
+
             String targetScheduling = """
                 INSERT INTO Schedulings(id, formOfPayment, date, totalValue, schedulingStatus, discount) VALUES(?, ?, ?, ?, ?, ?);
                 """;

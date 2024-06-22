@@ -6,7 +6,7 @@ import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,8 +24,10 @@ public class Scheduling {
 
     private LocalDate date;
 
-    //TODO: change LocalDate to LocalDateTime Class
-    private LocalDateTime hour; //optional
+    /*Como usar:
+    LocalTime.of(10, 10, 10) -> 10h10min10s (sempre passar 3 parâmetros
+    */
+    private LocalTime hour; //optional
 
     private double totalValue;
 
@@ -35,7 +37,17 @@ public class Scheduling {
 
     private final List<Service> services = new ArrayList<>();
 
-
+    public Scheduling(String id, FormOfPayment formOfPayment, LocalDate date, double totalValue, SchedulingStatus schedulingStatus, double discount, Client client, Vehicle vehicle, LocalTime hour) {
+        this.id = id;
+        this.formOfPayment = formOfPayment;
+        this.date = date;
+        this.totalValue = totalValue;
+        this.schedulingStatus = schedulingStatus;
+        this.discount = discount;
+        this.client = client;
+        this.vehicle = vehicle;
+        this.hour = hour;
+    }
 
     public Scheduling(LocalDate date, double totalValue, FormOfPayment formOfPayment, Service service, Client client, Vehicle vehicle) {
         this.date = date;
