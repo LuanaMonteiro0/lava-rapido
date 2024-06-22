@@ -99,10 +99,9 @@ public class ClientDaoJdbc implements ClientDAO {
             targetClientStatement.execute();
 
             ResultSet resultSet = targetClientStatement.getGeneratedKeys();
-            //This Vehicle was already persisted in DB
-            /*
-            Vehicle vehicle = client.getVehicles().getLast();
 
+            //This Vehicle was already persisted in DB
+            Vehicle vehicle = client.getVehicles().getLast();
 
             String targetClientVehicles = """
                 INSERT INTO ClientVehicles (clientId, vehicleId) VALUES(?, ?);
@@ -112,7 +111,6 @@ public class ClientDaoJdbc implements ClientDAO {
             targetClientVehiclesStatement.setString(2, vehicle.getId());
 
             targetClientVehiclesStatement.executeUpdate();
-               */
             return resultSet.getString(1);
 
         } catch(SQLException e) {

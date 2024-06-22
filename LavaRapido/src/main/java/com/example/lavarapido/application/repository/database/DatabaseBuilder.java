@@ -91,15 +91,9 @@ public class DatabaseBuilder {
             )
             """;
 
-
-/*    private final String sqlUpdateVehicle = """
-            ALTER TABLE Vehicles ADD COLUMN plate VARCHAR
-            """;*/
-
     public static void main(String[] args) {
         DatabaseBuilder databaseBuilder = new DatabaseBuilder();
         databaseBuilder.buildTables();
-        //databaseBuilder.updateVehicle();
     }
 
 
@@ -133,16 +127,5 @@ public class DatabaseBuilder {
             throw new RuntimeException(e);
         }
     }
-
-
-/*    private void updateVehicle(){
-        try{
-            PreparedStatement statement = ConnectionFactory.createPreparedStatement(sqlUpdateVehicle);
-            statement.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
 
 }
