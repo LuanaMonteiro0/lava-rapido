@@ -219,7 +219,7 @@ public class ClientDaoJdbc implements ClientDAO {
             targetClientStatement.setString(1, clientId);
             targetClientStatement.executeUpdate();
 
-            
+
             String targetClientVehicles = """
                 DELETE FROM ClientVehicles WHERE clientId = ?
                 """;
