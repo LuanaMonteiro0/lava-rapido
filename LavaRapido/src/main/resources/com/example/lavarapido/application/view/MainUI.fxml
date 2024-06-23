@@ -4,16 +4,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="518.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.MainUIController">
+<AnchorPane prefHeight="518.0" prefWidth="817.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.MainUIController">
    <children>
-      <Label layoutX="359.0" layoutY="14.0" text="Lava-rápido" textFill="#820000">
+      <Label contentDisplay="CENTER" layoutX="338.0" layoutY="14.0" text="Lava-rápido" textFill="#820000">
          <font>
             <Font name="Corbel Light Italic" size="36.0" />
          </font></Label>
-      <TableView fx:id="tableView" layoutX="18.0" layoutY="65.0" prefHeight="378.0" prefWidth="780.0">
+      <TableView fx:id="tableView" layoutX="18.0" layoutY="65.0" prefHeight="378.0" prefWidth="780.0" style="-fx-background-color: #179DCE; -fx-border-width: 1px; -fx-border-color: #89DAF9; fx-back: ;">
         <columns>
           <TableColumn fx:id="cClient" prefWidth="89.0" text="Cliente" />
           <TableColumn fx:id="cVehicle" prefWidth="81.0" text="Carro" />
@@ -25,9 +27,33 @@
             <TableColumn fx:id="cStatus" prefWidth="76.0" text="Status" />
         </columns>
       </TableView>
-      <Button fx:id="btnClient" layoutX="18.0" layoutY="461.0" mnemonicParsing="false" onAction="#clientManegement" prefHeight="34.0" prefWidth="122.0" text="Gerenciar Clientes" />
-      <Button fx:id="btnVehicle" layoutX="150.0" layoutY="461.0" mnemonicParsing="false" onAction="#vehicleManegement" prefHeight="34.0" prefWidth="122.0" text="Gerenciar Carros" />
-      <Button fx:id="btnScheduling" layoutX="666.0" layoutY="461.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="132.0" text="Novo Agendamento" />
+      <Button fx:id="btnClient" layoutX="18.0" layoutY="461.0" mnemonicParsing="false" onAction="#clientManegement" prefHeight="34.0" prefWidth="40.0" style="-fx-background-color: inherit;" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pngegg.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnVehicle" layoutX="75.0" layoutY="457.0" mnemonicParsing="false" onAction="#vehicleManegement" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: inherit;">
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@people-in-car-svgrepo-com.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnScheduling" layoutX="742.0" layoutY="454.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: inherit;">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@calendar.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Button fx:id="btnCategory" layoutX="287.0" layoutY="461.0" mnemonicParsing="false" onAction="#vehicleCategoryManegement" prefHeight="34.0" prefWidth="144.0" text="Gerenciar Categorias" />
    </children>
 </AnchorPane>
