@@ -89,12 +89,14 @@ public class ClientUIController {
     private void setEntityToView() {
         if (client != null) {
             txtName.setText(client.getName());
-            txtPhone.setText(client.getPhone().toString());
+            txtPhone.setText(client.getPhone());
             txtCPF.setText(client.getCpfString());
             cbVehicles.getSelectionModel().clearSelection();
-            if (!client.getVehicles().isEmpty()) {
-                cbVehicles.setValue(client.getVehicles().get(0));
-            }
+//            if (!client.getVehicles().isEmpty()) {
+//                cbVehicles.setValue(client.getVehicles().getFirst());
+//            }
+            /*nao faz sentido isso aqui. ou ele tem carro ou nao tem, não podemos apenas selecionar um automaticamente para ele.
+            Ex: e se o veículo não for dele??*/
         }
     }
 
@@ -105,6 +107,7 @@ public class ClientUIController {
         setEntityToView();
 
         if (mode == UIMode.VIEW) configureViewMode();
+        if (mode == UIMode.UPDATE) txtCPF.setDisable(true);
     }
 
     private void configureViewMode() {

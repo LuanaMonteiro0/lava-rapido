@@ -66,7 +66,6 @@ public class VehicleUIController {
         }
 
         vehicle.setModel(txtModel.getText());
-//        vehicle.setVehicleCategory(new VehicleCategory(txtCategory.getText()));
         vehicle.setColor(txtColor.getText());
         vehicle.setPlate(new LicensePlate(txtPlate.getText()));
 
