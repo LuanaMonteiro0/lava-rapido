@@ -15,7 +15,7 @@
          <font>
             <Font name="Corbel Light Italic" size="36.0" />
          </font></Label>
-      <TableView fx:id="tableView" layoutX="18.0" layoutY="65.0" prefHeight="378.0" prefWidth="780.0" style="-fx-background-color: #179DCE; -fx-border-width: 1px; -fx-border-color: #89DAF9; fx-back: ;">
+      <TableView fx:id="tableView" layoutX="18.0" layoutY="65.0" prefHeight="378.0" prefWidth="780.0" style="-fx-background-color: #179DCE; -fx-border-width: 1px; -fx-border-color: #89DAF9;">
         <columns>
           <TableColumn fx:id="cClient" prefWidth="89.0" text="Cliente" />
           <TableColumn fx:id="cVehicle" prefWidth="81.0" text="Carro" />

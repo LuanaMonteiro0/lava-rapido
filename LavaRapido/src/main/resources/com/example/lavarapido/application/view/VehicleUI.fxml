@@ -4,9 +4,11 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleUIController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleUIController">
    <children>
       <Label layoutX="24.0" layoutY="36.0" text="Modelo:" />
       <TextField fx:id="txtModel" layoutX="81.0" layoutY="32.0" prefHeight="25.0" prefWidth="212.0" />
@@ -15,8 +17,22 @@
       <Label layoutX="24.0" layoutY="73.0" text="Categoria:" />
       <Label layoutX="28.0" layoutY="118.0" text="Cor:" />
       <TextField fx:id="txtColor" layoutX="81.0" layoutY="114.0" prefHeight="25.0" prefWidth="212.0" />
-      <Button fx:id="btnCancel" layoutX="444.0" layoutY="339.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="35.0" prefWidth="64.0" text="Cancelar" />
-      <Button fx:id="btnConfirm" layoutX="520.0" layoutY="339.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="35.0" prefWidth="64.0" text="Salvar" />
+      <Button fx:id="btnCancel" layoutX="444.0" layoutY="339.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="35.0" prefWidth="64.0" style="-fx-background-color: inherit;">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@general/cancel.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnConfirm" layoutX="520.0" layoutY="339.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="35.0" prefWidth="64.0" style="-fx-background-color: inherit;">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@general/save.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <ComboBox fx:id="cbCategory" layoutX="81.0" layoutY="69.0" prefHeight="25.0" prefWidth="212.0" />
    </children>
 </AnchorPane>
