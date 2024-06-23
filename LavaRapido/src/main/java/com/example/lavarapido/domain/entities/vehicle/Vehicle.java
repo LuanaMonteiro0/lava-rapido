@@ -49,10 +49,12 @@ public class Vehicle {
         this.licensePlate = licensePlate;
         this.model = model;
         this.color = color;
-        this.status = Status.INACTIVE;
+        this.status = Status.ACTIVE;
     }
 
-    public Vehicle(){};
+    public Vehicle(){
+        this.status = Status.ACTIVE;
+    };
 
     public String getModel() {
         return model;

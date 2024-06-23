@@ -1,5 +1,7 @@
 package com.example.lavarapido.application.controller;
 
+import com.example.lavarapido.application.repository.daoimplements.VehicleCategoryDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
@@ -7,9 +9,12 @@ import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
+import java.util.List;
 
 //import static br.edu.ifps.luana.application.main.Main.*;
 import static com.example.lavarapido.application.main.Main.addVehicleClientUseCase;
@@ -20,7 +25,7 @@ public class VehicleUIController {
     @FXML
     private TextField txtModel;
     @FXML
-    private TextField txtCategory;
+    private ComboBox<VehicleCategory> cbCategory;
     @FXML
     private TextField txtColor;
     @FXML
@@ -31,6 +36,14 @@ public class VehicleUIController {
     private Button btnConfirm;
 
     private Vehicle vehicle;
+    private UIMode uiMode;
+
+    @FXML
+    public void initialize() {
+        configureCategoryComboBox();
+        loadAllCategories();
+    }
+
 
     public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("VehicleManegementUI");
@@ -39,11 +52,11 @@ public class VehicleUIController {
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
 
         getEntityToView();
-        if((vehicle.getPlate() == null)) {
-            addVehicleClientUseCase.insert(vehicle);
-        } else {
+        if (uiMode == UIMode.UPDATE)
             updateVehicleClientUseCase.update(vehicle);
-        }
+        else
+            addVehicleClientUseCase.insert(vehicle);
+
         WindowLoader.setRoot("VehicleManegementUI");
     }
 
@@ -51,12 +64,16 @@ public class VehicleUIController {
         if(vehicle == null) {
             vehicle = new Vehicle();
         }
-        else {
-            vehicle.setModel(txtModel.getText());
-            vehicle.setVehicleCategory(new VehicleCategory(txtCategory.getText()));
-            vehicle.setColor(txtColor.getText());
-            vehicle.setPlate(new LicensePlate(txtPlate.getText()));
-        }
+
+        vehicle.setModel(txtModel.getText());
+//        vehicle.setVehicleCategory(new VehicleCategory(txtCategory.getText()));
+        vehicle.setColor(txtColor.getText());
+        vehicle.setPlate(new LicensePlate(txtPlate.getText()));
+
+        VehicleCategory selectedCategory = cbCategory.getSelectionModel().getSelectedItem();
+        if (selectedCategory != null)
+            vehicle.setVehicleCategory(selectedCategory);
+
     }
 
     public void setVehicle(Vehicle vehicle, UIMode mode) {
@@ -65,19 +82,29 @@ public class VehicleUIController {
 
         this.vehicle = vehicle;
         setEntityToview();
+        this.uiMode = mode;
 
         if(mode == UIMode.VIEW)
             configureViewMode();
-        else if (mode == UIMode.UPDATE) {
+        if (mode == UIMode.UPDATE)
             configureUpdateMode();
-        }
+
     }
 
     public void setEntityToview() {
         txtModel.setText(vehicle.getModel());
-//        txtCategory.setText(vehicle.getVehicleCategory().getName());
+        selectCategoryInComboBox(vehicle.getVehicleCategory());
         txtColor.setText(vehicle.getColor());
         txtPlate.setText(vehicle.getPlate().toString());
+    }
+
+    private void selectCategoryInComboBox(VehicleCategory category) {
+        if (category != null) {
+            cbCategory.getItems().stream()
+                    .filter(c -> c.getId().equals(category.getId()))
+                    .findFirst()
+                    .ifPresent(c -> cbCategory.getSelectionModel().select(c));
+        }
     }
 
     private void configureUpdateMode() {
@@ -92,8 +119,32 @@ public class VehicleUIController {
         btnConfirm.setVisible(false);
 
         txtModel.setDisable(true);
-        txtCategory.setDisable(true);
+        cbCategory.setDisable(true);
         txtColor.setDisable(true);
         txtPlate.setDisable(true);
+    }
+
+    private void configureCategoryComboBox() {
+        cbCategory.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(VehicleCategory vehicleCategory) {
+                return vehicleCategory != null ? vehicleCategory.getName() : "";
+            }
+
+            @Override
+            public VehicleCategory fromString(String string) {
+                return cbCategory.getItems().stream()
+                        .filter(vehicleCategory -> vehicleCategory.getName().equals(string))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
+    }
+
+    private void loadAllCategories() {
+        VehicleCategoryDaoJdbc vehicleCategoryDaoJdbc = new VehicleCategoryDaoJdbc();
+        List<VehicleCategory> categories = vehicleCategoryDaoJdbc.findAll();
+        cbCategory.getItems().clear();
+        cbCategory.getItems().addAll(categories);
     }
 }

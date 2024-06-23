@@ -69,7 +69,8 @@ public class VehicleDaoJdbc implements VehicleDAO {
             targetVehicleStatement.setString(1, String.valueOf(vehicle.getStatus()));
             targetVehicleStatement.setString(2, vehicle.getColor());
             targetVehicleStatement.setString(3, vehicle.getModel());
-            targetVehicleStatement.setString(3, vehicle.getVehicleCategory().getId());
+            targetVehicleStatement.setString(4, vehicle.getVehicleCategory().getId());
+            targetVehicleStatement.setString(5, vehicle.getId());
 
             targetVehicleStatement.executeUpdate();
 
