@@ -17,7 +17,7 @@ public class ServiceDaoJdbc implements ServiceDAO {
         Service service = new Service(
             rs.getString("id"), rs.getString("name")
         );
-        service.setStatus(Status.valueOf(rs.getString("status")));
+        service.setStatus(Status.toEnum(rs.getString("status")));
         return service;
     }
 
