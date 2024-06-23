@@ -38,7 +38,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnVehicle" layoutX="75.0" layoutY="457.0" mnemonicParsing="false" onAction="#vehicleManegement" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: inherit;">
+      <Button fx:id="btnVehicle" layoutX="86.0" layoutY="457.0" mnemonicParsing="false" onAction="#vehicleManegement" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="34.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -54,6 +54,13 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnCategory" layoutX="287.0" layoutY="461.0" mnemonicParsing="false" onAction="#vehicleCategoryManegement" prefHeight="34.0" prefWidth="144.0" text="Gerenciar Categorias" />
+      <Button fx:id="btnCategory" layoutX="159.0" layoutY="456.0" mnemonicParsing="false" onAction="#vehicleCategoryManegement" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: inherit;">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@vehicle-categories.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>
