@@ -34,7 +34,7 @@
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@pngegg.png" />
+                  <Image url="@init/pngegg.png" />
                </image>
             </ImageView>
          </graphic></Button>
@@ -42,7 +42,7 @@
          <graphic>
             <ImageView fitHeight="34.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@people-in-car-svgrepo-com.png" />
+                  <Image url="@init/people-in-car-svgrepo-com.png" />
                </image>
             </ImageView>
          </graphic></Button>
@@ -50,7 +50,7 @@
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@calendar.png" />
+                  <Image url="@init/calendar.png" />
                </image>
             </ImageView>
          </graphic></Button>
@@ -58,7 +58,7 @@
          <graphic>
             <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@vehicle-categories.png" />
+                  <Image url="@init/vehicle-categories.png" />
                </image>
             </ImageView>
          </graphic></Button>
