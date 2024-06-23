@@ -211,13 +211,22 @@ public class ClientDaoJdbc implements ClientDAO {
     @Override
     public boolean deleteByKey(String clientId) {
         try {
+
             String targetClient = """
                 DELETE FROM Clients WHERE id = ?
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, clientId);
-
             targetClientStatement.executeUpdate();
+
+            
+            String targetClientVehicles = """
+                DELETE FROM ClientVehicles WHERE clientId = ?
+                """;
+            PreparedStatement targetClientVehiclesStatement = ConnectionFactory.createPreparedStatement(targetClientVehicles);
+            targetClientVehiclesStatement.setString(1, clientId);
+            targetClientVehiclesStatement.executeUpdate();
+
             return true;
 
         } catch(SQLException e) {
