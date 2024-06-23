@@ -39,7 +39,7 @@ public class ServiceUIController {
     }
 
     public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("ServiceManagementUI");
+        WindowLoader.setRoot("ServiceManegementUI");
     }
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
@@ -61,7 +61,7 @@ public class ServiceUIController {
             }
         }
 
-        WindowLoader.setRoot("ServiceManagementUI");
+        WindowLoader.setRoot("ServiceManegementUI");
     }
 
     private boolean serviceExists(String name, ServiceDaoJdbc serviceDaoJdbc) {
