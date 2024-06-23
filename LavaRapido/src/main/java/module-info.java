@@ -7,6 +7,8 @@ module com.example.lavarapido {
     opens com.example.lavarapido.application.controller to javafx.fxml;
     opens com.example.lavarapido.domain.entities.client to javafx.base;
     opens com.example.lavarapido.domain.entities.vehicle to javafx.base;
+    opens com.example.lavarapido.domain.entities.service to javafx.base;
+    opens com.example.lavarapido.domain.entities.scheduling to javafx.base;
 
     exports com.example.lavarapido.application.view;
     exports com.example.lavarapido.application.controller;
