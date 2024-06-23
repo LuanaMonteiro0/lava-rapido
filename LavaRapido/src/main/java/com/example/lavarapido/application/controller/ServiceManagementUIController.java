@@ -1,7 +1,9 @@
 package com.example.lavarapido.application.controller;
 
+import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
+import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.service.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,25 +30,43 @@ public class ServiceManagementUIController {
     private TableColumn<Service, String> cCategory;
     @FXML
     private TableColumn<Service, Double> cPrice;
+    @FXML
+    private ObservableList<Service> tableData;
 
     @FXML
     public void initialize() {
+        bindTableViewToItemsList();
+        bindColumnsToValueSources();
+        loadServices();
+    }
+
+    private void bindTableViewToItemsList() {
+        tableData = FXCollections.observableArrayList();
+        tableView.setItems(tableData);
+    }
+
+    private void bindColumnsToValueSources() {
         cName.setCellValueFactory(new PropertyValueFactory<>("name"));
         cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         cPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-        loadServices();
     }
 
     private void loadServices() {
         ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
         List<Service> services = serviceDaoJdbc.findAll();
-        ObservableList<Service> servicesObservableList = FXCollections.observableArrayList(services);
-        tableView.setItems(servicesObservableList);
+        tableData.clear();
+        tableData.addAll(services);
+
+        System.out.println("Total de serviços carregados: " + services.size());
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("MainUI");
+    private void showServiceInMode(UIMode mode) throws IOException {
+        Service selectedItem = tableView.getSelectionModel().getSelectedItem();
+        if(selectedItem != null){
+            WindowLoader.setRoot("ServiceUI");
+            ServiceUIController controller = (ServiceUIController) WindowLoader.getController();
+            controller.setService(selectedItem, mode);
+        }
     }
 
     public void inactivateService(ActionEvent actionEvent) {
@@ -69,18 +89,16 @@ public class ServiceManagementUIController {
         }
     }
 
+    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("MainUI");
+    }
+
     public void detailService(ActionEvent actionEvent) throws IOException {
-        Service selectedService = tableView.getSelectionModel().getSelectedItem();
-        if (selectedService != null) {
-            WindowLoader.setRoot("ServiceUI");
-        }
+        showServiceInMode(UIMode.VIEW);
     }
 
     public void editService(ActionEvent actionEvent) throws IOException {
-        Service selectedService = tableView.getSelectionModel().getSelectedItem();
-        if (selectedService != null) {
-            WindowLoader.setRoot("ServiceUI");
-        }
+        showServiceInMode(UIMode.VIEW);
     }
 
     public void createService(ActionEvent actionEvent) throws IOException {

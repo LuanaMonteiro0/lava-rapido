@@ -16,7 +16,7 @@
         <ComboBox fx:id="cbCategory" layoutX="89.0" layoutY="96.0" prefWidth="200.0" />
         <Label layoutX="25.0" layoutY="140.0" text="Preço:" />
         <TextField fx:id="txtPrice" layoutX="89.0" layoutY="136.0" prefWidth="200.0" />
-        <Button fx:id="btnSave" layoutX="499.0" layoutY="321.0" mnemonicParsing="false" onAction="#saveService" prefHeight="35.0" prefWidth="64.0" text="Salvar" />
-        <Button fx:id="btnCancel" layoutX="419.0" layoutY="321.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="64.0" text="Cancelar" />
+        <Button fx:id="btnSave" layoutX="499.0" layoutY="321.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="35.0" prefWidth="64.0" text="Salvar" />
+        <Button fx:id="btnCancel" layoutX="419.0" layoutY="321.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="35.0" prefWidth="64.0" text="Cancelar" />
     </children>
 </AnchorPane>
