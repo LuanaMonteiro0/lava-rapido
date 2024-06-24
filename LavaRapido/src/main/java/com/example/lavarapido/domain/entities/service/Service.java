@@ -75,4 +75,14 @@ public class Service {
 
     public Double getPriceForCategory(VehicleCategory category) { return this.price.get(category); }
 
+
+    @Override
+    public String toString() {
+        return "Service{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", price=" + price +
+                '}';
+    }
 }

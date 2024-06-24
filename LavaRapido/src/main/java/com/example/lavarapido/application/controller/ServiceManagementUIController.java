@@ -1,9 +1,12 @@
 package com.example.lavarapido.application.controller;
 
 import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.ServicesPricesDaoJdbc;
+import com.example.lavarapido.application.view.ServiceView;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.service.Service;
+import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +19,7 @@ import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.lavarapido.application.main.Main.inactivateServiceUseCase;
 import static com.example.lavarapido.application.main.Main.reactiveServiceUseCase;
@@ -23,17 +27,17 @@ import static com.example.lavarapido.application.main.Main.reactiveServiceUseCas
 public class ServiceManagementUIController {
 
     @FXML
-    private TableView<Service> tableView;
+    private TableView<ServiceView> tableView;
     @FXML
-    private TableColumn<Service, String> cName;
+    private TableColumn<ServiceView, String> cName;
     @FXML
-    private TableColumn<Service, String> cCategory;
+    private TableColumn<ServiceView, String> cCategory;
     @FXML
-    private TableColumn<Service, Double> cPrice;
+    private TableColumn<ServiceView, Double> cPrice;
     @FXML
-    private TableColumn<Service, Double> cStatus;
+    private TableColumn<ServiceView, String> cStatus;
     @FXML
-    private ObservableList<Service> tableData;
+    private ObservableList<ServiceView> tableData;
 
     @FXML
     public void initialize() {
@@ -49,48 +53,53 @@ public class ServiceManagementUIController {
 
     private void bindColumnsToValueSources() {
         cName.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         cPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
     private void loadServices() {
         ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
+        ServicesPricesDaoJdbc servicesPricesDaoJdbc = new ServicesPricesDaoJdbc();
         List<Service> services = serviceDaoJdbc.findAll();
         tableData.clear();
-        tableData.addAll(services);
 
+        for (Service service : services) {
+            var pricesMap = servicesPricesDaoJdbc.findPricesByServiceId(service.getId());
+            for (Map.Entry<VehicleCategory, Double> entry : pricesMap.entrySet()) {
+                ServiceView view = new ServiceView(service, entry.getKey(), entry.getValue());
+                tableData.add(view);
+            }
+        }
         System.out.println("Total de serviços carregados: " + services.size());
     }
 
     private void showServiceInMode(UIMode mode) throws IOException {
-        Service selectedItem = tableView.getSelectionModel().getSelectedItem();
+        ServiceView selectedItem = tableView.getSelectionModel().getSelectedItem();
         if(selectedItem != null){
             WindowLoader.setRoot("ServiceUI");
             ServiceUIController controller = (ServiceUIController) WindowLoader.getController();
-            controller.setService(selectedItem, mode);
+            controller.setService(selectedItem.getService(), mode);
         }
     }
 
     public void changeStatusService(ActionEvent actionEvent) {
-        Service selectedService = tableView.getSelectionModel().getSelectedItem();
-        if (selectedService == null) {
-            showAlert(Alert.AlertType.WARNING, "Nenhum Serviço Selecionado", "Por favor, selecione um serviço da lista.");
-            return;
-        }
-
-        try {
-            if (selectedService.getStatus() == Status.ACTIVE) {
-                inactivateServiceUseCase.inactivate(selectedService);
-                showAlert(Alert.AlertType.INFORMATION, "Serviço Inativado", "O serviço foi inativado com sucesso.");
-            } else {
-                reactiveServiceUseCase.reactive(selectedService);
-                showAlert(Alert.AlertType.INFORMATION, "Serviço Ativado", "O serviço foi ativado com sucesso.");
+        ServiceView selectedServiceView = tableView.getSelectionModel().getSelectedItem();
+        if (selectedServiceView != null) {
+            Service selectedService = selectedServiceView.getService();
+            try {
+                if (selectedService.getStatus() == Status.ACTIVE) {
+                    inactivateServiceUseCase.inactivate(selectedService);
+                    showAlert(Alert.AlertType.INFORMATION, "Serviço Inativado", "O serviço foi inativado com sucesso.");
+                } else {
+                    reactiveServiceUseCase.reactive(selectedService);
+                    showAlert(Alert.AlertType.INFORMATION, "Serviço Ativado", "O serviço foi ativado com sucesso.");
+                }
+                loadServices();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Erro", "Erro ao inativar/reativar o serviço.");
             }
-            loadServices();
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erro", "Erro ao inativar/reativar o serviço.");
         }
     }
 
@@ -111,7 +120,7 @@ public class ServiceManagementUIController {
     }
 
     public void editService(ActionEvent actionEvent) throws IOException {
-        showServiceInMode(UIMode.VIEW);
+        showServiceInMode(UIMode.UPDATE);
     }
 
     public void createService(ActionEvent actionEvent) throws IOException {

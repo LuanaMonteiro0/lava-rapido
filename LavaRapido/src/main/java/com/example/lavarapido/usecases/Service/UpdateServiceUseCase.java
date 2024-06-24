@@ -19,9 +19,13 @@ public class UpdateServiceUseCase {
         if (notification.hasErrors())
             throw new IllegalArgumentException(notification.errorMessage());
 
-        String name = service.getName();
-        if (serviceDAO.findOneByName(name).isEmpty())
-            throw new EntityNotFoundException("Service not found.");
+        String id = service.getId();
+        if (serviceDAO.findOne(id).isEmpty())
+            throw new EntityNotFoundException("Service not found by ID");
+
+//        String name = service.getName();
+//        if (serviceDAO.findOneByName(name).isPresent())
+//            throw new EntityNotFoundException("Service name is already in use");
 
         return serviceDAO.update(service);
     }
