@@ -23,22 +23,17 @@ public class ServiceDaoJdbc implements ServiceDAO {
 
     @Override
     public Optional<Service> findOneByName(String name) {
-        try {
-            String targetService = """
-                SELECT id FROM Services WHERE name = ? AND status LIKE 'A%'
-                """;
-            PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService);
+        String targetService = "SELECT id FROM Services WHERE name = ?";
+        try (PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService)) {
             targetServiceStatement.setString(1, name);
-
-            ResultSet res = targetServiceStatement.executeQuery();
-            if (res.next()) {
-                Optional<Service> myServiceOptional = findOne(res.getString("id"));
-                return myServiceOptional;
+            try (ResultSet res = targetServiceStatement.executeQuery()) {
+                if (res.next()) {
+                    return findOne(res.getString("id"));
+                }
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return Optional.empty();
     }
 
@@ -90,50 +85,30 @@ public class ServiceDaoJdbc implements ServiceDAO {
 
     @Override
     public Optional<Service> findOne(String serviceId) {
-        try {
-            String targetService = """
-                SELECT * FROM Services WHERE id = ? AND status LIKE 'A%' 
-                """;
-            PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService);
+        String targetService = "SELECT * FROM Services WHERE id = ?";
+        try (PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService)) {
             targetServiceStatement.setString(1, serviceId);
-
-            ResultSet res = targetServiceStatement.executeQuery();
-
-            if (res.next()) {
-
-                Service service = createServiceFromDbQuery(res);
-
-                String targetServicesPrices = """
-                SELECT * FROM ServicesPrices WHERE idService = ?
-                """;
-                PreparedStatement targetServicesPricesStatement = ConnectionFactory.createPreparedStatement(targetServicesPrices);
-                targetServicesPricesStatement.setString(1, serviceId);
-                ResultSet resultSetServicesPrices = targetServicesPricesStatement.executeQuery();
-
-                while (resultSetServicesPrices.next()) {
-
-                    String targetVehicleCategories = """
-                    SELECT * FROM VehicleCategories WHERE idVehicleCategory = ?
-                    """;
-                    PreparedStatement targetVehicleCategoriesStatement = ConnectionFactory.createPreparedStatement(targetVehicleCategories);
-                    targetVehicleCategoriesStatement.setString(1, serviceId);
-                    ResultSet resultSetVehicleCategory = targetServicesPricesStatement.executeQuery();
-
-                    VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
-                    VehicleCategory vCat = vcDaoJdbc.findOne(resultSetVehicleCategory.getString("id")).get();
-
-                    service.setPrice(vCat, resultSetServicesPrices.getDouble("price"));
-
+            try (ResultSet res = targetServiceStatement.executeQuery()) {
+                if (res.next()) {
+                    Service service = createServiceFromDbQuery(res);
+                    String targetServicesPrices = "SELECT * FROM ServicesPrices WHERE idService = ?";
+                    try (PreparedStatement targetServicesPricesStatement = ConnectionFactory.createPreparedStatement(targetServicesPrices)) {
+                        targetServicesPricesStatement.setString(1, serviceId);
+                        try (ResultSet resultSetServicesPrices = targetServicesPricesStatement.executeQuery()) {
+                            while (resultSetServicesPrices.next()) {
+                                String vehicleCategoryId = resultSetServicesPrices.getString("idVehicleCategory");
+                                VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+                                VehicleCategory vCat = vcDaoJdbc.findOne(vehicleCategoryId).orElseThrow();
+                                service.setPrice(vCat, resultSetServicesPrices.getDouble("price"));
+                            }
+                        }
+                    }
+                    return Optional.of(service);
                 }
-
-                return Optional.of(service);
-
             }
-
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return Optional.empty();
     }
 
@@ -164,35 +139,22 @@ public class ServiceDaoJdbc implements ServiceDAO {
 
     @Override
     public boolean update(Service service) {
-        try {
+        String targetService = "UPDATE Services SET name = ?, status = ? WHERE id = ?";
+        try (PreparedStatement targetServiceStatement = ConnectionFactory.createPreparedStatement(targetService)) {
+            targetServiceStatement.setString(1, service.getName());
+            targetServiceStatement.setString(2, String.valueOf(service.getStatus()));
+            targetServiceStatement.setString(3, service.getId());
+            targetServiceStatement.executeUpdate();
 
-            String targetService = """
-                UPDATE Services SET name = ?, status = ? WHERE id = ?
-                """;
-
-            PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetService);
-            targetClientStatement.setString(1, service.getName());
-            targetClientStatement.setString(2, String.valueOf(service.getStatus()));
-            targetClientStatement.setString(3, service.getId());
-
-            targetClientStatement.executeUpdate();
-
-            //Dando update (por consequência do update em Service), na tabela ServicesPrices,
-            // apenas no caso de os dois HashMaps serem diferentes
-            if (!(findOne(service.getId()).get().getPrice().values().equals(service.getPrice().values()))) {
-                ServicesPricesDaoJdbc spDaoJdbc = new ServicesPricesDaoJdbc();
-                var pricesMap = service.getPrice();
-                pricesMap.forEach((vCategory, price) -> {
-                    spDaoJdbc.update(price, service.getId(), vCategory.getId());
-                });
+            ServicesPricesDaoJdbc spDaoJdbc = new ServicesPricesDaoJdbc();
+            Map<VehicleCategory, Double> pricesMap = service.getPrice();
+            for (Map.Entry<VehicleCategory, Double> entry : pricesMap.entrySet()) {
+                spDaoJdbc.update(entry.getValue(), service.getId(), entry.getKey().getId());
             }
-
             return true;
-
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 

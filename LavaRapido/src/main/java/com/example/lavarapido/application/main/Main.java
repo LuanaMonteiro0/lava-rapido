@@ -58,7 +58,6 @@ public class Main {
     public static CreateServiceUseCase createServiceUseCase;
     public static InactivateServiceUseCase inactivateServiceUseCase;
     public static ReactiveServiceUseCase reactiveServiceUseCase;
-    public static ServiceInputRequestValidator serviceInputRequestValidator;
     public static UpdateServiceUseCase updateServiceUseCase;
 
     private static void configureInjection() {
@@ -82,7 +81,8 @@ public class Main {
 
         createServiceUseCase = new CreateServiceUseCase(serviceDaoJdbc);
         updateServiceUseCase = new UpdateServiceUseCase(serviceDaoJdbc);
-
+        inactivateServiceUseCase = new InactivateServiceUseCase(serviceDaoJdbc);
+        reactiveServiceUseCase = new ReactiveServiceUseCase(serviceDaoJdbc);
         //fazer os proximos use cases!
     }
 

@@ -1,9 +1,8 @@
 package com.example.lavarapido.application.controller;
 
-import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
-import com.example.lavarapido.domain.entities.client.Client;
+import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.service.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.example.lavarapido.application.main.Main.inactivateServiceUseCase;
+import static com.example.lavarapido.application.main.Main.reactiveServiceUseCase;
 
 public class ServiceManagementUIController {
 
@@ -30,6 +30,8 @@ public class ServiceManagementUIController {
     private TableColumn<Service, String> cCategory;
     @FXML
     private TableColumn<Service, Double> cPrice;
+    @FXML
+    private TableColumn<Service, Double> cStatus;
     @FXML
     private ObservableList<Service> tableData;
 
@@ -47,8 +49,9 @@ public class ServiceManagementUIController {
 
     private void bindColumnsToValueSources() {
         cName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+//        cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         cPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
     private void loadServices() {
@@ -69,24 +72,34 @@ public class ServiceManagementUIController {
         }
     }
 
-    public void inactivateService(ActionEvent actionEvent) {
+    public void changeStatusService(ActionEvent actionEvent) {
         Service selectedService = tableView.getSelectionModel().getSelectedItem();
-        if (selectedService != null) {
-            try {
-                inactivateServiceUseCase.inactivate(selectedService);
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setHeaderText(null);
-                alert.setContentText("Serviço Inativado");
-                alert.showAndWait();
-                loadServices();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Erro ao inativar o serviço.");
-                alert.showAndWait();
-            }
+        if (selectedService == null) {
+            showAlert(Alert.AlertType.WARNING, "Nenhum Serviço Selecionado", "Por favor, selecione um serviço da lista.");
+            return;
         }
+
+        try {
+            if (selectedService.getStatus() == Status.ACTIVE) {
+                inactivateServiceUseCase.inactivate(selectedService);
+                showAlert(Alert.AlertType.INFORMATION, "Serviço Inativado", "O serviço foi inativado com sucesso.");
+            } else {
+                reactiveServiceUseCase.reactive(selectedService);
+                showAlert(Alert.AlertType.INFORMATION, "Serviço Ativado", "O serviço foi ativado com sucesso.");
+            }
+            loadServices();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erro", "Erro ao inativar/reativar o serviço.");
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(null);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
@@ -104,4 +117,5 @@ public class ServiceManagementUIController {
     public void createService(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("ServiceUI");
     }
+
 }
