@@ -15,10 +15,14 @@ import java.util.Optional;
 public class VehicleDaoJdbc implements VehicleDAO {
 
     protected Vehicle createVehicleFromDbQuery(ResultSet resultSet) throws SQLException {
+        VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+        Optional<VehicleCategory> optionalVehicleCategory = vcDaoJdbc.findOne(resultSet.getString("category"));
 
-        VehicleCategory vehicleCategory = new VehicleCategory();
-        VehicleCategoryDaoJdbc vcDaoJdb = new VehicleCategoryDaoJdbc();
-        vehicleCategory = vcDaoJdb.findOne(resultSet.getString("category")).get();
+        if (optionalVehicleCategory.isEmpty()) {
+            throw new SQLException("Vehicle category not found for ID: " + resultSet.getString("category"));
+        }
+
+        VehicleCategory vehicleCategory = optionalVehicleCategory.get();
 
         Vehicle vehicle = new Vehicle(
                 new LicensePlate(resultSet.getString("licensePlate")),
@@ -31,6 +35,7 @@ public class VehicleDaoJdbc implements VehicleDAO {
 
         return vehicle;
     }
+
 
     @Override
     public String create(Vehicle vehicle) {
