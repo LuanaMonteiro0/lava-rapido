@@ -67,6 +67,9 @@ public class Scheduling {
         this.hour = hour;
     }
 
+    public Scheduling() {
+    }
+
     public void addAllServices(List<Service> myServices) {
         this.services.addAll(myServices);
     }
@@ -86,10 +89,12 @@ public class Scheduling {
         services.add(service);
     }
 
-    public void calculateTotal(){
+    public void calculateTotal() {
         VehicleCategory vc = this.vehicle.getVehicleCategory();
-        totalValue = services.stream().mapToDouble(service -> service.getPrice().get(vc)).sum();
+        double totalWithoutDiscount = services.stream().mapToDouble(service -> service.getPrice().get(vc)).sum();
+        this.totalValue = totalWithoutDiscount - discount;
     }
+
 
     public LocalDate getDate() {
         return date;

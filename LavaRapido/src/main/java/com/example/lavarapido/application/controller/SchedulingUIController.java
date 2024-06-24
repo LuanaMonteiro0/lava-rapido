@@ -1,9 +1,6 @@
 package com.example.lavarapido.application.controller;
 
-import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
-import com.example.lavarapido.application.repository.daoimplements.ClientVehiclesDaoJdbc;
-import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
-import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.*;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.scheduling.FormOfPayment;
@@ -23,8 +20,12 @@ import javafx.util.StringConverter;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import static com.example.lavarapido.application.main.Main.insertSchedulingUseCase;
 
 public class SchedulingUIController implements Initializable {
 
@@ -66,6 +67,7 @@ public class SchedulingUIController implements Initializable {
     private ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
     private VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
     private ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
+    private ServicesPricesDaoJdbc servicesPricesDaoJdbc = new ServicesPricesDaoJdbc();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -84,14 +86,75 @@ public class SchedulingUIController implements Initializable {
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
         getEntityToView();
+
+        try {
+            insertSchedulingUseCase.insert(scheduling);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void getEntityToView() {
-        // Implement logic to get scheduling entity from view fields
+        Client clientSelected = cbClient.getSelectionModel().getSelectedItem();
+        Vehicle vehicleSelected = cbVehicles.getSelectionModel().getSelectedItem();
+        FormOfPayment formOfPaymentSelected = boxPayment.getSelectionModel().getSelectedItem();
+        SchedulingStatus statusSelected = boxStatus.getSelectionModel().getSelectedItem();
+        LocalDate selectedDate = pickerDate.getValue();
+        String selectedHour = txtHour.getText().trim();
+
+        double discount = 0.0;
+        String discountText = txtDiscount.getText().trim();
+
+        if (!discountText.isEmpty()) {
+            try {
+                discount = Double.parseDouble(discountText);
+            } catch (NumberFormatException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (scheduling == null) {
+            scheduling = new Scheduling();
+        }
+
+        scheduling.setClient(clientSelected);
+        scheduling.setVehicle(vehicleSelected);
+        scheduling.setFormOfPayment(formOfPaymentSelected);
+        scheduling.setSchedulingStatus(statusSelected);
+        scheduling.setDate(selectedDate);
+        scheduling.setHour(LocalTime.parse(selectedHour));
+        scheduling.setDiscount(discount);
+
+        List<Service> selectedServices = listService.getSelectionModel().getSelectedItems();
+
+        scheduling.addAllServices(selectedServices);
+
+        double totalValue = 0.0;
+
+        for (Service service : selectedServices) {
+            Map<VehicleCategory, Double> servicePrices = servicesPricesDaoJdbc.findPricesByServiceId(service.getId());
+
+            for (Map.Entry<VehicleCategory, Double> entry : servicePrices.entrySet()) {
+                VehicleCategory category = entry.getKey();
+                double price = entry.getValue();
+
+                totalValue += price;
+
+            }
+        }
+
+        totalValue -= discount;
+
+        scheduling.setTotalValue(totalValue);
+
     }
 
     public void setEntityToView() {
         // Implement logic to set view fields based on scheduling entity
+    }
+
+    public void setScheduling() {
+
     }
 
     public void setScheduling(Scheduling scheduling, UIMode mode) {

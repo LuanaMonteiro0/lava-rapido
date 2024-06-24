@@ -40,8 +40,6 @@ public class Main {
         WindowLoader.main(args);
     }
 
-    public static InsertSchedulingUseCase insertSchedulingUseCase;
-
     public static CreateClientUseCase createClientUseCase;
     public static DeleteClientUseCase deleteClientUseCase;
     public static UpdateClientUseCase updateClientUseCase;
@@ -60,11 +58,14 @@ public class Main {
     public static ReactiveServiceUseCase reactiveServiceUseCase;
     public static UpdateServiceUseCase updateServiceUseCase;
 
+    public static InsertSchedulingUseCase insertSchedulingUseCase;
+
     private static void configureInjection() {
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
         VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
         VehicleCategoryDaoJdbc vehicleCategoryDaoJdbc = new VehicleCategoryDaoJdbc();
         ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
+        SchedulingDaoJdbc schedulingDaoJdbc = new SchedulingDaoJdbc();
 
         createClientUseCase = new CreateClientUseCase(clientDaoJdbc);
         updateClientUseCase = new UpdateClientUseCase(clientDaoJdbc);
@@ -83,6 +84,9 @@ public class Main {
         updateServiceUseCase = new UpdateServiceUseCase(serviceDaoJdbc);
         inactivateServiceUseCase = new InactivateServiceUseCase(serviceDaoJdbc);
         reactiveServiceUseCase = new ReactiveServiceUseCase(serviceDaoJdbc);
+
+        insertSchedulingUseCase = new InsertSchedulingUseCase(
+                schedulingDaoJdbc, clientDaoJdbc, vehicleDaoJdbc, serviceDaoJdbc);
         //fazer os proximos use cases!
     }
 

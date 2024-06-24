@@ -62,17 +62,19 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
     public String create(Scheduling scheduling) {
         try {
 
+            String formattedTime = scheduling.getHour().toString();
+
             String targetScheduling = """
-                INSERT INTO Schedulings(id, formOfPayment, date, totalValue, schedulingStatus, discount, time, client, vehicle) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);
-                """;
+    INSERT INTO Schedulings(id, formOfPayment, date, totalValue, status, discount, time, client, vehicle) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);
+    """;
             PreparedStatement targetSchedulingStatement = ConnectionFactory.createPreparedStatement(targetScheduling);
             targetSchedulingStatement.setString(1, scheduling.getId());
-            targetSchedulingStatement.setString(2, String.valueOf(scheduling.getFormOfPayment()));
+            targetSchedulingStatement.setString(2, scheduling.getFormOfPayment().toString());
             targetSchedulingStatement.setString(3, String.valueOf(scheduling.getDate()));
             targetSchedulingStatement.setString(4, String.valueOf(scheduling.getTotalValue()));
-            targetSchedulingStatement.setString(5, String.valueOf(scheduling.getSchedulingStatus()));
+            targetSchedulingStatement.setString(5, scheduling.getSchedulingStatus().toString());
             targetSchedulingStatement.setString(6, String.valueOf(scheduling.getDiscount()));
-            targetSchedulingStatement.setString(7, String.valueOf(scheduling.getHour()));
+            targetSchedulingStatement.setString(7, formattedTime);
             targetSchedulingStatement.setString(8, scheduling.getClient().getId());
             targetSchedulingStatement.setString(9, scheduling.getVehicle().getId());
 

@@ -27,7 +27,7 @@ public class SchedulingInputRequestValidator extends Validator<Scheduling> {
         Client client = scheduling.getClient();
         if (client == null)
             notification.addError("Client is null.");
-        else if (!client.getStatus().equals(Status.INACTIVE))
+        else if (client.getStatus().equals(Status.INACTIVE))
             notification.addError("Client is not active.");
 
 
