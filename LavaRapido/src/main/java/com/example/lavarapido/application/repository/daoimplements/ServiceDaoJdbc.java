@@ -192,4 +192,32 @@ public class ServiceDaoJdbc implements ServiceDAO {
     public boolean delete(Service service) {
         return deleteByKey(service.getId());
     }
+
+
+    public List<Service> findServicesByVehicleCategory(VehicleCategory category) {
+        List<Service> services = new ArrayList<>();
+        String query = """
+                SELECT s.*
+                FROM Services s
+                JOIN ServicesPrices sp ON s.id = sp.idService
+                WHERE sp.idVehicleCategory = ?
+                """;
+
+        try(PreparedStatement statement = ConnectionFactory.createPreparedStatement(query)) {
+
+            statement.setString(1, category.getId());
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Service service = createServiceFromDbQuery(resultSet);
+                services.add(service);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return services;
+    }
 }
