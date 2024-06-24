@@ -1,8 +1,6 @@
 package com.example.lavarapido.domain.entities.general;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public enum Status {
     ACTIVE("Ativo"),

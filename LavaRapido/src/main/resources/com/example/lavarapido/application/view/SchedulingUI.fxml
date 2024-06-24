@@ -13,22 +13,17 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.SchedulingUIController">
    <children>
       <Label layoutX="14.0" layoutY="38.0" text="Cliente:" />
-      <TextField fx:id="txtClient" layoutX="76.0" layoutY="34.0" />
 
-      <Label layoutX="12.0" layoutY="89.0" text="Carro:" />
-      <TextField fx:id="txtVehicle" layoutX="76.0" layoutY="85.0" />
+      <Label layoutX="12.0" layoutY="89.0" text="Veículo:" />
 
       <Label layoutX="273.0" layoutY="38.0" text="Forma de Pagamento:" />
       <ComboBox fx:id="boxPayment" layoutX="405.0" layoutY="34.0" prefWidth="150.0" />
 
       <Label layoutX="14.0" layoutY="140.0" text="Data:" />
-      <DatePicker fx:id="pickerDate" layoutX="76.0" layoutY="136.0" />
+      <DatePicker fx:id="pickerDate" layoutX="76.0" layoutY="136.0" prefHeight="25.0" prefWidth="150.0" />
 
       <Label layoutX="14.0" layoutY="191.0" text="Hora:" />
       <TextField fx:id="txtHour" layoutX="76.0" layoutY="187.0" />
-
-      <Label layoutX="12.0" layoutY="242.0" text="Valor Total:" />
-      <TextField fx:id="txtValue" layoutX="76.0" layoutY="238.0" />
 
       <Label layoutX="345.0" layoutY="132.0" text="Desconto:" />
       <TextField fx:id="txtDiscount" layoutX="406.0" layoutY="128.0" />
@@ -36,8 +31,8 @@
       <Label layoutX="266.0" layoutY="81.0" text="Status do Agendamento:" />
       <ComboBox fx:id="boxStatus" layoutX="405.0" layoutY="77.0" prefWidth="150.0" />
 
-      <Label layoutX="11.0" layoutY="293.0" text="Serviços:" />
-      <ListView fx:id="listService" layoutX="76.0" layoutY="293.0" prefHeight="93.0" prefWidth="243.0" />
+      <Label layoutX="14.0" layoutY="239.0" text="Serviços:" />
+      <ListView fx:id="listService" layoutX="79.0" layoutY="239.0" prefHeight="93.0" prefWidth="243.0" />
 
       <Button fx:id="btnCancel" layoutX="444.0" layoutY="339.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="35.0" prefWidth="64.0" style="-fx-background-color: inherit;">
          <graphic>
@@ -47,7 +42,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnConfirm" layoutX="520.0" layoutY="339.0" mnemonicParsing="false" onAction="#saveOrUpadte" prefHeight="35.0" prefWidth="64.0" style="-fx-background-color: inherit;">
+      <Button fx:id="btnConfirm" layoutX="520.0" layoutY="339.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="35.0" prefWidth="64.0" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -55,5 +50,7 @@
                </image>
             </ImageView>
          </graphic></Button>
+      <ComboBox fx:id="cbClient" layoutX="76.0" layoutY="34.0" prefWidth="150.0" />
+      <ComboBox fx:id="cbVehicles" layoutX="76.0" layoutY="85.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

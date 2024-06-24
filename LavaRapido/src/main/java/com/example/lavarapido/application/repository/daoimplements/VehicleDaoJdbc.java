@@ -25,10 +25,10 @@ public class VehicleDaoJdbc implements VehicleDAO {
         VehicleCategory vehicleCategory = optionalVehicleCategory.get();
 
         Vehicle vehicle = new Vehicle(
+                resultSet.getString("id"),
                 new LicensePlate(resultSet.getString("licensePlate")),
                 resultSet.getString("color"),
                 resultSet.getString("model"),
-                resultSet.getString("id"),
                 vehicleCategory
         );
         vehicle.setStatus(Status.toEnum(resultSet.getString("status")));
