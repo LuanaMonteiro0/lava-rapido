@@ -33,14 +33,14 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnDetail" layoutX="385.0" layoutY="397.0" mnemonicParsing="false" onAction="#detailService" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: inherit;">
-         <graphic>
-            <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@service/service-details.png" />
-               </image>
-            </ImageView>
-         </graphic></Button>
+<!--      <Button fx:id="btnDetail" layoutX="385.0" layoutY="397.0" mnemonicParsing="false" onAction="#detailService" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: inherit;">-->
+<!--         <graphic>-->
+<!--            <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">-->
+<!--               <image>-->
+<!--                  <Image url="@service/service-details.png" />-->
+<!--               </image>-->
+<!--            </ImageView>-->
+<!--         </graphic></Button>-->
       <Button fx:id="btnEdit" layoutX="437.0" layoutY="397.0" mnemonicParsing="false" onAction="#editService" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">

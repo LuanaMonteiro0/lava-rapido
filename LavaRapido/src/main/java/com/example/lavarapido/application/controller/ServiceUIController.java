@@ -1,6 +1,7 @@
 package com.example.lavarapido.application.controller;
 
 import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.ServicesPricesDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.VehicleCategoryDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.general.Status;
@@ -32,6 +33,8 @@ public class ServiceUIController {
 
     private Service service;
 
+    private UIMode uiMode;
+
     @FXML
     public void initialize() {
         configureCategoryComboBox();
@@ -47,7 +50,7 @@ public class ServiceUIController {
 
         ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
 
-        if (serviceExists(service.getName(), serviceDaoJdbc)) {
+        if (uiMode == UIMode.UPDATE) {
             try {
                 updateServiceUseCase.update(service);
             } catch (Exception e) {
@@ -74,43 +77,44 @@ public class ServiceUIController {
         Double price = Double.parseDouble(txtPrice.getText());
 
         if (service == null) {
-            service = new Service(name, Status.ACTIVE);
-            service.setPrice(selectedCategory, price);
-        } else {
-            service.setName(name);
-            service.setPrice(selectedCategory, price);
+            service = new Service();
         }
+        service.setName(name);
+        service.setPrice(selectedCategory, price);
     }
 
     private void setEntityToView() {
         if (service != null) {
             txtName.setText(service.getName());
 
+            ServicesPricesDaoJdbc servicesPricesDaoJdbc = new ServicesPricesDaoJdbc();
+            Map<VehicleCategory, Double> pricesMap = servicesPricesDaoJdbc.findPricesByServiceId(service.getId());
+
             cbCategory.getSelectionModel().clearSelection();
 
-            if (!service.getPrice().isEmpty()) {
-                cbCategory.setValue(service.getPrice().keySet().iterator().next());
-            }
+            for (Map.Entry<VehicleCategory, Double> entry : pricesMap.entrySet()) {
+                VehicleCategory category = entry.getKey();
+                Double price = entry.getValue();
 
-            VehicleCategory selectedCategory = cbCategory.getSelectionModel().getSelectedItem();
-            if (selectedCategory != null) {
-                Double price = service.getPriceForCategory(selectedCategory);
+                cbCategory.getSelectionModel().select(category);
+
                 if (price != null) {
                     txtPrice.setText(price.toString());
                 } else {
                     txtPrice.setText("");
                 }
-            } else {
-                txtPrice.setText("");
+                break;
             }
         }
     }
+
 
     public void setService(Service service, UIMode mode) {
         if (service == null) throw new IllegalArgumentException("Service can not be null.");
 
         this.service = service;
         setEntityToView();
+        this.uiMode = mode;
 
         if (mode == UIMode.VIEW) configureViewMode();
     }

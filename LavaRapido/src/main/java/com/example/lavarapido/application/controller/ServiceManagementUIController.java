@@ -118,9 +118,9 @@ public class ServiceManagementUIController {
         WindowLoader.setRoot("MainUI");
     }
 
-    public void detailService(ActionEvent actionEvent) throws IOException {
-        showServiceInMode(UIMode.VIEW);
-    }
+//    public void detailService(ActionEvent actionEvent) throws IOException {
+//        showServiceInMode(UIMode.VIEW);
+//    }
 
     public void editService(ActionEvent actionEvent) throws IOException {
         showServiceInMode(UIMode.UPDATE);

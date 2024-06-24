@@ -13,17 +13,17 @@ import java.util.*;
 
 public class ServicesPricesDaoJdbc {
 
-    public boolean update(Double price, String serviceId, String vehicleId) {
+    public boolean update(Double price, String serviceId, String categoryId) {
         try {
 
             String targetServicesPrices = """
-                UPDATE ServicesPrices SET price = ? WHERE serviceId = ? AND vehicleId = ?
+                UPDATE ServicesPrices SET price = ?, idVehicleCategory = ? WHERE idService = ?
                 """;
 
             PreparedStatement targetServicesPricesStatement = ConnectionFactory.createPreparedStatement(targetServicesPrices);
             targetServicesPricesStatement.setString(1, price.toString());
-            targetServicesPricesStatement.setString(2, serviceId);
-            targetServicesPricesStatement.setString(3, vehicleId);
+            targetServicesPricesStatement.setString(2, categoryId);
+            targetServicesPricesStatement.setString(3, serviceId);
 
             targetServicesPricesStatement.executeUpdate();
 

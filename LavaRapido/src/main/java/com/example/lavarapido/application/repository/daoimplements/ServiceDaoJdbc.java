@@ -149,7 +149,14 @@ public class ServiceDaoJdbc implements ServiceDAO {
             ServicesPricesDaoJdbc spDaoJdbc = new ServicesPricesDaoJdbc();
             Map<VehicleCategory, Double> pricesMap = service.getPrice();
             for (Map.Entry<VehicleCategory, Double> entry : pricesMap.entrySet()) {
-                spDaoJdbc.update(entry.getValue(), service.getId(), entry.getKey().getId());
+                String categoryId = entry.getKey().getId();
+                Double price = entry.getValue();
+
+                boolean isUpdated = spDaoJdbc.update(price, service.getId(), categoryId);
+
+                if (!isUpdated) {
+                    System.out.println("Failed to update price for category: " + categoryId);
+                }
             }
             return true;
         } catch (SQLException e) {
