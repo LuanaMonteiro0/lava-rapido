@@ -2,10 +2,12 @@ package com.example.lavarapido.application.controller;
 
 import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.ServicesPricesDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.VehicleCategoryDaoJdbc;
 import com.example.lavarapido.application.view.ServiceView;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.service.Service;
+import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +22,7 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.example.lavarapido.application.main.Main.inactivateServiceUseCase;
 import static com.example.lavarapido.application.main.Main.reactiveServiceUseCase;

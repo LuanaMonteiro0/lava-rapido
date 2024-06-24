@@ -2,6 +2,7 @@ package com.example.lavarapido.application.repository.daoimplements;
 
 import com.example.lavarapido.application.repository.database.ConnectionFactory;
 import com.example.lavarapido.domain.entities.service.Service;
+import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.usecases.utils.DAO;
 
@@ -55,20 +56,27 @@ public class ServicesPricesDaoJdbc {
 
     public Map<VehicleCategory, Double> findPricesByServiceId(String serviceId) {
         Map<VehicleCategory, Double> prices = new HashMap<>();
-        try {
-            String query = """
+
+        String query = """
                 SELECT idVehicleCategory, price FROM ServicesPrices WHERE idService = ?
                 """;
-            PreparedStatement statement = ConnectionFactory.createPreparedStatement(query);
+
+        try(PreparedStatement statement = ConnectionFactory.createPreparedStatement(query)){
+
             statement.setString(1, serviceId);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                VehicleCategory category = new VehicleCategory(rs.getString("idVehicleCategory"));
+                String categoryId = rs.getString("idVehicleCategory");
+                VehicleCategoryDaoJdbc vehicleCategoryDaoJdbc = new VehicleCategoryDaoJdbc();
+                Optional<VehicleCategory> categoryOptional = vehicleCategoryDaoJdbc.findOne(categoryId);
+
+                VehicleCategory category = categoryOptional.orElse(new VehicleCategory()); // Categoria vazia se não encontrada
+
                 double price = rs.getDouble("price");
                 prices.put(category, price);
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return prices;
