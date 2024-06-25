@@ -21,8 +21,8 @@ public enum FormOfPayment {
         return label;
     }
 
-    public static Status toEnum(String value) {
-        return Arrays.stream(Status.values())
+    public static FormOfPayment toEnum(String value) {
+        return Arrays.stream(FormOfPayment.values())
                 .filter(c -> value.equals(c.toString()))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);

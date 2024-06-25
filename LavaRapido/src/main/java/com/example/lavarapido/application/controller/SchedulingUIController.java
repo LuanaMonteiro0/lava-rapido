@@ -135,7 +135,6 @@ public class SchedulingUIController implements Initializable {
             Map<VehicleCategory, Double> servicePrices = servicesPricesDaoJdbc.findPricesByServiceId(service.getId());
 
             for (Map.Entry<VehicleCategory, Double> entry : servicePrices.entrySet()) {
-                VehicleCategory category = entry.getKey();
                 double price = entry.getValue();
 
                 totalValue += price;

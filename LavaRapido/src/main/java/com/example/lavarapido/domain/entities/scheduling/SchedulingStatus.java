@@ -20,8 +20,8 @@ public enum SchedulingStatus {
         return label;
     }
 
-    public static Status toEnum(String value) {
-        return Arrays.stream(Status.values())
+    public static SchedulingStatus toEnum(String value) {
+        return Arrays.stream(SchedulingStatus.values())
                 .filter(c -> value.equals(c.toString()))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);

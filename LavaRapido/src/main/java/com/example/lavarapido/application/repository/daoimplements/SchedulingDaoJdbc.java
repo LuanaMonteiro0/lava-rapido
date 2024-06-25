@@ -2,6 +2,7 @@ package com.example.lavarapido.application.repository.daoimplements;
 
 import com.example.lavarapido.application.repository.database.ConnectionFactory;
 import com.example.lavarapido.domain.entities.client.Client;
+import com.example.lavarapido.domain.entities.scheduling.FormOfPayment;
 import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.domain.entities.scheduling.SchedulingStatus;
 import com.example.lavarapido.domain.entities.service.Service;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,11 +23,11 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
 
     protected Scheduling createSchedulingFromDbQuery(ResultSet resultSet) throws SQLException {
 
-        Client client = new Client();
+        Client client;
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
         client = clientDaoJdbc.findOne(resultSet.getString("client")).get();
 
-        Vehicle vehicle = new Vehicle();
+        Vehicle vehicle;
         VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
         vehicle = vehicleDaoJdbc.findOne(resultSet.getString("vehicle")).get();
 
@@ -33,25 +35,31 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
         String dateDbResult = resultSet.getString("date");//"2024-06-03"
         String timeDbResult = resultSet.getString("time");
 
-        String [] localDateArgumentsInStringFormat = dateDbResult.split("-");
-        int year = Integer.parseInt(localDateArgumentsInStringFormat[0]);
-        int month = Integer.parseInt(localDateArgumentsInStringFormat[1]);
-        int day = Integer.parseInt(localDateArgumentsInStringFormat[2]);
+//        String [] localDateArgumentsInStringFormat = dateDbResult.split("-");
+//        int year = Integer.parseInt(localDateArgumentsInStringFormat[0]);
+//        int month = Integer.parseInt(localDateArgumentsInStringFormat[1]);
+//        int day = Integer.parseInt(localDateArgumentsInStringFormat[2]);
+        LocalDate localDate = LocalDate.parse(dateDbResult, DateTimeFormatter.ISO_LOCAL_DATE);
+        LocalTime localTime = LocalTime.parse(timeDbResult, DateTimeFormatter.ofPattern("HH:mm"));
 
-        String [] localTimeArgumentsInStringFormat = timeDbResult.split(":");
-        int hour = Integer.parseInt(localTimeArgumentsInStringFormat[0]);
-        int minute = Integer.parseInt(localTimeArgumentsInStringFormat[1]);
-        int second = Integer.parseInt(localTimeArgumentsInStringFormat[2]);
+
+//        String [] localTimeArgumentsInStringFormat = timeDbResult.split(":");
+//        int hour = Integer.parseInt(localTimeArgumentsInStringFormat[0]);
+//        int minute = Integer.parseInt(localTimeArgumentsInStringFormat[1]);
+//        int second = Integer.parseInt(localTimeArgumentsInStringFormat[2]);
 
         Scheduling scheduling = new Scheduling(
                 resultSet.getString("id"),
                 resultSet.getDouble("totalValue"),
                 resultSet.getDouble("discount"),
-                LocalDate.of(year, month, day),
-                LocalTime.of(hour, minute, second)
+//                LocalDate.of(year, month, day),
+                localDate,
+                localTime
+//                LocalTime.of(hour, minute, second)
         );
 
-        scheduling.setSchedulingStatus(SchedulingStatus.valueOf(resultSet.getString("schedulingStatus")));
+        scheduling.setSchedulingStatus(SchedulingStatus.toEnum(resultSet.getString("status")));
+        scheduling.setFormOfPayment(FormOfPayment.toEnum(resultSet.getString("formOfPayment")));
         scheduling.setClient(client);
         scheduling.setVehicle(vehicle);
 
