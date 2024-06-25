@@ -7,17 +7,18 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="432.0" prefWidth="593.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleManegementUIController">
+<AnchorPane prefHeight="570.0" prefWidth="817.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleManegementUIController">
     <children>
-        <TableView fx:id="tableView" layoutX="22.0" layoutY="16.0" prefHeight="351.0" prefWidth="549.0" style="-fx-background-color: #179DCE; -fx-border-width: 1px; -fx-border-color: #89DAF9;">
+        <TableView fx:id="tableView" layoutX="24.0" layoutY="71.0" prefHeight="400.0" prefWidth="769.0" style="-fx-background-color: #179DCE; -fx-border-width: 1px; -fx-border-color: #89DAF9;">
             <columns>
                 <TableColumn fx:id="cModel" prefWidth="155.0" text="Modelo" />
                 <TableColumn fx:id="cCategory" prefWidth="161.0" text="Categoria" />
-                <TableColumn fx:id="cColor" prefWidth="118.0" text="Cor" />
-                <TableColumn fx:id="cPlate" prefWidth="111.0" text="Placa" />
+                <TableColumn fx:id="cColor" prefWidth="136.0" text="Cor" />
+                <TableColumn fx:id="cPlate" prefWidth="161.0" text="Placa" />
+            <TableColumn fx:id="cStatus" prefWidth="154.0" text="Status" />
             </columns>
         </TableView>
-        <Button fx:id="btnBack" layoutX="2.0" layoutY="369.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="33.0" prefWidth="64.0" style="-fx-background-color: inherit;">
+        <Button fx:id="btnBack" layoutX="14.0" layoutY="494.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="33.0" prefWidth="64.0" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -25,7 +26,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-        <Button fx:id="btnDelete" layoutX="373.0" layoutY="378.0" mnemonicParsing="false" onAction="#deleteVehicle" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: inherit;">
+        <Button fx:id="btnDelete" layoutX="593.0" layoutY="487.0" mnemonicParsing="false" onAction="#deleteVehicle" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -33,7 +34,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-        <Button fx:id="btnDetail" layoutX="310.0" layoutY="381.0" mnemonicParsing="false" onAction="#detailVehicle" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: inherit;">
+        <Button fx:id="btnDetail" layoutX="530.0" layoutY="490.0" mnemonicParsing="false" onAction="#detailVehicle" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,7 +42,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-        <Button fx:id="btnEdit" layoutX="437.0" layoutY="381.0" mnemonicParsing="false" onAction="#editVehicle" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: inherit;">
+        <Button fx:id="btnEdit" layoutX="657.0" layoutY="490.0" mnemonicParsing="false" onAction="#editVehicle" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -49,7 +50,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-        <Button fx:id="btnCreate" layoutX="507.0" layoutY="378.0" mnemonicParsing="false" onAction="#createVehicle" prefHeight="33.0" prefWidth="64.0" style="-fx-background-color: inherit;">
+        <Button fx:id="btnCreate" layoutX="727.0" layoutY="487.0" mnemonicParsing="false" onAction="#createVehicle" prefHeight="33.0" prefWidth="64.0" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
