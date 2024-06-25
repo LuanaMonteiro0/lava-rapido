@@ -15,12 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.example.lavarapido.application.main.Main.deleteVehicleClientUseCase;
-import static com.example.lavarapido.application.main.Main.testeReativaVeiculo;
-
-//import static br.edu.ifps.luana.application.main.Main.deleteVehicleClientUseCase;
 
 public class VehicleManegementUIController {
 
@@ -53,7 +49,6 @@ public class VehicleManegementUIController {
 
     private void bindColumnsToValueSources() {
         cModel.setCellValueFactory(new PropertyValueFactory<>("model"));
-//        cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         cCategory.setCellValueFactory(param -> {
             Vehicle vehicle = param.getValue();
             if (vehicle != null && vehicle.getVehicleCategory() != null) {

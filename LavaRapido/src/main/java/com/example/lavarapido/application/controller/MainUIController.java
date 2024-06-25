@@ -1,6 +1,5 @@
 package com.example.lavarapido.application.controller;
 
-import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.SchedulingDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.SchedulingServicesDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
@@ -14,18 +13,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static com.example.lavarapido.application.main.Main.cancelSchedulingUseCase;
+import static com.example.lavarapido.application.main.Main.listSchedulesForTheDayUseCase;
 
 public class MainUIController implements Initializable {
 
@@ -56,8 +58,11 @@ public class MainUIController implements Initializable {
     @FXML
     private TableView<SchedulingView> tableView;
 
+    @FXML
+    private CheckBox checkListSchedulesForTheDay;
+
     private ObservableList<SchedulingView> tableData;
-    private SchedulingDaoJdbc schedulingDaoJdbc = new SchedulingDaoJdbc();
+    private final SchedulingDaoJdbc schedulingDaoJdbc = new SchedulingDaoJdbc();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -106,6 +111,28 @@ public class MainUIController implements Initializable {
         System.out.println("Total de agendamentos carregados: " + schedulings.size());
     }
 
+    private void loadSchedulesForTheDay() {
+        SchedulingServicesDaoJdbc schedulingServicesDaoJdbc = new SchedulingServicesDaoJdbc();
+        ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
+
+        List<Scheduling> schedulings = listSchedulesForTheDayUseCase.findAllForDate(LocalDate.now());
+
+        tableData.clear();
+
+        for (Scheduling scheduling : schedulings) {
+            List<String> serviceIds = schedulingServicesDaoJdbc.findAll(scheduling.getId());
+            List<String> serviceNames = new ArrayList<>();
+
+            for (String serviceId : serviceIds) {
+                Optional<Service> serviceOptional = serviceDaoJdbc.findOne(serviceId);
+                serviceOptional.ifPresent(service -> serviceNames.add(service.getName()));
+            }
+
+            SchedulingView data = new SchedulingView(scheduling, serviceNames);
+            tableData.add(data);
+        }
+    }
+
     public void clientManegement(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("ClientManegementUI");
     }
@@ -131,5 +158,13 @@ public class MainUIController implements Initializable {
 
         cancelSchedulingUseCase.cancel(selectedScheduling);
         loadDataAndShow();
+    }
+
+    public void listSchedules(ActionEvent actionEvent) {
+        if (checkListSchedulesForTheDay.isSelected()) {
+            loadSchedulesForTheDay();
+        } else {
+            loadDataAndShow();
+        }
     }
 }
