@@ -67,6 +67,7 @@ public class Main {
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
         VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
         VehicleCategoryDaoJdbc vehicleCategoryDaoJdbc = new VehicleCategoryDaoJdbc();
+        ServicesPricesDaoJdbc servicesPricesDaoJdbc = new ServicesPricesDaoJdbc();
         ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
         SchedulingDaoJdbc schedulingDaoJdbc = new SchedulingDaoJdbc();
 
@@ -82,7 +83,7 @@ public class Main {
 
         insertVehicleCategoryUseCase = new InsertVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
         updateVehicleCategoryUseCase = new UpdateVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
-        deleteVehicleCategoryUseCase = new DeleteVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
+        deleteVehicleCategoryUseCase = new DeleteVehicleCategoryUseCase(vehicleCategoryDaoJdbc, servicesPricesDaoJdbc, vehicleDaoJdbc);
 
         createServiceUseCase = new CreateServiceUseCase(serviceDaoJdbc);
         updateServiceUseCase = new UpdateServiceUseCase(serviceDaoJdbc);
@@ -269,17 +270,17 @@ public class Main {
     }
 
 
-    public static void testeRemoveCategoriaDeVeiculo() {
-
-        VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
-
-        VehicleCategory vc = vcDaoJdbc.findOneByName("SUV").get();
-
-        DeleteVehicleCategoryUseCase dvcUc = new DeleteVehicleCategoryUseCase(vcDaoJdbc);
-
-        dvcUc.delete(vc);
-
-    }
+//    public static void testeRemoveCategoriaDeVeiculo() {
+//
+//        VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+//
+//        VehicleCategory vc = vcDaoJdbc.findOneByName("SUV").get();
+//
+//        DeleteVehicleCategoryUseCase dvcUc = new DeleteVehicleCategoryUseCase(vcDaoJdbc);
+//
+//        dvcUc.delete(vc);
+//
+//    }
 
 
 }
