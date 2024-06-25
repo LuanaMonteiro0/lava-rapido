@@ -15,6 +15,7 @@ import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Client.*;
+import com.example.lavarapido.usecases.Scheduling.CancelSchedulingUseCase;
 import com.example.lavarapido.usecases.Scheduling.InsertSchedulingUseCase;
 import com.example.lavarapido.usecases.Service.*;
 import com.example.lavarapido.usecases.Vehicle.AddVehicleClientUseCase;
@@ -59,6 +60,7 @@ public class Main {
     public static UpdateServiceUseCase updateServiceUseCase;
 
     public static InsertSchedulingUseCase insertSchedulingUseCase;
+    public static CancelSchedulingUseCase cancelSchedulingUseCase;
 
     private static void configureInjection() {
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
@@ -87,6 +89,7 @@ public class Main {
 
         insertSchedulingUseCase = new InsertSchedulingUseCase(
                 schedulingDaoJdbc, clientDaoJdbc, vehicleDaoJdbc, serviceDaoJdbc);
+        cancelSchedulingUseCase = new CancelSchedulingUseCase(schedulingDaoJdbc);
         //fazer os proximos use cases!
     }
 

@@ -63,11 +63,11 @@ public class SchedulingUIController implements Initializable {
 
     private Client selectedClient;
 
-    private ClientVehiclesDaoJdbc clientVehiclesDaoJdbc = new ClientVehiclesDaoJdbc();
-    private ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
-    private VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
-    private ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
-    private ServicesPricesDaoJdbc servicesPricesDaoJdbc = new ServicesPricesDaoJdbc();
+    private final ClientVehiclesDaoJdbc clientVehiclesDaoJdbc = new ClientVehiclesDaoJdbc();
+    private final ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
+    private final VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
+    private final ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
+    private final ServicesPricesDaoJdbc servicesPricesDaoJdbc = new ServicesPricesDaoJdbc();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -80,7 +80,7 @@ public class SchedulingUIController implements Initializable {
         loadAllClients();
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("MainUI");
     }
 
@@ -89,6 +89,7 @@ public class SchedulingUIController implements Initializable {
 
         try {
             insertSchedulingUseCase.insert(scheduling);
+            backToPreviousScene();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -146,25 +147,6 @@ public class SchedulingUIController implements Initializable {
 
         scheduling.setTotalValue(totalValue);
 
-    }
-
-    public void setEntityToView() {
-        // Implement logic to set view fields based on scheduling entity
-    }
-
-    public void setScheduling() {
-
-    }
-
-    public void setScheduling(Scheduling scheduling, UIMode mode) {
-        if (scheduling == null)
-            throw new IllegalArgumentException("Scheduling can not be null.");
-
-        this.scheduling = scheduling;
-        setEntityToView();
-
-        if (mode == UIMode.VIEW)
-            configureViewMode();
     }
 
     private void configureVehicleComboBox() {
@@ -255,18 +237,5 @@ public class SchedulingUIController implements Initializable {
         List<Service> services = serviceDaoJdbc.findServicesByVehicleCategory(category);
         ObservableList<Service> serviceList = FXCollections.observableArrayList(services);
         listService.setItems(serviceList);
-    }
-
-    private void configureViewMode() {
-        btnCancel.setLayoutX(btnConfirm.getLayoutX());
-        btnCancel.setLayoutY(btnConfirm.getLayoutY());
-        btnCancel.setText("Fechar");
-
-        btnConfirm.setVisible(false);
-
-        boxPayment.setDisable(true);
-        pickerDate.setDisable(true);
-        txtDiscount.setDisable(true);
-        boxStatus.setDisable(true);
     }
 }

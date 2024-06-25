@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static com.example.lavarapido.application.main.Main.cancelSchedulingUseCase;
+
 public class MainUIController implements Initializable {
 
     @FXML
@@ -125,6 +127,9 @@ public class MainUIController implements Initializable {
     }
 
     public void cancelScheduling(ActionEvent actionEvent) {
+        Scheduling selectedScheduling = tableView.getSelectionModel().getSelectedItem().getScheduling();
 
+        cancelSchedulingUseCase.cancel(selectedScheduling);
+        loadDataAndShow();
     }
 }

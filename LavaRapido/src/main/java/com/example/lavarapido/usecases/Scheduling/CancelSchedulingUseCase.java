@@ -3,11 +3,11 @@ package com.example.lavarapido.usecases.Scheduling;
 import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
 
-public class cancelSchedulingUseCase {
+public class CancelSchedulingUseCase {
 
     private final SchedulingDAO schedulingDAO;
 
-    public cancelSchedulingUseCase(SchedulingDAO schedulingDAO) {
+    public CancelSchedulingUseCase(SchedulingDAO schedulingDAO) {
         this.schedulingDAO = schedulingDAO;
     }
 
