@@ -21,6 +21,7 @@ public class VehicleCategoryDaoJdbc implements VehicleCategoryDAO {
         );
     }
 
+
     @Override
     public String create(VehicleCategory vehicleCategory) {
 
