@@ -63,8 +63,22 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnService" layoutX="227.0" layoutY="510.0" mnemonicParsing="false" onAction="#serviceManegement" text="Gerenciar Serviços" />
-      <Button fx:id="btnCancelScheduling" layoutX="657.0" layoutY="69.0" mnemonicParsing="false" onAction="#cancelScheduling" text="Cancelar Agendamento" />
+      <Button fx:id="btnService" layoutX="235.0" layoutY="500.0" mnemonicParsing="false" onAction="#serviceManegement" style="-fx-background-color: inherit;">
+         <graphic>
+            <ImageView cache="true" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@init/car-service.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnCancelScheduling" layoutX="686.0" layoutY="498.0" mnemonicParsing="false" onAction="#cancelScheduling" style="-fx-background-color: inherit;">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@scheduling/remove.-schedulingpng.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <CheckBox fx:id="checkListSchedulesForTheDay" layoutX="19.0" layoutY="73.0" mnemonicParsing="false" onAction="#listSchedules" text="Listar agendamentos do dia" />
    </children>
 </AnchorPane>
