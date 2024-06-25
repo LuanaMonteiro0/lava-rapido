@@ -71,7 +71,7 @@ public class ServicesPricesDaoJdbc {
                 VehicleCategoryDaoJdbc vehicleCategoryDaoJdbc = new VehicleCategoryDaoJdbc();
                 Optional<VehicleCategory> categoryOptional = vehicleCategoryDaoJdbc.findOne(categoryId);
 
-                VehicleCategory category = categoryOptional.orElse(new VehicleCategory()); // Categoria vazia se não encontrada
+                VehicleCategory category = categoryOptional.orElse(new VehicleCategory());
 
                 double price = rs.getDouble("price");
                 prices.put(category, price);
@@ -81,4 +81,24 @@ public class ServicesPricesDaoJdbc {
         }
         return prices;
     }
+
+    public List<String> findAllVehicleCategoryIds() {
+        List<String> categoryIds = new ArrayList<>();
+
+        String query = "SELECT DISTINCT idVehicleCategory FROM ServicesPrices";
+
+        try (PreparedStatement statement = ConnectionFactory.createPreparedStatement(query)) {
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                String categoryId = rs.getString("idVehicleCategory");
+                categoryIds.add(categoryId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return categoryIds;
+    }
+
 }

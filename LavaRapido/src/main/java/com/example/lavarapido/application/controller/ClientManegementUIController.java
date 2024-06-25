@@ -33,6 +33,8 @@ public class ClientManegementUIController {
     private TableColumn<Client, String> cPhone;
     @FXML
     private TableColumn<Client, String> cCPF;
+    @FXML
+    private TableColumn<Client, String> cStatus;
 
     private ObservableList<Client> tableData;
 
@@ -52,30 +54,7 @@ public class ClientManegementUIController {
         cName.setCellValueFactory(new PropertyValueFactory<>("name"));
         cPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         cCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-        /*cVehicle.setCellValueFactory(param -> {
-            List<Vehicle> vehicles = param.getValue().getVehicles();
-            if (vehicles != null && !vehicles.isEmpty()) {
-                String models = vehicles.stream()
-                        .map(Vehicle::getModel)
-                        .collect(Collectors.joining(", "));
-                return new SimpleStringProperty(models);
-            } else {
-                return new SimpleStringProperty("Sem Carro");
-            }
-        });
-        cScheduling.setCellValueFactory(param -> {
-            List<Scheduling> schedulings = param.getValue().getSchedulings();
-            if (schedulings != null && !schedulings.isEmpty()) {
-                String schedulingInfo = schedulings.stream()
-                        .map(scheduling -> scheduling.getServices().stream()
-                                .map(service -> service.getName() + " (" + scheduling.getDate() + ")")
-                                .collect(Collectors.joining(", ")))
-                        .collect(Collectors.joining("; "));
-                return new SimpleStringProperty(schedulingInfo);
-            } else {
-                return new SimpleStringProperty("Sem Agendamento");
-            }
-        });*/
+        cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
 

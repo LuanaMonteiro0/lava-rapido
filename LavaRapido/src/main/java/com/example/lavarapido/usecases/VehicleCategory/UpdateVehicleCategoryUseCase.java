@@ -1,6 +1,7 @@
 package com.example.lavarapido.usecases.VehicleCategory;
 
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
+import com.example.lavarapido.usecases.utils.EntityAlreadyExistsException;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
 import com.example.lavarapido.usecases.utils.Notification;
 import com.example.lavarapido.usecases.utils.Validator;
@@ -12,10 +13,6 @@ public class UpdateVehicleCategoryUseCase {
 
     public UpdateVehicleCategoryUseCase(VehicleCategoryDAO vehicleCategoryDAO) {
         this.vehicleCategoryDAO = vehicleCategoryDAO;
-    }
-
-    public Optional<VehicleCategory> findCategoriesByName(String name) {
-        return vehicleCategoryDAO.findOneByName(name);
     }
 
     public boolean update(VehicleCategory vehicleCategory) {
@@ -30,8 +27,8 @@ public class UpdateVehicleCategoryUseCase {
             throw new EntityNotFoundException("Category not found by ID.");
 
         String name = vehicleCategory.getName();
-        if (vehicleCategoryDAO.findOneByName(name).isEmpty())
-            throw new EntityNotFoundException("Category not found by name.");
+        if (vehicleCategoryDAO.findOneByName(name).isPresent())
+            throw new EntityAlreadyExistsException("This category name is already in use. Please enter with a new name.");
 
         return vehicleCategoryDAO.update(vehicleCategory);
     }

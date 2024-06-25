@@ -94,10 +94,21 @@ public class VehicleCategoryManegementUIController {
                 String newName = result.get();
 
                 VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
-                selectedCategory.setName(newName);
-                vcDaoJdbc.update(selectedCategory);
+                Optional<VehicleCategory> existingCategory = vcDaoJdbc.findOneByName(newName);
 
-                tableView.refresh();
+                if (existingCategory.isPresent()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText("This name is already in use. Please enter a different name.");
+
+                    alert.showAndWait();
+                } else {
+                    selectedCategory.setName(newName);
+                    vcDaoJdbc.update(selectedCategory);
+
+                    tableView.refresh();
+                }
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

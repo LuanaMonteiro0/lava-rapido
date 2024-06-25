@@ -217,12 +217,12 @@ public class SchedulingUIController implements Initializable {
 
 
     private void loadAllClients() {
-        List<Client> clients = clientDaoJdbc.findAll();
+        List<Client> clients = clientDaoJdbc.findAllActive();
         cbClient.getItems().addAll(clients);
     }
 
     private void loadVehiclesForClient(String clientId) {
-        List<Vehicle> vehicles = clientVehiclesDaoJdbc.findVehiclesByClientId(clientId);
+        List<Vehicle> vehicles = clientVehiclesDaoJdbc.findActiveVehiclesByClientId(clientId);
         ObservableList<Vehicle> vehicleList = FXCollections.observableArrayList(vehicles);
         cbVehicles.setItems(vehicleList);
     }

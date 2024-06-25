@@ -44,6 +44,7 @@ public class Main {
     public static CreateClientUseCase createClientUseCase;
     public static DeleteClientUseCase deleteClientUseCase;
     public static UpdateClientUseCase updateClientUseCase;
+    public static ReactiveClientUseCase reactiveClientUseCase;
 
     public static DeleteVehicleClientUseCase deleteVehicleClientUseCase;
     public static AddVehicleClientUseCase addVehicleClientUseCase;
@@ -66,21 +67,25 @@ public class Main {
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
         VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
         VehicleCategoryDaoJdbc vehicleCategoryDaoJdbc = new VehicleCategoryDaoJdbc();
+        ServicesPricesDaoJdbc servicesPricesDaoJdbc = new ServicesPricesDaoJdbc();
         ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
         SchedulingDaoJdbc schedulingDaoJdbc = new SchedulingDaoJdbc();
 
         createClientUseCase = new CreateClientUseCase(clientDaoJdbc);
         updateClientUseCase = new UpdateClientUseCase(clientDaoJdbc);
-        deleteClientUseCase = new DeleteClientUseCase(clientDaoJdbc);
+        deleteClientUseCase = new DeleteClientUseCase(clientDaoJdbc, schedulingDaoJdbc);
+        reactiveClientUseCase = new ReactiveClientUseCase(clientDaoJdbc);
 
         addVehicleClientUseCase = new AddVehicleClientUseCase(vehicleDaoJdbc);
         reactiveVehicleClientUseCase = new ReactiveVehicleClientUseCase(vehicleDaoJdbc);
         updateVehicleClientUseCase = new UpdateVehicleClientUseCase(vehicleDaoJdbc);
-        deleteVehicleClientUseCase = new DeleteVehicleClientUseCase(vehicleDaoJdbc);
+        deleteVehicleClientUseCase = new DeleteVehicleClientUseCase(vehicleDaoJdbc, schedulingDaoJdbc);
 
         insertVehicleCategoryUseCase = new InsertVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
         updateVehicleCategoryUseCase = new UpdateVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
-        deleteVehicleCategoryUseCase = new DeleteVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
+        deleteVehicleCategoryUseCase = new DeleteVehicleCategoryUseCase(
+                vehicleCategoryDaoJdbc, servicesPricesDaoJdbc, vehicleDaoJdbc);
+
 
         createServiceUseCase = new CreateServiceUseCase(serviceDaoJdbc);
         updateServiceUseCase = new UpdateServiceUseCase(serviceDaoJdbc);
@@ -120,17 +125,6 @@ public class Main {
         ucu.update(cn);
     }
 
-    public static void testeRemoveCliente() {
-        ClientDaoJdbc cjdbc = new ClientDaoJdbc();
-
-        Client cd = cjdbc.findOneByCPF(new CPF("428.888.999-16")).get();
-
-        cd.setSchedulings( new ArrayList<>());
-
-        DeleteClientUseCase ucd = new DeleteClientUseCase(cjdbc);
-
-        ucd.delete(cd);
-    }
 
     public static void testeReativarCliente() {
         ClientDaoJdbc cjdbc = new ClientDaoJdbc();
@@ -239,17 +233,17 @@ public class Main {
 
     }
 
-    public static void testeRemoveVeiculo() {
-
-        VehicleDaoJdbc vDaoJdbc = new VehicleDaoJdbc();
-
-        Vehicle v = vDaoJdbc.findByLicensePlate(new LicensePlate("CJA0562")).get();
-
-        DeleteVehicleClientUseCase dvcUc = new DeleteVehicleClientUseCase(vDaoJdbc);
-
-        dvcUc.delete(v);
-
-    }
+//    public static void testeRemoveVeiculo() {
+//
+//        VehicleDaoJdbc vDaoJdbc = new VehicleDaoJdbc();
+//
+//        Vehicle v = vDaoJdbc.findByLicensePlate(new LicensePlate("CJA0562")).get();
+//
+//        DeleteVehicleClientUseCase dvcUc = new DeleteVehicleClientUseCase(vDaoJdbc);
+//
+//        dvcUc.delete(v);
+//
+//    }
 
     public static void testeInsereCategoriaDeVeiculo() {
 
@@ -278,17 +272,17 @@ public class Main {
     }
 
 
-    public static void testeRemoveCategoriaDeVeiculo() {
-
-        VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
-
-        VehicleCategory vc = vcDaoJdbc.findOneByName("SUV").get();
-
-        DeleteVehicleCategoryUseCase dvcUc = new DeleteVehicleCategoryUseCase(vcDaoJdbc);
-
-        dvcUc.delete(vc);
-
-    }
+//    public static void testeRemoveCategoriaDeVeiculo() {
+//
+//        VehicleCategoryDaoJdbc vcDaoJdbc = new VehicleCategoryDaoJdbc();
+//
+//        VehicleCategory vc = vcDaoJdbc.findOneByName("SUV").get();
+//
+//        DeleteVehicleCategoryUseCase dvcUc = new DeleteVehicleCategoryUseCase(vcDaoJdbc);
+//
+//        dvcUc.delete(vc);
+//
+//    }
 
 
 }

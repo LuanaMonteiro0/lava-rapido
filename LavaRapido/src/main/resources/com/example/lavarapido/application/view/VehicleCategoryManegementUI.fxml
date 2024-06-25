@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="452.0" prefWidth="449.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleCategoryManegementUIController">
+<AnchorPane prefHeight="570.0" prefWidth="817.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleCategoryManegementUIController">
    <children>
       <TableView fx:id="tableView" layoutX="81.0" layoutY="56.0" prefHeight="297.0" prefWidth="288.0" style="-fx-background-color: #179DCE; -fx-border-color: #89DAF9; -fx-border-width: 1px;">
         <columns>

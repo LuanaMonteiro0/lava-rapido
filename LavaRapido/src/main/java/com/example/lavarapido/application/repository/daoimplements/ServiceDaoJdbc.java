@@ -176,7 +176,6 @@ public class ServiceDaoJdbc implements ServiceDAO {
 
             targetServiceStatement.executeUpdate();
 
-            //Apagando as tuplas de ServicesPrices referentes ao Service apagado
             ServicesPricesDaoJdbc spDaoJdbc = new ServicesPricesDaoJdbc();
             spDaoJdbc.deleteByKey(serviceId);
 
@@ -200,7 +199,7 @@ public class ServiceDaoJdbc implements ServiceDAO {
                 SELECT s.*
                 FROM Services s
                 JOIN ServicesPrices sp ON s.id = sp.idService
-                WHERE sp.idVehicleCategory = ?
+                WHERE sp.idVehicleCategory = ? AND s.status LIKE 'A%'
                 """;
 
         try(PreparedStatement statement = ConnectionFactory.createPreparedStatement(query)) {

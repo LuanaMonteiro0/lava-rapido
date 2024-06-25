@@ -34,6 +34,8 @@ public class VehicleManegementUIController {
     private TableColumn<Vehicle, String> cColor;
     @FXML
     private TableColumn<Vehicle, String> cPlate;
+    @FXML
+    private TableColumn<Vehicle, String> cStatus;
 
     private ObservableList<Vehicle> tableData;
 
@@ -51,7 +53,7 @@ public class VehicleManegementUIController {
 
     private void bindColumnsToValueSources() {
         cModel.setCellValueFactory(new PropertyValueFactory<>("model"));
-        cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+//        cCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         cCategory.setCellValueFactory(param -> {
             Vehicle vehicle = param.getValue();
             if (vehicle != null && vehicle.getVehicleCategory() != null) {
@@ -69,18 +71,8 @@ public class VehicleManegementUIController {
                 return new SimpleStringProperty("");
             }
         });
-        /*cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        cScheduling.setCellValueFactory(param -> {
-            Scheduling scheduling = param.getValue().getScheduling();
-            if (scheduling != null) {
-                String schedulingInfo = scheduling.getServices().stream()
-                        .map(service -> service.getName() + " (" + scheduling.getDate() + ")")
-                        .collect(Collectors.joining(", "));
-                return new SimpleStringProperty(schedulingInfo);
-            } else {
-                return new SimpleStringProperty("No Scheduling");
-            }
-        });*/
+        cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
     }
 
     private void loadDataAndShow() {
