@@ -105,6 +105,15 @@ public class VehicleDaoJdbc implements VehicleDAO {
 
             targetVehicleStatement.executeUpdate();
 
+
+            String targetClientVehicles = """
+                DELETE FROM ClientVehicles WHERE vehicleId = ?
+                """;
+            PreparedStatement targetClientVehiclesStatement = ConnectionFactory.createPreparedStatement(targetClientVehicles);
+            targetClientVehiclesStatement.setString(1, vehicleId);
+
+            targetClientVehiclesStatement.executeUpdate();
+
             return true;
 
         } catch(SQLException e) {
