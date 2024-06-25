@@ -3,6 +3,7 @@ package com.example.lavarapido.application.controller;
 import com.example.lavarapido.application.repository.daoimplements.VehicleCategoryDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
+import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
@@ -17,8 +18,8 @@ import java.io.IOException;
 import java.util.List;
 
 //import static br.edu.ifps.luana.application.main.Main.*;
-import static com.example.lavarapido.application.main.Main.addVehicleClientUseCase;
-import static com.example.lavarapido.application.main.Main.updateVehicleClientUseCase;
+import static com.example.lavarapido.application.main.Main.*;
+
 
 public class VehicleUIController {
 
@@ -34,6 +35,8 @@ public class VehicleUIController {
     private Button btnCancel;
     @FXML
     private Button btnConfirm;
+    @FXML
+    private Button btnReactive;
 
     private Vehicle vehicle;
     private UIMode uiMode;
@@ -42,10 +45,14 @@ public class VehicleUIController {
     public void initialize() {
         configureCategoryComboBox();
         loadAllCategories();
+
+        if (vehicle == null) {
+            btnReactive.setVisible(false);
+        }
     }
 
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("VehicleManegementUI");
     }
 
@@ -95,6 +102,8 @@ public class VehicleUIController {
         selectCategoryInComboBox(vehicle.getVehicleCategory());
         txtColor.setText(vehicle.getColor());
         txtPlate.setText(vehicle.getPlate().toString());
+
+        btnReactive.setVisible(vehicle.getStatus() == Status.INACTIVE);
     }
 
     private void selectCategoryInComboBox(VehicleCategory category) {
@@ -116,6 +125,7 @@ public class VehicleUIController {
         btnCancel.setText("Fechar");
 
         btnConfirm.setVisible(false);
+        btnReactive.setVisible(false);
 
         txtModel.setDisable(true);
         cbCategory.setDisable(true);
@@ -145,5 +155,16 @@ public class VehicleUIController {
         List<VehicleCategory> categories = vehicleCategoryDaoJdbc.findAll();
         cbCategory.getItems().clear();
         cbCategory.getItems().addAll(categories);
+    }
+
+    public void reactiveVehicle(ActionEvent actionEvent) {
+        try {
+            reactiveVehicleClientUseCase.reactive(vehicle);
+            backToPreviousScene();
+            //colocar um alert de sucesso
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+            //alert de erro
+        }
     }
 }

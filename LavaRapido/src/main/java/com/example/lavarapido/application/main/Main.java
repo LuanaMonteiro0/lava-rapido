@@ -83,7 +83,9 @@ public class Main {
 
         insertVehicleCategoryUseCase = new InsertVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
         updateVehicleCategoryUseCase = new UpdateVehicleCategoryUseCase(vehicleCategoryDaoJdbc);
-        deleteVehicleCategoryUseCase = new DeleteVehicleCategoryUseCase(vehicleCategoryDaoJdbc, servicesPricesDaoJdbc, vehicleDaoJdbc);
+        deleteVehicleCategoryUseCase = new DeleteVehicleCategoryUseCase(
+                vehicleCategoryDaoJdbc, servicesPricesDaoJdbc, vehicleDaoJdbc);
+
 
         createServiceUseCase = new CreateServiceUseCase(serviceDaoJdbc);
         updateServiceUseCase = new UpdateServiceUseCase(serviceDaoJdbc);

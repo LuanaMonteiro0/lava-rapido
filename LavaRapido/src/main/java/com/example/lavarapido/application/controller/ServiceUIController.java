@@ -30,6 +30,8 @@ public class ServiceUIController {
     private Button btnCancel;
     @FXML
     private Button btnSave;
+    @FXML
+    private Button btnReactive;
 
     private Service service;
 
@@ -39,37 +41,36 @@ public class ServiceUIController {
     public void initialize() {
         configureCategoryComboBox();
         loadAllCategories();
+
+        if (service == null) {
+            btnReactive.setVisible(false);
+        }
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("ServiceManegementUI");
     }
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
         getEntityFromView();
 
-        ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
-
         if (uiMode == UIMode.UPDATE) {
             try {
                 updateServiceUseCase.update(service);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         } else {
             try {
                 createServiceUseCase.insert(service);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
 
         WindowLoader.setRoot("ServiceManegementUI");
     }
 
-    private boolean serviceExists(String name, ServiceDaoJdbc serviceDaoJdbc) {
-        return serviceDaoJdbc.findOneByName(name).isPresent();
-    }
 
     private void getEntityFromView() {
         String name = txtName.getText();
@@ -86,6 +87,7 @@ public class ServiceUIController {
     private void setEntityToView() {
         if (service != null) {
             txtName.setText(service.getName());
+            btnReactive.setVisible(service.getStatus() == Status.INACTIVE);
 
             ServicesPricesDaoJdbc servicesPricesDaoJdbc = new ServicesPricesDaoJdbc();
             Map<VehicleCategory, Double> pricesMap = servicesPricesDaoJdbc.findPricesByServiceId(service.getId());
@@ -125,6 +127,7 @@ public class ServiceUIController {
         btnCancel.setText("Fechar");
 
         btnSave.setVisible(false);
+        btnReactive.setVisible(false);
 
         txtName.setDisable(true);
         cbCategory.setDisable(true);
@@ -153,5 +156,14 @@ public class ServiceUIController {
         List<VehicleCategory> categories = vehicleCategoryDaoJdbc.findAll();
         cbCategory.getItems().clear();
         cbCategory.getItems().addAll(categories);
+    }
+
+    public void reactiveService(ActionEvent actionEvent) {
+        try {
+            reactiveServiceUseCase.reactive(service);
+            backToPreviousScene();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
