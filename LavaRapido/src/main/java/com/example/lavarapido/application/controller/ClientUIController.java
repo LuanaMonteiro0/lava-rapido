@@ -3,7 +3,6 @@ package com.example.lavarapido.application.controller;
 import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.ClientVehiclesDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
-import com.example.lavarapido.application.view.SchedulingView;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
@@ -19,7 +18,6 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import static com.example.lavarapido.application.main.Main.createClientUseCase;
 import static com.example.lavarapido.application.main.Main.updateClientUseCase;
@@ -34,6 +32,9 @@ public class ClientUIController {
 
     @FXML
     private TableColumn<Vehicle, String> cClientVehicles;
+
+    @FXML
+    private Label lblAddVehicle;
 
     @FXML
     private ComboBox<Vehicle> cbVehicles;
@@ -75,7 +76,6 @@ public class ClientUIController {
 
     private void loadTableDataAndShow() {
         ClientVehiclesDaoJdbc clientVehiclesDaoJdbc = new ClientVehiclesDaoJdbc();
-        VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
 
         if (client != null) {
             List<Vehicle> vehiclesByClientId = clientVehiclesDaoJdbc.findVehiclesByClientId(client.getId());
@@ -96,13 +96,13 @@ public class ClientUIController {
             try {
                 updateClientUseCase.update(client);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         } else {
             try {
                 createClientUseCase.insert(client);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
 
@@ -152,11 +152,12 @@ public class ClientUIController {
         btnCancel.setText("Fechar");
 
         btnConfirm.setVisible(false);
+        cbVehicles.setVisible(false);
+        lblAddVehicle.setVisible(false);
 
         txtName.setDisable(true);
         txtPhone.setDisable(true);
         txtCPF.setDisable(true);
-        cbVehicles.setDisable(true);
     }
 
     private void configureVehicleComboBox() {

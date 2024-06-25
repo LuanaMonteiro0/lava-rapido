@@ -35,7 +35,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Label layoutX="11.0" layoutY="125.0" text="Adicionar veículo:" />
+      <Label fx:id="lblAddVehicle" layoutX="11.0" layoutY="125.0" text="Adicionar veículo:" />
       <TableView fx:id="tableView" layoutX="33.0" layoutY="172.0" prefHeight="200.0" prefWidth="184.0">
         <columns>
           <TableColumn fx:id="cClientVehicles" prefWidth="183.0" text="Veículos do Cliente" />

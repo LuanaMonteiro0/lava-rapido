@@ -98,7 +98,6 @@ public class ClientDaoJdbc implements ClientDAO {
 
             targetClientStatement.execute();
 
-            //This Vehicle was already persisted in DB
             Vehicle vehicle = client.getVehicles().getLast();
 
             String targetClientVehicles = """
@@ -184,29 +183,52 @@ public class ClientDaoJdbc implements ClientDAO {
 
     @Override
     public boolean update(Client client) {
+        try {
+            String targetClient = """
+            UPDATE Clients SET name = ?, phone = ?, status = ? WHERE id = ?
+            """;
 
-            try {
-                String targetClient = """
-                UPDATE Clients SET name = ?, phone = ?, status = ? WHERE id = ?
-                """;
+            PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
+            targetClientStatement.setString(1, client.getName());
+            targetClientStatement.setString(2, client.getPhone());
+            targetClientStatement.setString(3, String.valueOf(client.getStatus()));
+            targetClientStatement.setString(4, client.getId());
+            targetClientStatement.executeUpdate();
 
-                PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
-                targetClientStatement.setString(1, client.getName());
-                targetClientStatement.setString(2, client.getPhone());
-                targetClientStatement.setString(3, String.valueOf(client.getStatus()));
-                targetClientStatement.setString(4, client.getId());
+            String queryClientVehicles = """
+            SELECT vehicleId FROM ClientVehicles WHERE clientId = ?
+            """;
 
-                targetClientStatement.executeUpdate();
+            PreparedStatement queryClientVehiclesStatement = ConnectionFactory.createPreparedStatement(queryClientVehicles);
+            queryClientVehiclesStatement.setString(1, client.getId());
+            ResultSet rs = queryClientVehiclesStatement.executeQuery();
 
-                return true;
-
-            } catch(SQLException e) {
-                e.printStackTrace();
+            List<String> currentVehicleIds = new ArrayList<>();
+            while (rs.next()) {
+                currentVehicleIds.add(rs.getString("vehicleId"));
             }
 
-            return false;
+            for (Vehicle vehicle : client.getVehicles()) {
+                if (!currentVehicleIds.contains(vehicle.getId())) {
+                    String insertClientVehicles = """
+                    INSERT INTO ClientVehicles (clientId, vehicleId) VALUES(?, ?);
+                    """;
+                    PreparedStatement insertClientVehiclesStatement = ConnectionFactory.createPreparedStatement(insertClientVehicles);
+                    insertClientVehiclesStatement.setString(1, client.getId());
+                    insertClientVehiclesStatement.setString(2, vehicle.getId());
+                    insertClientVehiclesStatement.executeUpdate();
+                }
+            }
 
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
+
 
     @Override
     public boolean deleteByKey(String clientId) {
