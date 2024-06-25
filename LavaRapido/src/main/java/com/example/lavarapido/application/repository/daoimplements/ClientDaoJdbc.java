@@ -65,7 +65,7 @@ public class ClientDaoJdbc implements ClientDAO {
     public Optional<Client> findOneByCPF(CPF cpf) {
         try {
             String targetClient = """
-                SELECT id FROM Clients WHERE cpf = ? AND status LIKE 'A%'
+                SELECT id FROM Clients WHERE cpf = ?
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, cpf.getCpf());
@@ -120,7 +120,7 @@ public class ClientDaoJdbc implements ClientDAO {
     public Optional<Client> findOne(String clientId) {
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE id = ? AND status LIKE 'A%'
+                SELECT * FROM Clients WHERE id = ?
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
             targetClientStatement.setString(1, clientId);
@@ -163,7 +163,7 @@ public class ClientDaoJdbc implements ClientDAO {
 
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE status LIKE 'A%'
+                SELECT * FROM Clients
                 """;
 
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
@@ -179,6 +179,25 @@ public class ClientDaoJdbc implements ClientDAO {
         }
 
         return myClients;
+    }
+
+    public List<Client> findAllActive() {
+        List<Client> myClients = new ArrayList<>();
+        String targetClient = """
+                SELECT * FROM Clients WHERE status LIKE 'A%'
+                """;
+
+        try (PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient)) {
+            ResultSet res = targetClientStatement.executeQuery();
+
+            while(res.next()){
+                myClients.add(createClientFromDbQuery(res));
+            }
+            return myClients;
+
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -44,6 +44,7 @@ public class Main {
     public static CreateClientUseCase createClientUseCase;
     public static DeleteClientUseCase deleteClientUseCase;
     public static UpdateClientUseCase updateClientUseCase;
+    public static ReactiveClientUseCase reactiveClientUseCase;
 
     public static DeleteVehicleClientUseCase deleteVehicleClientUseCase;
     public static AddVehicleClientUseCase addVehicleClientUseCase;
@@ -71,7 +72,8 @@ public class Main {
 
         createClientUseCase = new CreateClientUseCase(clientDaoJdbc);
         updateClientUseCase = new UpdateClientUseCase(clientDaoJdbc);
-        deleteClientUseCase = new DeleteClientUseCase(clientDaoJdbc);
+        deleteClientUseCase = new DeleteClientUseCase(clientDaoJdbc, schedulingDaoJdbc);
+        reactiveClientUseCase = new ReactiveClientUseCase(clientDaoJdbc);
 
         addVehicleClientUseCase = new AddVehicleClientUseCase(vehicleDaoJdbc);
         reactiveVehicleClientUseCase = new ReactiveVehicleClientUseCase(vehicleDaoJdbc);
@@ -120,17 +122,6 @@ public class Main {
         ucu.update(cn);
     }
 
-    public static void testeRemoveCliente() {
-        ClientDaoJdbc cjdbc = new ClientDaoJdbc();
-
-        Client cd = cjdbc.findOneByCPF(new CPF("428.888.999-16")).get();
-
-        cd.setSchedulings( new ArrayList<>());
-
-        DeleteClientUseCase ucd = new DeleteClientUseCase(cjdbc);
-
-        ucd.delete(cd);
-    }
 
     public static void testeReativarCliente() {
         ClientDaoJdbc cjdbc = new ClientDaoJdbc();

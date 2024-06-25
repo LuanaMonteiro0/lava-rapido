@@ -7,6 +7,7 @@ import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
+import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import static com.example.lavarapido.application.main.Main.createClientUseCase;
 import static com.example.lavarapido.application.main.Main.updateClientUseCase;
+import static com.example.lavarapido.application.main.Main.reactiveClientUseCase;
 
 public class ClientUIController {
 
@@ -51,6 +53,9 @@ public class ClientUIController {
     @FXML
     private TextField txtPhone;
 
+    @FXML
+    private Button btnReactive;
+
     private Client client;
 
     private ObservableList<Vehicle> tableData;
@@ -59,10 +64,11 @@ public class ClientUIController {
     public void initialize() {
         configureVehicleComboBox();
         loadAllVehicles();
-
         configureTableColumns();
         bindTableViewToItemsList();
-        loadTableDataAndShow();
+        if (client == null) {
+            btnReactive.setVisible(false);
+        }
     }
 
     private void bindTableViewToItemsList() {
@@ -133,6 +139,8 @@ public class ClientUIController {
             txtCPF.setText(client.getCpf().toString());
             cbVehicles.getSelectionModel().clearSelection();
             loadTableDataAndShow();
+
+            btnReactive.setVisible(client.getStatus() == Status.INACTIVE);
         }
     }
 
@@ -151,6 +159,7 @@ public class ClientUIController {
         btnCancel.setLayoutY(btnConfirm.getLayoutY());
         btnCancel.setText("Fechar");
 
+        btnReactive.setVisible(false);
         btnConfirm.setVisible(false);
         cbVehicles.setVisible(false);
         lblAddVehicle.setVisible(false);
@@ -182,5 +191,11 @@ public class ClientUIController {
         List<Vehicle> vehicles = vehicleDaoJdbc.findAll();
         cbVehicles.getItems().clear();
         cbVehicles.getItems().addAll(vehicles);
+    }
+
+    public void reactiveClient(ActionEvent actionEvent) {
+        if (client != null && client.getStatus() == Status.INACTIVE) {
+            reactiveClientUseCase.reactive(client);
+        }
     }
 }
