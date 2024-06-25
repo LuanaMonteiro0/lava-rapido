@@ -1,21 +1,25 @@
 package com.example.lavarapido.application.controller;
 
 import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
+import com.example.lavarapido.application.repository.daoimplements.ClientVehiclesDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
+import com.example.lavarapido.application.view.SchedulingView;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.CPF;
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.lavarapido.application.main.Main.createClientUseCase;
 import static com.example.lavarapido.application.main.Main.updateClientUseCase;
@@ -23,24 +27,60 @@ import static com.example.lavarapido.application.main.Main.updateClientUseCase;
 public class ClientUIController {
 
     @FXML
-    private TextField txtName;
-    @FXML
-    private TextField txtPhone;
-    @FXML
-    private TextField txtCPF;
-    @FXML
-    private ComboBox<Vehicle> cbVehicles;
-    @FXML
     private Button btnCancel;
+
     @FXML
     private Button btnConfirm;
 
+    @FXML
+    private TableColumn<Vehicle, String> cClientVehicles;
+
+    @FXML
+    private ComboBox<Vehicle> cbVehicles;
+
+    @FXML
+    private TableView<Vehicle> tableView;
+
+    @FXML
+    private TextField txtCPF;
+
+    @FXML
+    private TextField txtName;
+
+    @FXML
+    private TextField txtPhone;
+
     private Client client;
+
+    private ObservableList<Vehicle> tableData;
 
     @FXML
     public void initialize() {
         configureVehicleComboBox();
         loadAllVehicles();
+
+        configureTableColumns();
+        bindTableViewToItemsList();
+        loadTableDataAndShow();
+    }
+
+    private void bindTableViewToItemsList() {
+        tableData = FXCollections.observableArrayList();
+        tableView.setItems(tableData);
+    }
+
+    private void configureTableColumns() {
+        cClientVehicles.setCellValueFactory(new PropertyValueFactory<>("plateString"));
+    }
+
+    private void loadTableDataAndShow() {
+        ClientVehiclesDaoJdbc clientVehiclesDaoJdbc = new ClientVehiclesDaoJdbc();
+        VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
+
+        if (client != null) {
+            List<Vehicle> vehiclesByClientId = clientVehiclesDaoJdbc.findVehiclesByClientId(client.getId());
+            tableData.addAll(vehiclesByClientId);
+        }
     }
 
     public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
@@ -90,13 +130,9 @@ public class ClientUIController {
         if (client != null) {
             txtName.setText(client.getName());
             txtPhone.setText(client.getPhone());
-            txtCPF.setText(client.getCpfString());
+            txtCPF.setText(client.getCpf().toString());
             cbVehicles.getSelectionModel().clearSelection();
-//            if (!client.getVehicles().isEmpty()) {
-//                cbVehicles.setValue(client.getVehicles().getFirst());
-//            }
-            /*nao faz sentido isso aqui. ou ele tem carro ou nao tem, não podemos apenas selecionar um automaticamente para ele.
-            Ex: e se o veículo não for dele??*/
+            loadTableDataAndShow();
         }
     }
 
@@ -122,12 +158,6 @@ public class ClientUIController {
         txtCPF.setDisable(true);
         cbVehicles.setDisable(true);
     }
-
-    /*private void loadUnassociatedVehicles() {
-        VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
-        List<Vehicle> vehicles = vehicleDaoJdbc.findAllUnassociated();
-        cbVehicles.getItems().addAll(vehicles);
-    }*/
 
     private void configureVehicleComboBox() {
         cbVehicles.setConverter(new StringConverter<>() {

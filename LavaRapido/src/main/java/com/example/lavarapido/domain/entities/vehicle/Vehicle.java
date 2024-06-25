@@ -89,6 +89,10 @@ public class Vehicle {
         return licensePlate;
     }
 
+    public String getPlateString() {
+        return licensePlate.getLicensePlate();
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }

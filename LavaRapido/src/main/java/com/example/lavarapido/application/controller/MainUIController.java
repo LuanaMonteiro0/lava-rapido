@@ -82,7 +82,7 @@ public class MainUIController implements Initializable {
 
     private void loadDataAndShow() {
         SchedulingServicesDaoJdbc schedulingServicesDaoJdbc = new SchedulingServicesDaoJdbc();
-        ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc(); // Suponho que você tenha um DAO para serviços
+        ServiceDaoJdbc serviceDaoJdbc = new ServiceDaoJdbc();
 
         List<Scheduling> schedulings = schedulingDaoJdbc.findAll();
 
@@ -122,5 +122,9 @@ public class MainUIController implements Initializable {
 
     public void schedulingManegement(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("SchedulingUI");
+    }
+
+    public void cancelScheduling(ActionEvent actionEvent) {
+
     }
 }
