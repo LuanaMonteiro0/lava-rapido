@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="570.0" prefWidth="817.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.SchedulingUIController">
+<AnchorPane prefHeight="570.0" prefWidth="817.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.SchedulingUIController">
    <children>
       <Label layoutX="14.0" layoutY="38.0" text="Cliente:" />
 
@@ -52,5 +46,7 @@
          </graphic></Button>
       <ComboBox fx:id="cbClient" layoutX="76.0" layoutY="34.0" prefWidth="150.0" />
       <ComboBox fx:id="cbVehicles" layoutX="76.0" layoutY="85.0" prefWidth="150.0" />
+      <Label layoutX="538.0" layoutY="395.0" text="Salvar" />
+      <Label layoutX="453.0" layoutY="395.0" text="Cancelar" />
    </children>
 </AnchorPane>

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="570.0" prefWidth="817.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleCategoryManegementUIController">
+<AnchorPane prefHeight="570.0" prefWidth="817.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.VehicleCategoryManegementUIController">
    <children>
-      <TableView fx:id="tableView" layoutX="81.0" layoutY="56.0" prefHeight="297.0" prefWidth="288.0" style="-fx-background-color: #179DCE; -fx-border-color: #89DAF9; -fx-border-width: 1px;">
+      <TableView fx:id="tableView" layoutX="81.0" layoutY="129.0" prefHeight="297.0" prefWidth="288.0" style="-fx-background-color: #179DCE; -fx-border-color: #89DAF9; -fx-border-width: 1px;">
         <columns>
           <TableColumn fx:id="cCategoryName" prefWidth="285.0" text="Nome da Categoria" />
         </columns>
       </TableView>
-      <Button fx:id="btnBack" layoutX="76.0" layoutY="358.0" mnemonicParsing="false" onAction="#backToPreviousScene" style="-fx-background-color: inherit;">
+      <Button fx:id="btnBack" layoutX="81.0" layoutY="434.0" mnemonicParsing="false" onAction="#backToPreviousScene" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -22,7 +20,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnDelete" layoutX="263.0" layoutY="360.0" mnemonicParsing="false" onAction="#deleteCategory" style="-fx-background-color: inherit;">
+      <Button fx:id="btnDelete" layoutX="262.0" layoutY="426.0" mnemonicParsing="false" onAction="#deleteCategory" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -30,7 +28,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnUpdate" layoutX="206.0" layoutY="369.0" mnemonicParsing="false" onAction="#updateCategory" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: inherited;">
+      <Button fx:id="btnUpdate" layoutX="206.0" layoutY="426.0" mnemonicParsing="false" onAction="#updateCategory" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: inherited;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -38,7 +36,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnCreate" layoutX="319.0" layoutY="360.0" mnemonicParsing="false" onAction="#createCategory" style="-fx-background-color: inherit;">
+      <Button fx:id="btnCreate" layoutX="319.0" layoutY="426.0" mnemonicParsing="false" onAction="#createCategory" style="-fx-background-color: inherit;">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -46,5 +44,14 @@
                </image>
             </ImageView>
          </graphic></Button>
+      <Label layoutX="238.0" layoutY="33.0" text="Gerenciamento de Categorias">
+         <font>
+            <Font name="JetBrains Mono Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="322.0" layoutY="474.0" text="Adicionar" />
+      <Label layoutX="266.0" layoutY="474.0" text="Remover" />
+      <Label layoutX="219.0" layoutY="474.0" text="Editar" />
+      <Label layoutX="88.0" layoutY="474.0" text="Voltar" />
    </children>
 </AnchorPane>
