@@ -34,7 +34,5 @@
             </ImageView>
          </graphic></Button>
       <Button fx:id="btnReactive" layoutX="310.0" layoutY="357.0" mnemonicParsing="false" onAction="#reactiveService" prefHeight="25.0" prefWidth="200.0" text="Reativar Serviço" />
-      <Label layoutX="464.0" layoutY="469.0" text="Salvar" />
-      <Label layoutX="321.0" layoutY="469.0" text="Cancelar" />
     </children>
 </AnchorPane>

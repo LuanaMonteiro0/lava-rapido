@@ -6,9 +6,7 @@
 
 <AnchorPane prefHeight="570.0" prefWidth="817.0" style="-fx-background-color: #89DAF9;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.ClientUIController">
    <children>
-      <Label layoutX="458.0" layoutY="393.0" text="Cancelar" />
       <TextField fx:id="txtName" layoutX="65.0" layoutY="31.0" prefHeight="25.0" prefWidth="519.0" />
-      <Label layoutX="536.0" layoutY="393.0" text="Salvar" />
       <TextField fx:id="txtPhone" layoutX="65.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
       <Label layoutX="307.0" layoutY="77.0" prefHeight="17.0" prefWidth="36.0" text="CPF:" />
       <TextField fx:id="txtCPF" layoutX="341.0" layoutY="73.0" prefHeight="25.0" prefWidth="243.0" />
@@ -36,5 +34,7 @@
         </columns>
       </TableView>
       <Button fx:id="btnReactive" layoutX="338.0" layoutY="121.0" mnemonicParsing="false" onAction="#reactiveClient" prefHeight="25.0" prefWidth="243.0" text="Reativar Cliente" />
+      <Label layoutX="22.0" layoutY="31.0" text="Nome:" />
+      <Label layoutX="9.0" layoutY="77.0" text="Telefone:" />
    </children>
 </AnchorPane>

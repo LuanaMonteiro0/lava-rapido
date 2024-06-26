@@ -46,7 +46,5 @@
          </graphic></Button>
       <ComboBox fx:id="cbClient" layoutX="76.0" layoutY="34.0" prefWidth="150.0" />
       <ComboBox fx:id="cbVehicles" layoutX="76.0" layoutY="85.0" prefWidth="150.0" />
-      <Label layoutX="538.0" layoutY="395.0" text="Salvar" />
-      <Label layoutX="453.0" layoutY="395.0" text="Cancelar" />
    </children>
 </AnchorPane>
