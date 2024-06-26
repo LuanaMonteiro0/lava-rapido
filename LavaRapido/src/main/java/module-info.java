@@ -2,6 +2,8 @@ module com.example.lavarapido {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires kernel;
+    requires layout;
 
     opens com.example.lavarapido.application.view to javafx.fxml;
     opens com.example.lavarapido.application.controller to javafx.fxml;
@@ -12,5 +14,4 @@ module com.example.lavarapido {
 
     exports com.example.lavarapido.application.view;
     exports com.example.lavarapido.application.controller;
-
 }
