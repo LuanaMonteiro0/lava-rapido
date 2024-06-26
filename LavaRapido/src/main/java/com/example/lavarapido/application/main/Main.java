@@ -1,19 +1,7 @@
 package com.example.lavarapido.application.main;
 
 import com.example.lavarapido.application.repository.daoimplements.*;
-import com.example.lavarapido.application.repository.database.DatabaseBuilder;
 import com.example.lavarapido.application.view.WindowLoader;
-import com.example.lavarapido.domain.entities.client.CPF;
-import com.example.lavarapido.domain.entities.client.Client;
-import com.example.lavarapido.domain.entities.client.Telephone;
-import com.example.lavarapido.domain.entities.general.Status;
-import com.example.lavarapido.domain.entities.scheduling.FormOfPayment;
-import com.example.lavarapido.domain.entities.scheduling.Scheduling;
-import com.example.lavarapido.domain.entities.scheduling.SchedulingStatus;
-import com.example.lavarapido.domain.entities.service.Service;
-import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
-import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
-import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Client.*;
 import com.example.lavarapido.usecases.Report.ClientsReport.AbsentClientReportUseCase;
 import com.example.lavarapido.usecases.Report.DaysBillingReportUseCase;
@@ -30,10 +18,6 @@ import com.example.lavarapido.usecases.VehicleCategory.DeleteVehicleCategoryUseC
 import com.example.lavarapido.usecases.VehicleCategory.InsertVehicleCategoryUseCase;
 import com.example.lavarapido.usecases.VehicleCategory.UpdateVehicleCategoryUseCase;
 import javafx.application.Application;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
