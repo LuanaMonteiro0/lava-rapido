@@ -5,8 +5,17 @@ import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.usecases.Scheduling.SchedulingDAO;
 import com.example.lavarapido.usecases.utils.DateValidator;
 import com.example.lavarapido.usecases.utils.Notification;
+import com.example.lavarapido.usecases.utils.ShowAlert;
 import com.example.lavarapido.usecases.utils.Validator;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
+import javafx.scene.control.Alert;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.List;
@@ -23,19 +32,19 @@ public class DaysBillingReportUseCase {
         Validator<LocalDate> validator = new DateValidator();
         Notification notification = validator.validate(date);
 
-        if (notification.hasErrors())
+        if (notification.hasErrors()) {
+            ShowAlert.showErrorAlert(notification.errorMessage());
             throw new IllegalArgumentException(notification.errorMessage());
+        }
 
         List<Scheduling> schedules = schedulingDAO.findByDate(date);
         if (schedules.isEmpty())
             throw new RuntimeException("No schedule performed on this date");
 
-
         Map<FormOfPayment, Double> totalByPaymentMethod = new EnumMap<>(FormOfPayment.class);
         double totalRevenue = 0;
 
         for (Scheduling scheduling : schedules) {
-            scheduling.calculateTotal();
             double totalValue = scheduling.getTotalValue();
 
             totalRevenue += totalValue;
@@ -47,10 +56,36 @@ public class DaysBillingReportUseCase {
 
     }
 
-    private void exportReport(LocalDate date, double totalRevenue, Map<FormOfPayment,
-            Double> totalsByPaymentMethod, List<Scheduling> schedules) {
-        // ver como exporta para PDF
-        // https://www.youtube.com/watch?v=ylaP8LyoKog&list=PLz3sH_KSH-y_hyudbNhHk3Egdsn9Zj5SJ
+    private void exportReport(LocalDate date, double totalRevenue, Map<FormOfPayment, Double> totalsByPaymentMethod, List<Scheduling> schedules) {
+        String dest = "billing_report_" + date.toString() + ".pdf";
+        try {
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
 
+            document.add(new Paragraph("Billing Report for " + date.toString())
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setBold()
+                    .setFontSize(16));
+
+            document.add(new Paragraph("Total Revenue: $" + totalRevenue)
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(12));
+
+            Table table = new Table(2);
+            table.addCell("Form of Payment");
+            table.addCell("Total Amount");
+
+            for (Map.Entry<FormOfPayment, Double> entry : totalsByPaymentMethod.entrySet()) {
+                table.addCell(entry.getKey().toString());
+                table.addCell("$" + entry.getValue());
+            }
+
+            document.add(table);
+
+            document.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

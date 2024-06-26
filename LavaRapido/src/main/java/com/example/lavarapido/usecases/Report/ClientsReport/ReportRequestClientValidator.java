@@ -9,9 +9,6 @@ public class ReportRequestClientValidator extends Validator<ReportRequestClient>
 
         Notification notification = new Notification();
 
-        if (request.getClient() == null)
-            notification.addError("No client selected.");
-
         if (request.getInitialDate() == null)
             notification.addError("Initial date cannot be null.");
 

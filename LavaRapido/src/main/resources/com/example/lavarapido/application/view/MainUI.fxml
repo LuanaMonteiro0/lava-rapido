@@ -80,5 +80,10 @@
             </ImageView>
          </graphic></Button>
       <CheckBox fx:id="checkListSchedulesForTheDay" layoutX="19.0" layoutY="73.0" mnemonicParsing="false" onAction="#listSchedules" text="Listar agendamentos do dia" />
+      <Button fx:id="btnReport" layoutX="660.0" layoutY="69.0" mnemonicParsing="false" onAction="#newReport" prefHeight="25.0" prefWidth="138.0" text="Novo Relatório" />
+      <Label layoutX="23.0" layoutY="538.0" text="Clientes" />
+      <Label layoutX="89.0" layoutY="538.0" text="Veículos" />
+      <Label layoutX="160.0" layoutY="538.0" text="Categorias" />
+      <Label layoutX="239.0" layoutY="538.0" text="Serviços" />
    </children>
 </AnchorPane>

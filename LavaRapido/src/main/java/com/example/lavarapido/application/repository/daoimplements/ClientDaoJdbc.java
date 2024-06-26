@@ -40,10 +40,10 @@ public class ClientDaoJdbc implements ClientDAO {
 
         try {
             String targetClient = """
-                SELECT * FROM Clients WHERE name = ? AND status LIKE 'A%'
+                SELECT * FROM Clients WHERE name LIKE ?
                 """;
             PreparedStatement targetClientStatement = ConnectionFactory.createPreparedStatement(targetClient);
-            targetClientStatement.setString(1, name);
+            targetClientStatement.setString(1, "%" + name + "%");
 
             ResultSet res = targetClientStatement.executeQuery();
             List<Client> myClients = new ArrayList<>();

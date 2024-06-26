@@ -170,4 +170,8 @@ public class MainUIController implements Initializable {
             loadDataAndShow();
         }
     }
+
+    public void newReport(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("ReportUI");
+    }
 }

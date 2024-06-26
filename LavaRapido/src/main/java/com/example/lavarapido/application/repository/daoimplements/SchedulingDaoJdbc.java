@@ -35,27 +35,15 @@ public class SchedulingDaoJdbc implements SchedulingDAO {
         String dateDbResult = resultSet.getString("date");//"2024-06-03"
         String timeDbResult = resultSet.getString("time");
 
-//        String [] localDateArgumentsInStringFormat = dateDbResult.split("-");
-//        int year = Integer.parseInt(localDateArgumentsInStringFormat[0]);
-//        int month = Integer.parseInt(localDateArgumentsInStringFormat[1]);
-//        int day = Integer.parseInt(localDateArgumentsInStringFormat[2]);
         LocalDate localDate = LocalDate.parse(dateDbResult, DateTimeFormatter.ISO_LOCAL_DATE);
         LocalTime localTime = LocalTime.parse(timeDbResult, DateTimeFormatter.ofPattern("HH:mm"));
-
-
-//        String [] localTimeArgumentsInStringFormat = timeDbResult.split(":");
-//        int hour = Integer.parseInt(localTimeArgumentsInStringFormat[0]);
-//        int minute = Integer.parseInt(localTimeArgumentsInStringFormat[1]);
-//        int second = Integer.parseInt(localTimeArgumentsInStringFormat[2]);
 
         Scheduling scheduling = new Scheduling(
                 resultSet.getString("id"),
                 resultSet.getDouble("totalValue"),
                 resultSet.getDouble("discount"),
-//                LocalDate.of(year, month, day),
                 localDate,
                 localTime
-//                LocalTime.of(hour, minute, second)
         );
 
         scheduling.setSchedulingStatus(SchedulingStatus.toEnum(resultSet.getString("status")));

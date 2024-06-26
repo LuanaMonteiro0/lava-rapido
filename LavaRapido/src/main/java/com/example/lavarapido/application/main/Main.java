@@ -15,6 +15,9 @@ import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Client.*;
+import com.example.lavarapido.usecases.Report.ClientsReport.AbsentClientReportUseCase;
+import com.example.lavarapido.usecases.Report.DaysBillingReportUseCase;
+import com.example.lavarapido.usecases.Report.ServicesReport.ServicesPerformedReportUseCase;
 import com.example.lavarapido.usecases.Scheduling.CancelSchedulingUseCase;
 import com.example.lavarapido.usecases.Scheduling.InsertSchedulingUseCase;
 import com.example.lavarapido.usecases.Scheduling.ListSchedulesForTheDayUseCase;
@@ -61,6 +64,10 @@ public class Main {
     public static CancelSchedulingUseCase cancelSchedulingUseCase;
     public static ListSchedulesForTheDayUseCase listSchedulesForTheDayUseCase;
 
+    public static DaysBillingReportUseCase daysBillingReportUseCase;
+    public static AbsentClientReportUseCase absentClientReportUseCase;
+    public static ServicesPerformedReportUseCase servicesPerformedReportUseCase;
+
     private static void configureInjection() {
         ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
         VehicleDaoJdbc vehicleDaoJdbc = new VehicleDaoJdbc();
@@ -93,5 +100,10 @@ public class Main {
                 schedulingDaoJdbc, clientDaoJdbc, vehicleDaoJdbc, serviceDaoJdbc);
         cancelSchedulingUseCase = new CancelSchedulingUseCase(schedulingDaoJdbc);
         listSchedulesForTheDayUseCase = new ListSchedulesForTheDayUseCase(schedulingDaoJdbc);
+
+        daysBillingReportUseCase = new DaysBillingReportUseCase(schedulingDaoJdbc);
+        absentClientReportUseCase = new AbsentClientReportUseCase(schedulingDaoJdbc);
+        servicesPerformedReportUseCase = new ServicesPerformedReportUseCase(schedulingDaoJdbc, serviceDaoJdbc);
+
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="570.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.ReportAbsentClientsController">
+   <children>
+      <DatePicker fx:id="dpInitialDate" layoutX="306.0" layoutY="216.0" prefHeight="25.0" prefWidth="205.0" />
+      <DatePicker fx:id="dpFinalDate" layoutX="304.0" layoutY="285.0" prefHeight="25.0" prefWidth="205.0" />
+      <Button fx:id="btnConfirm" layoutX="304.0" layoutY="350.0" mnemonicParsing="false" onAction="#create" prefHeight="25.0" prefWidth="205.0" text="Cofirmar" />
+      <Button fx:id="btnBack" layoutX="306.0" layoutY="388.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="25.0" prefWidth="205.0" text="Voltar" />
+   </children>
+</AnchorPane>

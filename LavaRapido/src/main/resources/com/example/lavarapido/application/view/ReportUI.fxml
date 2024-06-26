@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="570.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lavarapido.application.controller.ReportUIController">
+   <children>
+      <Button fx:id="btnAbsentClients" layoutX="328.0" layoutY="218.0" mnemonicParsing="false" onAction="#createReportAbsentClients" prefHeight="30.0" prefWidth="161.0" text="Clientes Ausentes">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Label layoutX="328.0" layoutY="116.0" text="Gerar Relatórios">
+         <font>
+            <Font name="System Italic" size="23.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnServicesPerformed" layoutX="328.0" layoutY="273.0" mnemonicParsing="false" onAction="#createServicesPerformedReport" prefHeight="30.0" prefWidth="161.0" text="Serviços Realizados">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDaysBilling" layoutX="328.0" layoutY="328.0" mnemonicParsing="false" onAction="#createDaysBillingReport" prefHeight="30.0" prefWidth="161.0" text="Faturamento por Dia">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnBack" layoutX="385.0" layoutY="429.0" mnemonicParsing="false" onAction="#backToPreviousScene" text="Voltar" />
+   </children>
+</AnchorPane>

@@ -17,11 +17,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.example.lavarapido.application.main.Main.deleteClientUseCase;
 
-//import static br.edu.ifps.luana.application.main.Main.deleteClientUseCase;
 
 public class ClientManegementUIController {
 

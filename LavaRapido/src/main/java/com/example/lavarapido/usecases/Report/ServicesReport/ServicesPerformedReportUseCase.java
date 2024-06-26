@@ -8,11 +8,20 @@ import com.example.lavarapido.usecases.Service.ServiceDAO;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
 import com.example.lavarapido.usecases.utils.Notification;
 import com.example.lavarapido.usecases.utils.Validator;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ServicesPerformedReportUseCase {
     private final SchedulingDAO schedulingDAO;
@@ -44,20 +53,54 @@ public class ServicesPerformedReportUseCase {
                 if (scheduling.getDate().isBefore(initialDate) || scheduling.getDate().isAfter(finalDate)) {
                     continue;
                 }
-                scheduling.calculateTotal();
                 double totalValue = scheduling.getTotalValue();
                 totalRevenue += totalValue;
                 totalsByPaymentMethod.merge(scheduling.getFormOfPayment(), totalValue, Double::sum);
             }
         }
 
-        exportReport(initialDate, finalDate, totalRevenue, totalsByPaymentMethod);
+        exportReport(initialDate, finalDate, totalRevenue, totalsByPaymentMethod, services);
     }
 
     private void exportReport(LocalDate initialDate, LocalDate finalDate, double totalRevenue,
-                              Map<FormOfPayment, Double> totalsByPaymentMethod) {
-        // ver como exporta para PDF
-        // https://www.youtube.com/watch?v=ylaP8LyoKog&list=PLz3sH_KSH-y_hyudbNhHk3Egdsn9Zj5SJ
+                              Map<FormOfPayment, Double> totalsByPaymentMethod, List<Service> services) {
+        String dest = "services_performed_report.pdf";
+        try {
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
 
+            document.add(new Paragraph("Services Performed Report")
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setBold()
+                    .setFontSize(16));
+
+            document.add(new Paragraph("Period: " + formatDate(initialDate) + " to " + formatDate(finalDate))
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(12));
+
+            document.add(new Paragraph("Total Revenue: " + totalRevenue)
+                    .setTextAlignment(TextAlignment.LEFT)
+                    .setFontSize(12));
+
+            Table table = new Table(2);
+            table.addCell("Payment Method");
+            table.addCell("Total Amount");
+
+            for (Map.Entry<FormOfPayment, Double> entry : totalsByPaymentMethod.entrySet()) {
+                table.addCell(entry.getKey().toString());
+                table.addCell(entry.getValue().toString());
+            }
+
+            document.add(table);
+
+            document.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String formatDate(LocalDate date) {
+        return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }
