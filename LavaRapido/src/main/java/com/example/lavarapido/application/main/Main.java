@@ -2,22 +2,21 @@ package com.example.lavarapido.application.main;
 
 import com.example.lavarapido.application.repository.daoimplements.*;
 import com.example.lavarapido.application.view.WindowLoader;
-import com.example.lavarapido.usecases.Client.*;
-import com.example.lavarapido.usecases.Report.ClientsReport.AbsentClientReportUseCase;
-import com.example.lavarapido.usecases.Report.DaysBillingReportUseCase;
-import com.example.lavarapido.usecases.Report.ServicesReport.ServicesPerformedReportUseCase;
-import com.example.lavarapido.usecases.Scheduling.CancelSchedulingUseCase;
-import com.example.lavarapido.usecases.Scheduling.InsertSchedulingUseCase;
-import com.example.lavarapido.usecases.Scheduling.ListSchedulesForTheDayUseCase;
-import com.example.lavarapido.usecases.Service.*;
-import com.example.lavarapido.usecases.Vehicle.AddVehicleClientUseCase;
-import com.example.lavarapido.usecases.Vehicle.DeleteVehicleClientUseCase;
-import com.example.lavarapido.usecases.Vehicle.ReactiveVehicleClientUseCase;
-import com.example.lavarapido.usecases.Vehicle.UpdateVehicleClientUseCase;
-import com.example.lavarapido.usecases.VehicleCategory.DeleteVehicleCategoryUseCase;
-import com.example.lavarapido.usecases.VehicleCategory.InsertVehicleCategoryUseCase;
-import com.example.lavarapido.usecases.VehicleCategory.UpdateVehicleCategoryUseCase;
-import javafx.application.Application;
+import com.example.lavarapido.usecases.client.*;
+import com.example.lavarapido.usecases.report.clientsReport.AbsentClientReportUseCase;
+import com.example.lavarapido.usecases.report.DaysBillingReportUseCase;
+import com.example.lavarapido.usecases.report.servicesReport.ServicesPerformedReportUseCase;
+import com.example.lavarapido.usecases.scheduling.CancelSchedulingUseCase;
+import com.example.lavarapido.usecases.scheduling.InsertSchedulingUseCase;
+import com.example.lavarapido.usecases.scheduling.ListSchedulesForTheDayUseCase;
+import com.example.lavarapido.usecases.service.*;
+import com.example.lavarapido.usecases.vehicle.AddVehicleClientUseCase;
+import com.example.lavarapido.usecases.vehicle.DeleteVehicleClientUseCase;
+import com.example.lavarapido.usecases.vehicle.ReactiveVehicleClientUseCase;
+import com.example.lavarapido.usecases.vehicle.UpdateVehicleClientUseCase;
+import com.example.lavarapido.usecases.vehicleCategory.DeleteVehicleCategoryUseCase;
+import com.example.lavarapido.usecases.vehicleCategory.InsertVehicleCategoryUseCase;
+import com.example.lavarapido.usecases.vehicleCategory.UpdateVehicleCategoryUseCase;
 
 public class Main {
     public static void main(String[] args) {

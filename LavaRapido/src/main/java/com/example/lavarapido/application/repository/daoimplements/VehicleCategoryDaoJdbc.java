@@ -2,7 +2,7 @@ package com.example.lavarapido.application.repository.daoimplements;
 
 import com.example.lavarapido.application.repository.database.ConnectionFactory;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
-import com.example.lavarapido.usecases.VehicleCategory.VehicleCategoryDAO;
+import com.example.lavarapido.usecases.vehicleCategory.VehicleCategoryDAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

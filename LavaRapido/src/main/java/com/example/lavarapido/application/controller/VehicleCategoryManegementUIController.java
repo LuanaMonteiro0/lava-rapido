@@ -1,11 +1,9 @@
 package com.example.lavarapido.application.controller;
 
-import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.VehicleCategoryDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
-import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
-import com.example.lavarapido.usecases.VehicleCategory.InsertVehicleCategoryUseCase;
+import com.example.lavarapido.usecases.vehicleCategory.InsertVehicleCategoryUseCase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

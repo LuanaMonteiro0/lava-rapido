@@ -6,9 +6,8 @@ import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.client.Telephone;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
-import com.example.lavarapido.usecases.Client.ClientDAO;
+import com.example.lavarapido.usecases.client.ClientDAO;
 
-import java.lang.annotation.Documented;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

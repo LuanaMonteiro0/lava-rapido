@@ -7,7 +7,7 @@ import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.domain.entities.scheduling.SchedulingStatus;
 import com.example.lavarapido.domain.entities.service.Service;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
-import com.example.lavarapido.usecases.Scheduling.SchedulingDAO;
+import com.example.lavarapido.usecases.scheduling.SchedulingDAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

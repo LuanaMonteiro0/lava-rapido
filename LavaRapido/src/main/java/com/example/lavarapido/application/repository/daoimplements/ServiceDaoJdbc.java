@@ -4,7 +4,7 @@ import com.example.lavarapido.application.repository.database.ConnectionFactory;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.service.Service;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
-import com.example.lavarapido.usecases.Service.ServiceDAO;
+import com.example.lavarapido.usecases.service.ServiceDAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

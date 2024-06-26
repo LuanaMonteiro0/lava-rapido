@@ -5,7 +5,7 @@ import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
-import com.example.lavarapido.usecases.Vehicle.VehicleDAO;
+import com.example.lavarapido.usecases.vehicle.VehicleDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
