@@ -3,6 +3,7 @@ package com.example.lavarapido.usecases.Vehicle;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
+import com.example.lavarapido.usecases.utils.ShowAlert;
 
 public class ReactiveVehicleClientUseCase {
     private final VehicleDAO vehicleDAO;
@@ -12,15 +13,17 @@ public class ReactiveVehicleClientUseCase {
     }
 
     public boolean reactive(Vehicle vehicle) {
-        if (vehicle == null || vehicleDAO.findByLicensePlate(vehicle.getPlate()).isEmpty())
-            throw new EntityNotFoundException("Vehicle not found.");
+        if (vehicle == null || vehicleDAO.findByLicensePlate(vehicle.getPlate()).isEmpty()) {
+            ShowAlert.showErrorAlert("Veículo não encontrado.");
+            throw new EntityNotFoundException("Veículo não encontrado.");
+        }
 
-        if (vehicle.getStatus() == Status.INACTIVE){
+        if (vehicle.getStatus() == Status.INACTIVE) {
             vehicle.changeVehicleStatus(Status.ACTIVE);
             return vehicleDAO.update(vehicle);
         }
 
-        throw new RuntimeException("Client is already activated.");
-
+        ShowAlert.showErrorAlert("O veículo já está ativado.");
+        throw new RuntimeException("O veículo já está ativado.");
     }
 }

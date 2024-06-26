@@ -110,8 +110,24 @@ public class SchedulingUIController implements Initializable {
             try {
                 discount = Double.parseDouble(discountText);
             } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Valor inválido para desconto.");
+                alert.showAndWait();
                 throw new RuntimeException(e);
             }
+        }
+
+        LocalTime localTime;
+        try {
+            localTime = LocalTime.parse(selectedHour);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Valor inválido para Horário.");
+            alert.showAndWait();
+            throw new RuntimeException(e);
+        }
+
+        if (selectedDate == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Valor inválido para Data.");
+            alert.showAndWait();
         }
 
         if (scheduling == null) {
@@ -123,7 +139,7 @@ public class SchedulingUIController implements Initializable {
         scheduling.setFormOfPayment(formOfPaymentSelected);
         scheduling.setSchedulingStatus(statusSelected);
         scheduling.setDate(selectedDate);
-        scheduling.setHour(LocalTime.parse(selectedHour));
+        scheduling.setHour(localTime);
         scheduling.setDiscount(discount);
 
         List<Service> selectedServices = listService.getSelectionModel().getSelectedItems();

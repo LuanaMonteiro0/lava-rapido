@@ -5,6 +5,7 @@ import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
+import com.example.lavarapido.usecases.utils.ShowAlert;
 
 import java.util.List;
 
@@ -18,8 +19,10 @@ public class DeleteVehicleClientUseCase {
     }
 
     public boolean delete(Vehicle vehicle) {
-        if (vehicle == null || vehicleDAO.findByLicensePlate(vehicle.getPlate()).isEmpty())
-            throw new EntityNotFoundException("Vehicle not found.");
+        if (vehicle == null || vehicleDAO.findByLicensePlate(vehicle.getPlate()).isEmpty()) {
+            ShowAlert.showErrorAlert("Veículo não encontrado.");
+            throw new EntityNotFoundException("Veículo não encontrado.");
+        }
 
         List<Scheduling> allSchedulings = schedulingDaoJdbc.findAll();
         boolean hasSchedulings = allSchedulings.stream()
@@ -29,6 +32,7 @@ public class DeleteVehicleClientUseCase {
             return vehicleDAO.delete(vehicle);
         }
 
+        ShowAlert.showInfoAlert("Não é possível deletar um veículo com agendamentos. O veículo será inativado.");
         vehicle.setStatus(Status.INACTIVE);
         return vehicleDAO.update(vehicle);
     }

@@ -60,6 +60,8 @@ public class ClientUIController {
 
     private ObservableList<Vehicle> tableData;
 
+    private UIMode uiMode;
+
     @FXML
     public void initialize() {
         configureVehicleComboBox();
@@ -96,9 +98,7 @@ public class ClientUIController {
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
         getEntityFromView();
 
-        ClientDaoJdbc clientDaoJdbc = new ClientDaoJdbc();
-
-        if (clientExists(client.getCpf(), clientDaoJdbc)) {
+        if (uiMode == UIMode.UPDATE) {
             try {
                 updateClientUseCase.update(client);
             } catch (Exception e) {
@@ -115,17 +115,15 @@ public class ClientUIController {
         WindowLoader.setRoot("ClientManegementUI");
     }
 
-    private boolean clientExists(CPF cpf, ClientDaoJdbc clientDaoJdbc) {
-        return clientDaoJdbc.findOneByCPF(cpf).isPresent();
-    }
 
     private void getEntityFromView() {
         if (client == null) {
-            client = new Client(txtName.getText(), new Telephone(txtPhone.getText()), new CPF(txtCPF.getText()));
-        } else {
-            client.setName(txtName.getText());
-            client.setPhone(new Telephone(txtPhone.getText()));
+            client = new Client();
         }
+        client.setName(txtName.getText());
+        client.setPhone(new Telephone(txtPhone.getText()));
+        client.setCpf(new CPF(txtCPF.getText()));
+
         Vehicle selectedVehicle = cbVehicles.getSelectionModel().getSelectedItem();
         if (selectedVehicle != null && !client.getVehicles().contains(selectedVehicle)) {
             client.addVehicle(selectedVehicle);
@@ -149,6 +147,7 @@ public class ClientUIController {
 
         this.client = client;
         setEntityToView();
+        this.uiMode = mode;
 
         if (mode == UIMode.VIEW) configureViewMode();
         if (mode == UIMode.UPDATE) txtCPF.setDisable(true);

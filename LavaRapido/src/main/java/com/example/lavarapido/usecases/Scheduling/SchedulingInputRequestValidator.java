@@ -17,45 +17,47 @@ public class SchedulingInputRequestValidator extends Validator<Scheduling> {
         Notification notification = new Notification();
 
         if (scheduling == null) {
-            notification.addError("Scheduling is null.");
+            notification.addError("Agendamento é nulo.");
             return notification;
         }
 
+        if (nullOrEmpty(String.valueOf(scheduling.getDate())))
+            notification.addError("Data não pode ser vazia ou nula.");
+
         if (scheduling.verifyDate())
-            notification.addError("The scheduling date is invalid. It must be today or a future date.");
+            notification.addError("Data inválida. Deve ser hoje ou uma data futura.");
 
         Client client = scheduling.getClient();
         if (client == null)
-            notification.addError("Client is null.");
+            notification.addError("Cliente é nulo.");
         else if (client.getStatus().equals(Status.INACTIVE))
-            notification.addError("Client is not active.");
-
+            notification.addError("Cliente não está ativo.");
 
         Vehicle vehicle = scheduling.getVehicle();
         if (vehicle == null)
-            notification.addError("Vehicle is null.");
+            notification.addError("Veículo é nulo.");
 
         List<Service> services = scheduling.getServices();
         if (nullOrEmpty(services))
-            notification.addError("Services is null or empty.");
+            notification.addError("Serviços são nulos ou vazios.");
         else {
             for (Service service : services) {
                 if (service == null) {
-                    notification.addError("Service cannot be null.");
+                    notification.addError("Serviço não pode ser nulo.");
                 }
             }
         }
 
         if (scheduling.getFormOfPayment() == null) {
-            notification.addError("Form of payment cannot be null.");
+            notification.addError("Forma de pagamento não pode ser nula ou vazia.");
         }
 
-        if (scheduling.getTotalValue() < 0) {
-            notification.addError("Total value cannot be negative.");
+        if (scheduling.getTotalValue() < 0 || Double.isNaN(scheduling.getTotalValue())) {
+            notification.addError("O valor total não pode ser negativo e deve ser um número válido.");
         }
 
-        if (scheduling.getDiscount() < 0) {
-            notification.addError("Discount cannot be negative.");
+        if (scheduling.getDiscount() < 0 || Double.isNaN(scheduling.getDiscount())) {
+            notification.addError("O desconto não pode ser negativo e deve ser um número válido.");
         }
 
         return notification;

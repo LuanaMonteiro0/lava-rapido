@@ -4,6 +4,7 @@ import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.utils.EntityAlreadyExistsException;
 import com.example.lavarapido.usecases.utils.Notification;
+import com.example.lavarapido.usecases.utils.ShowAlert;
 import com.example.lavarapido.usecases.utils.Validator;
 
 public class AddVehicleClientUseCase {
@@ -17,14 +18,17 @@ public class AddVehicleClientUseCase {
         Validator<Vehicle> validator = new VehicleRequestValidator();
         Notification notification = validator.validate(vehicle);
 
-        if (notification.hasErrors())
+        if (notification.hasErrors()) {
+            ShowAlert.showErrorAlert(notification.errorMessage());
             throw new IllegalArgumentException(notification.errorMessage());
+        }
 
         LicensePlate licensePlate = vehicle.getPlate();
-        if (vehicleDAO.findByLicensePlate(licensePlate).isPresent())
-            throw new EntityAlreadyExistsException("This Plate is already in use.");
+        if (vehicleDAO.findByLicensePlate(licensePlate).isPresent()) {
+            ShowAlert.showErrorAlert("Esta placa já está em uso.");
+            throw new EntityAlreadyExistsException("Esta placa já está em uso.");
+        }
 
         return vehicleDAO.create(vehicle);
     }
-
 }

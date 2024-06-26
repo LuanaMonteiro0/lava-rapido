@@ -154,10 +154,13 @@ public class MainUIController implements Initializable {
     }
 
     public void cancelScheduling(ActionEvent actionEvent) {
-        Scheduling selectedScheduling = tableView.getSelectionModel().getSelectedItem().getScheduling();
+        SchedulingView selectedItem = tableView.getSelectionModel().getSelectedItem();
 
-        cancelSchedulingUseCase.cancel(selectedScheduling);
-        loadDataAndShow();
+        if (selectedItem != null) {
+            Scheduling scheduling = selectedItem.getScheduling();
+            cancelSchedulingUseCase.cancel(scheduling);
+            loadDataAndShow();
+        }
     }
 
     public void listSchedules(ActionEvent actionEvent) {

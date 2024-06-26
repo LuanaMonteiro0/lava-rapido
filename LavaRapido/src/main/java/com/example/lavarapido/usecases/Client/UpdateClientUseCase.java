@@ -1,6 +1,7 @@
 package com.example.lavarapido.usecases.Client;
 
 import com.example.lavarapido.domain.entities.client.Client;
+import com.example.lavarapido.usecases.utils.ShowAlert;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
 import com.example.lavarapido.usecases.utils.Notification;
 import com.example.lavarapido.usecases.utils.Validator;
@@ -25,11 +26,14 @@ public class UpdateClientUseCase {
         Validator<Client> validator = new ClientInputRequestValidator();
         Notification notification = validator.validate(client);
 
-        if (notification.hasErrors())
+        if (notification.hasErrors()) {
+            ShowAlert.showErrorAlert(notification.errorMessage());
             throw new IllegalArgumentException(notification.errorMessage());
+        }
 
         String id = client.getId();
         if (clientDAO.findOne(id).isEmpty()) {
+            ShowAlert.showErrorAlert("Cliente não encontrado");
             throw new EntityNotFoundException("Client not found.");
         }
 

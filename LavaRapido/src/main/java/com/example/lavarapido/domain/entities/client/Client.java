@@ -17,7 +17,7 @@ public class Client {
 
     private Telephone phone;
 
-    private final CPF cpf;
+    private CPF cpf;
 
     private List<Vehicle> vehicles = new ArrayList<>();
 
@@ -62,7 +62,9 @@ public class Client {
         }
     }
 
-    public Client(){this.cpf = null;};
+    public Client(){
+        this.status = Status.ACTIVE;
+    };
 
     public String getName() {
         return name;
@@ -98,6 +100,10 @@ public class Client {
 
     public CPF getCpf() {
         return cpf;
+    }
+
+    public void setCpf(CPF cpf) {
+        this.cpf = cpf;
     }
 
     public List<Vehicle> getVehicles() {

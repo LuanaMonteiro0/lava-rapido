@@ -11,16 +11,16 @@ public class ClientInputRequestValidator extends Validator<Client> {
         Notification notification = new Notification();
 
         if (client == null) {
-            notification.addError("Client is null");
+            notification.addError("Cliente é nulo.");
             return notification;
         }
 
         if (nullOrEmpty(client.getName()))
-            notification.addError("Name is null or empty");
+            notification.addError("Nome é nulo ou vazio.");
         if (nullOrEmpty(client.getCpfString()))
-            notification.addError("CPF is null or empty");
+            notification.addError("CPF é nulo ou vazio.");
         if (nullOrEmpty(client.getPhone()))
-            notification.addError("Phone is null or empty");
+            notification.addError("Telefone é nulo ou vazio.");
 
         return notification;
     }

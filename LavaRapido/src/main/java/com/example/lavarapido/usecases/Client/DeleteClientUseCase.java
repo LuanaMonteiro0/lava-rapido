@@ -4,6 +4,7 @@ import com.example.lavarapido.application.repository.daoimplements.SchedulingDao
 import com.example.lavarapido.domain.entities.client.Client;
 import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.scheduling.Scheduling;
+import com.example.lavarapido.usecases.utils.ShowAlert;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
 
 import java.util.List;
@@ -19,12 +20,9 @@ public class DeleteClientUseCase {
         this.schedulingDaoJdbc = schedulingDaoJdbc;
     }
 
-    public Optional<List<Client>> findClientsByName(String name) {
-        return clientDAO.findByName(name);
-    }
-
     public boolean delete(Client client) {
         if (client == null || clientDAO.findOneByCPF(client.getCpf()).isEmpty()) {
+            ShowAlert.showErrorAlert("Cliente não encontrado.");
             throw new EntityNotFoundException("Client not found.");
         }
 
@@ -36,6 +34,7 @@ public class DeleteClientUseCase {
             return clientDAO.delete(client);
         }
 
+        ShowAlert.showInfoAlert("Não é possível deletar cliente com agendamentos. O cliente será inativado.");
         client.setStatus(Status.INACTIVE);
         return clientDAO.update(client);
     }

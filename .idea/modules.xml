@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LavaRapido/LavaRapido.iml" filepath="$PROJECT_DIR$/LavaRapido/LavaRapido.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/lava-rapido.iml" filepath="$PROJECT_DIR$/.idea/lava-rapido.iml" />
     </modules>
   </component>

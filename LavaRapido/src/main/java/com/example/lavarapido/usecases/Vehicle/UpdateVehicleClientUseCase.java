@@ -4,6 +4,7 @@ import com.example.lavarapido.domain.entities.vehicle.LicensePlate;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.utils.EntityNotFoundException;
 import com.example.lavarapido.usecases.utils.Notification;
+import com.example.lavarapido.usecases.utils.ShowAlert;
 import com.example.lavarapido.usecases.utils.Validator;
 
 public class UpdateVehicleClientUseCase {
@@ -17,12 +18,16 @@ public class UpdateVehicleClientUseCase {
         Validator<Vehicle> validator = new VehicleRequestValidator();
         Notification notification = validator.validate(vehicle);
 
-        if (notification.hasErrors())
+        if (notification.hasErrors()) {
+            ShowAlert.showErrorAlert(notification.errorMessage());
             throw new IllegalArgumentException(notification.errorMessage());
+        }
 
         LicensePlate licensePlate = vehicle.getPlate();
-        if (vehicleDAO.findByLicensePlate(licensePlate).isEmpty())
-            throw new EntityNotFoundException("Vehicle not found.");
+        if (vehicleDAO.findByLicensePlate(licensePlate).isEmpty()) {
+            ShowAlert.showErrorAlert("Veículo não encontrado.");
+            throw new EntityNotFoundException("Veículo não encontrado.");
+        }
 
         return vehicleDAO.update(vehicle);
     }

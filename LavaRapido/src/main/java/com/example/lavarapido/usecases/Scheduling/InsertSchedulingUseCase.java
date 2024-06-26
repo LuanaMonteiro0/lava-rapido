@@ -1,17 +1,13 @@
 package com.example.lavarapido.usecases.Scheduling;
 
 import com.example.lavarapido.domain.entities.client.Client;
-import com.example.lavarapido.domain.entities.general.Status;
 import com.example.lavarapido.domain.entities.scheduling.Scheduling;
 import com.example.lavarapido.domain.entities.service.Service;
 import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.usecases.Client.ClientDAO;
 import com.example.lavarapido.usecases.Service.ServiceDAO;
 import com.example.lavarapido.usecases.Vehicle.VehicleDAO;
-import com.example.lavarapido.usecases.utils.EntityAlreadyExistsException;
-import com.example.lavarapido.usecases.utils.EntityNotFoundException;
-import com.example.lavarapido.usecases.utils.Notification;
-import com.example.lavarapido.usecases.utils.Validator;
+import com.example.lavarapido.usecases.utils.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,28 +29,34 @@ public class InsertSchedulingUseCase {
         Validator<Scheduling> validator = new SchedulingInputRequestValidator();
         Notification notification = validator.validate(scheduling);
 
-        if (notification.hasErrors())
+        if (notification.hasErrors()) {
+            ShowAlert.showErrorAlert(notification.errorMessage());
             throw new IllegalArgumentException(notification.errorMessage());
+        }
 
         String id = scheduling.getId();
         if (schedulingDAO.findOne(id).isPresent())
-            throw new EntityAlreadyExistsException("This ID is already in use.");
+            throw new EntityAlreadyExistsException("Este ID já está em uso.");
 
-        Client client  = scheduling.getClient();
+        Client client = scheduling.getClient();
         Optional<Client> clientScheduling = clientDAO.findOne(client.getId());
-        if (clientScheduling.isEmpty())
-            throw new EntityNotFoundException("Client does not exist.");
-        if (clientScheduling.get().getStatus() == Status.INACTIVE)
-            throw new IllegalArgumentException("Client is inactive.");
+        if (clientScheduling.isEmpty()) {
+            ShowAlert.showErrorAlert("Cliente não existe.");
+            throw new EntityNotFoundException("Cliente não existe.");
+        }
 
         Vehicle vehicle = scheduling.getVehicle();
-        if (vehicleDAO.findByLicensePlate(vehicle.getPlate()).isEmpty())
-            throw new EntityNotFoundException("Vehicle is not registered.");
+        if (vehicleDAO.findByLicensePlate(vehicle.getPlate()).isEmpty()) {
+            ShowAlert.showErrorAlert("Veículo não está registrado.");
+            throw new EntityNotFoundException("Veículo não está registrado.");
+        }
 
         List<Service> services = scheduling.getServices();
         for (Service service : services)
-            if (serviceDAO.findOne(service.getId()).isEmpty())
-                throw new EntityNotFoundException("Service not found.");
+            if (serviceDAO.findOne(service.getId()).isEmpty()) {
+                ShowAlert.showErrorAlert("Serviço não encontrado.");
+                throw new EntityNotFoundException("Serviço não encontrado.");
+            }
 
         return schedulingDAO.create(scheduling);
     }
