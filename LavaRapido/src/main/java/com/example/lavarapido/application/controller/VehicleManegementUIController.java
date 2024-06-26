@@ -75,8 +75,6 @@ public class VehicleManegementUIController {
         List<Vehicle> vehicles = vehicleDaoJdbc.findAll();
         tableData.clear();
         tableData.addAll(vehicles);
-
-        System.out.println("Total de veiculos carregados: " + vehicles.size());
     }
 
     private void showVehicleInMode(UIMode mode) throws IOException {
@@ -88,7 +86,7 @@ public class VehicleManegementUIController {
         }
     }
 
-    public void deleteVehicle(ActionEvent actionEvent) {
+    public void deleteVehicle() {
         Vehicle selectedItem = tableView.getSelectionModel().getSelectedItem();
         if (selectedItem !=null) {
             deleteVehicleClientUseCase.delete(selectedItem);
@@ -96,19 +94,19 @@ public class VehicleManegementUIController {
         }
     }
 
-    public void createVehicle(ActionEvent actionEvent) throws IOException {
+    public void createVehicle() throws IOException {
         WindowLoader.setRoot("VehicleUI");
     }
 
-    public void editVehicle(ActionEvent actionEvent) throws IOException {
+    public void editVehicle() throws IOException {
         showVehicleInMode(UIMode.UPDATE);
     }
 
-    public void detailVehicle(ActionEvent actionEvent) throws IOException {
+    public void detailVehicle() throws IOException {
         showVehicleInMode(UIMode.VIEW);
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("MainUI");
     }
 }

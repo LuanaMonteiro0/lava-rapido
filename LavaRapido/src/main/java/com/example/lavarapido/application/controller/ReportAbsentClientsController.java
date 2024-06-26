@@ -1,7 +1,6 @@
 package com.example.lavarapido.application.controller;
 
 import com.example.lavarapido.application.view.WindowLoader;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
@@ -18,7 +17,7 @@ public class ReportAbsentClientsController {
     @FXML
     private DatePicker dpInitialDate;
 
-    public void create(ActionEvent actionEvent) {
+    public void create() {
 
         LocalDate initialDate = dpInitialDate.getValue();
         LocalDate finalDate = dpFinalDate.getValue();
@@ -43,7 +42,7 @@ public class ReportAbsentClientsController {
         }
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("ReportUI");
     }
 }

@@ -50,7 +50,7 @@ public class ServiceUIController {
         WindowLoader.setRoot("ServiceManegementUI");
     }
 
-    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
+    public void saveOrUpdate() throws IOException {
         getEntityFromView();
 
         if (uiMode == UIMode.UPDATE) {
@@ -104,7 +104,6 @@ public class ServiceUIController {
                 } else {
                     txtPrice.setText("");
                 }
-                break;
             }
         }
     }
@@ -157,7 +156,7 @@ public class ServiceUIController {
         cbCategory.getItems().addAll(categories);
     }
 
-    public void reactiveService(ActionEvent actionEvent) {
+    public void reactiveService() {
         try {
             reactiveServiceUseCase.reactive(service);
             backToPreviousScene();

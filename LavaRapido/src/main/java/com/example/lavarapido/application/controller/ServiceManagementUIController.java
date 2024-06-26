@@ -74,7 +74,6 @@ public class ServiceManagementUIController {
                 tableData.add(view);
             }
         }
-        System.out.println("Total de serviços carregados: " + services.size());
     }
 
     private void showServiceInMode(UIMode mode) throws IOException {
@@ -86,7 +85,7 @@ public class ServiceManagementUIController {
         }
     }
 
-    public void changeStatusService(ActionEvent actionEvent) {
+    public void changeStatusService() {
         ServiceView selectedServiceView = tableView.getSelectionModel().getSelectedItem();
         if (selectedServiceView != null) {
             Service selectedService = selectedServiceView.getService();
@@ -114,19 +113,15 @@ public class ServiceManagementUIController {
         alert.showAndWait();
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("MainUI");
     }
 
-//    public void detailService(ActionEvent actionEvent) throws IOException {
-//        showServiceInMode(UIMode.VIEW);
-//    }
-
-    public void editService(ActionEvent actionEvent) throws IOException {
+    public void editService() throws IOException {
         showServiceInMode(UIMode.UPDATE);
     }
 
-    public void createService(ActionEvent actionEvent) throws IOException {
+    public void createService() throws IOException {
         WindowLoader.setRoot("ServiceUI");
     }
 

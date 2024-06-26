@@ -2,13 +2,9 @@ package com.example.lavarapido.application.controller;
 
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.client.Client;
-import com.example.lavarapido.domain.entities.scheduling.Scheduling;
-import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -61,8 +57,6 @@ public class ClientManegementUIController {
         List<Client> clients = clientDaoJdbc.findAll();
         tableData.clear();
         tableData.addAll(clients);
-
-        System.out.println("Total de clientes carregados: " + clients.size());
     }
 
     private void showClientInMode(UIMode mode) throws IOException {
@@ -74,7 +68,7 @@ public class ClientManegementUIController {
         }
     }
 
-    public void deleteClient(ActionEvent actionEvent) {
+    public void deleteClient() {
         Client selectedItem = tableView.getSelectionModel().getSelectedItem();
         if (selectedItem !=null) {
             deleteClientUseCase.delete(selectedItem);
@@ -82,20 +76,20 @@ public class ClientManegementUIController {
         }
     }
 
-    public void editClient(ActionEvent actionEvent) throws IOException {
+    public void editClient() throws IOException {
         showClientInMode(UIMode.UPDATE);
     }
 
-    public void createClient(ActionEvent actionEvent) throws IOException {
+    public void createClient() throws IOException {
         WindowLoader.setRoot("ClientUI");
 
     }
 
-    public void detailClient(ActionEvent actionEvent) throws IOException {
+    public void detailClient() throws IOException {
         showClientInMode(UIMode.VIEW);
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("MainUI");
     }
 

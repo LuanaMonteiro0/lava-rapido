@@ -1,6 +1,5 @@
 package com.example.lavarapido.application.controller;
 
-import com.example.lavarapido.application.repository.daoimplements.ClientDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.ClientVehiclesDaoJdbc;
 import com.example.lavarapido.application.repository.daoimplements.VehicleDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
@@ -91,11 +90,11 @@ public class ClientUIController {
         }
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("ClientManegementUI");
     }
 
-    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
+    public void saveOrUpdate() throws IOException {
         getEntityFromView();
 
         if (uiMode == UIMode.UPDATE) {
@@ -192,7 +191,7 @@ public class ClientUIController {
         cbVehicles.getItems().addAll(vehicles);
     }
 
-    public void reactiveClient(ActionEvent actionEvent) {
+    public void reactiveClient() {
         if (client != null && client.getStatus() == Status.INACTIVE) {
             reactiveClientUseCase.reactive(client);
         }

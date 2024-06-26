@@ -61,15 +61,13 @@ public class VehicleCategoryManegementUIController {
         List<VehicleCategory> vehicleCategories = vehicleCategoryDaoJdbc.findAll();
         tableData.clear();
         tableData.addAll(vehicleCategories);
-
-        System.out.println("Total de categorias carregadas: " + vehicleCategories.size());
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("MainUI");
     }
 
-    public void deleteCategory(ActionEvent actionEvent) {
+    public void deleteCategory() {
         VehicleCategory selectedCategory = tableView.getSelectionModel().getSelectedItem();
         if (selectedCategory != null) {
             deleteVehicleCategoryUseCase.delete(selectedCategory);
@@ -77,7 +75,7 @@ public class VehicleCategoryManegementUIController {
         loadDataAndShow();
     }
 
-    public void updateCategory(ActionEvent actionEvent) {
+    public void updateCategory() {
         VehicleCategory selectedCategory = tableView.getSelectionModel().getSelectedItem();
 
         if (selectedCategory != null) {
@@ -118,7 +116,7 @@ public class VehicleCategoryManegementUIController {
         }
     }
 
-    public void createCategory(ActionEvent actionEvent) throws IOException {
+    public void createCategory() throws IOException {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Create Category");
         dialog.setHeaderText("Enter the name for the new category:");

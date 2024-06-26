@@ -11,7 +11,6 @@ import com.example.lavarapido.domain.entities.vehicle.Vehicle;
 import com.example.lavarapido.domain.entities.vehicle.VehicleCategory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -84,7 +83,7 @@ public class SchedulingUIController implements Initializable {
         WindowLoader.setRoot("MainUI");
     }
 
-    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
+    public void saveOrUpdate() throws IOException {
         getEntityToView();
 
         try {

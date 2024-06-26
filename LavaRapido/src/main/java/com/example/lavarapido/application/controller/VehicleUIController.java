@@ -17,7 +17,6 @@ import javafx.util.StringConverter;
 import java.io.IOException;
 import java.util.List;
 
-//import static br.edu.ifps.luana.application.main.Main.*;
 import static com.example.lavarapido.application.main.Main.*;
 
 
@@ -56,7 +55,7 @@ public class VehicleUIController {
         WindowLoader.setRoot("VehicleManegementUI");
     }
 
-    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
+    public void saveOrUpdate() throws IOException {
 
         getEntityToView();
         if (uiMode == UIMode.UPDATE)
@@ -157,14 +156,12 @@ public class VehicleUIController {
         cbCategory.getItems().addAll(categories);
     }
 
-    public void reactiveVehicle(ActionEvent actionEvent) {
+    public void reactiveVehicle() {
         try {
             reactiveVehicleClientUseCase.reactive(vehicle);
             backToPreviousScene();
-            //colocar um alert de sucesso
         } catch (Exception e) {
             throw new RuntimeException(e);
-            //alert de erro
         }
     }
 }

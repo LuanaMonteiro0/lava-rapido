@@ -107,8 +107,6 @@ public class MainUIController implements Initializable {
             SchedulingView data = new SchedulingView(scheduling, serviceNames);
             tableData.add(data);
         }
-
-        System.out.println("Total de agendamentos carregados: " + schedulings.size());
     }
 
     private void loadSchedulesForTheDay() {
@@ -133,27 +131,27 @@ public class MainUIController implements Initializable {
         }
     }
 
-    public void clientManegement(ActionEvent actionEvent) throws IOException {
+    public void clientManegement() throws IOException {
         WindowLoader.setRoot("ClientManegementUI");
     }
 
-    public void vehicleManegement(ActionEvent actionEvent) throws IOException {
+    public void vehicleManegement() throws IOException {
         WindowLoader.setRoot("VehicleManegementUI");
     }
 
-    public void vehicleCategoryManegement(ActionEvent actionEvent) throws IOException {
+    public void vehicleCategoryManegement() throws IOException {
         WindowLoader.setRoot("VehicleCategoryManegementUI");
     }
 
-    public void serviceManegement(ActionEvent actionEvent) throws IOException {
+    public void serviceManegement() throws IOException {
         WindowLoader.setRoot("ServiceManegementUI");
     }
 
-    public void schedulingManegement(ActionEvent actionEvent) throws IOException {
+    public void schedulingManegement() throws IOException {
         WindowLoader.setRoot("SchedulingUI");
     }
 
-    public void cancelScheduling(ActionEvent actionEvent) {
+    public void cancelScheduling() {
         SchedulingView selectedItem = tableView.getSelectionModel().getSelectedItem();
 
         if (selectedItem != null) {
@@ -163,7 +161,7 @@ public class MainUIController implements Initializable {
         }
     }
 
-    public void listSchedules(ActionEvent actionEvent) {
+    public void listSchedules() {
         if (checkListSchedulesForTheDay.isSelected()) {
             loadSchedulesForTheDay();
         } else {
@@ -171,7 +169,7 @@ public class MainUIController implements Initializable {
         }
     }
 
-    public void newReport(ActionEvent actionEvent) throws IOException {
+    public void newReport() throws IOException {
         WindowLoader.setRoot("ReportUI");
     }
 }

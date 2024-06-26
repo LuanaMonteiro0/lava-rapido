@@ -3,8 +3,6 @@ package com.example.lavarapido.application.controller;
 import com.example.lavarapido.application.repository.daoimplements.ServiceDaoJdbc;
 import com.example.lavarapido.application.view.WindowLoader;
 import com.example.lavarapido.domain.entities.service.Service;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
@@ -21,11 +19,11 @@ import static com.example.lavarapido.application.main.Main.servicesPerformedRepo
 
 public class ReportUIController {
 
-    public void createReportAbsentClients(ActionEvent actionEvent) throws IOException {
+    public void createReportAbsentClients() throws IOException {
         WindowLoader.setRoot("ReportAbsentClients");
     }
 
-    public void createServicesPerformedReport(ActionEvent actionEvent) {
+    public void createServicesPerformedReport() {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Selecione Data e Serviços");
@@ -42,7 +40,6 @@ public class ReportUIController {
         servicesListView.getItems().addAll(allServices);
         servicesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        // Configurar ListCell para exibir apenas o nome do serviço
         servicesListView.setCellFactory(new Callback<>() {
             @Override
             public ListCell<Service> call(ListView<Service> param) {
@@ -85,7 +82,7 @@ public class ReportUIController {
         stage.showAndWait();
     }
 
-    public void createDaysBillingReport(ActionEvent actionEvent) {
+    public void createDaysBillingReport() {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Selecione Data");
@@ -114,7 +111,7 @@ public class ReportUIController {
         stage.showAndWait();
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+    public void backToPreviousScene() throws IOException {
         WindowLoader.setRoot("MainUI");
     }
 }
